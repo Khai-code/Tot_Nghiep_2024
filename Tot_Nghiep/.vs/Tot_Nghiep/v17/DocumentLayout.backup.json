@@ -3,8 +3,36 @@
   "WorkspaceRootPath": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\examroomscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\examroomscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\examroomstudentanswershistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\examroomstudentanswershistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\examhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\examhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\classescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\classescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\migrations\\20240923152425_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\migrations\\20240923152425_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,14 +55,105 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Class1.cs",
-              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Class1.cs",
-              "RelativeDocumentMoniker": "Data\\Class1.cs",
-              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Class1.cs",
-              "RelativeToolTip": "Data\\Class1.cs",
+              "Title": "UserController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\UserController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\UserController.cs",
+              "RelativeToolTip": "API\\Controllers\\UserController.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAgwAIAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T16:14:27.292Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ExamRoomStudentAnswersHistoriesController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
+              "RelativeToolTip": "API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T15:48:20.502Z",
+              "WhenOpened": "2024-09-23T16:14:16.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ExamRoomsController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamRoomsController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ExamRoomsController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamRoomsController.cs",
+              "RelativeToolTip": "API\\Controllers\\ExamRoomsController.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T16:14:14.681Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ExamHistoriesController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamHistoriesController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ExamHistoriesController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamHistoriesController.cs",
+              "RelativeToolTip": "API\\Controllers\\ExamHistoriesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T16:12:20.484Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ClassesController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ClassesController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ClassesController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ClassesController.cs",
+              "RelativeToolTip": "API\\Controllers\\ClassesController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABQAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T16:11:29.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAYwBoAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T16:05:02.673Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\appsettings.json",
+              "RelativeDocumentMoniker": "API\\appsettings.json",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\appsettings.json",
+              "RelativeToolTip": "API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-09-23T16:04:47.589Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "20240923152425_data.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Migrations\\20240923152425_data.cs",
+              "RelativeDocumentMoniker": "Data\\Migrations\\20240923152425_data.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Migrations\\20240923152425_data.cs",
+              "RelativeToolTip": "Data\\Migrations\\20240923152425_data.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-23T16:04:38.694Z",
               "EditorCaption": ""
             }
           ]
