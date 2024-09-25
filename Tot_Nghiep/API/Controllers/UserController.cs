@@ -1,9 +1,17 @@
 ﻿using Data.Database;
+using Data.DTOs;
 using Data.Model;
 using Database.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.JSInterop;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text;
 
 namespace API.Controllers
 {
@@ -149,18 +157,58 @@ namespace API.Controllers
 
                 return Ok("Thêm thành công");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Lỗi");
-
+                return BadRequest(ex.ToString());
             }
 
         }
+       
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginModel model)
+        {
+            var data= _db.users.FirstOrDefault(temp=>temp.UserName==model.Username);
+        
+            // Kiểm tra tên người dùng và mật khẩu tại đây (có thể kiểm tra trong cơ sở dữ liệu)
+            if (model.Username == data.UserName && model.Password == data.PasswordHash)
+            {
+                // Nếu thông tin đăng nhập đúng, tạo token JWT
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere");
 
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                    new Claim(ClaimTypes.Name, data.FullName),
+                    new Claim(ClaimTypes.Dns,data.Avartar)
+                     // Bạn có thể thêm nhiều claim tùy theo nhu cầu
+                    }),
+                    Expires = DateTime.UtcNow.AddHours(1), // Thời hạn token
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                    Issuer = "https://localhost:7039/",
+                    Audience = "https://localhost:7257/"
+                };
+
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
+
+                // Trả về token cho client
+                return Ok(new { Token = tokenString });
+            }
+
+            // Nếu đăng nhập thất bại
+            return Unauthorized();
+        }
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            
+            return Ok(new { message = "Logout successful" });
+        }
         [HttpPut("update-user")]
         public async Task<IActionResult> Update(UserDTO userDTO)
         {
-
             var data = await _db.users.FirstOrDefaultAsync(x => x.Id == userDTO.Id);
 
             if (data == null)
