@@ -12,7 +12,7 @@ namespace Database.DTOs
         public Guid Id { get; set; }
 
         [StringLength(100, ErrorMessage = "Tên không được quá 100 ký tự")]
-        [RegularExpression(@"\S+", ErrorMessage = "Tên chua it nhat 1 ki tu ko phai dau cach")]
+       
         public string? FullName { get; set; }
         public string? Avartar { get; set; }
 
