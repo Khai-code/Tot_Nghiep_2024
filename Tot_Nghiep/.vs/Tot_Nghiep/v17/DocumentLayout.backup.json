@@ -60,7 +60,7 @@
               "RelativeDocumentMoniker": "API\\Controllers\\UserController.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\UserController.cs",
               "RelativeToolTip": "API\\Controllers\\UserController.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAgwAIAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAIAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-23T16:14:27.292Z",
               "EditorCaption": ""
@@ -75,8 +75,7 @@
               "RelativeToolTip": "API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:14:16.954Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:14:16.954Z"
             },
             {
               "$type": "Document",
@@ -88,8 +87,7 @@
               "RelativeToolTip": "API\\Controllers\\ExamRoomsController.cs",
               "ViewState": "AgIAAB0AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:14:14.681Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:14:14.681Z"
             },
             {
               "$type": "Document",
@@ -101,8 +99,7 @@
               "RelativeToolTip": "API\\Controllers\\ExamHistoriesController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:12:20.484Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:12:20.484Z"
             },
             {
               "$type": "Document",
@@ -114,8 +111,7 @@
               "RelativeToolTip": "API\\Controllers\\ClassesController.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABQAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:11:29.682Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:11:29.682Z"
             },
             {
               "$type": "Document",
@@ -127,8 +123,7 @@
               "RelativeToolTip": "API\\Program.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAYwBoAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:05:02.673Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:05:02.673Z"
             },
             {
               "$type": "Document",
@@ -140,8 +135,7 @@
               "RelativeToolTip": "API\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-09-23T16:04:47.589Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:04:47.589Z"
             },
             {
               "$type": "Document",
@@ -153,8 +147,7 @@
               "RelativeToolTip": "Data\\Migrations\\20240923152425_data.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:04:38.694Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:04:38.694Z"
             }
           ]
         }
