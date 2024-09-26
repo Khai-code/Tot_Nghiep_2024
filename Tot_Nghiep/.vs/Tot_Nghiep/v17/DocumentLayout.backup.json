@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\thionline.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\thionline.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\blazor\\shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\blazor\\shared\\mainlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -15,24 +27,12 @@
       "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\tokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\tokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\testquestioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -53,10 +53,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\model\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\model\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\examroomstudentanswershistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -94,7 +90,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -110,28 +106,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "TokenResponse.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TokenResponse.cs",
-              "RelativeDocumentMoniker": "Data\\DTOs\\TokenResponse.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TokenResponse.cs",
-              "RelativeToolTip": "Data\\DTOs\\TokenResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T07:35:04.157Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "LoginModel.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\LoginModel.cs",
-              "RelativeDocumentMoniker": "Data\\DTOs\\LoginModel.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\LoginModel.cs",
-              "RelativeToolTip": "Data\\DTOs\\LoginModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T07:33:45.935Z",
+              "DocumentIndex": 0,
+              "Title": "Thionline.razor",
+              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Thionline.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Thionline.razor",
+              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Thionline.razor*",
+              "RelativeToolTip": "Blazor\\Pages\\Thionline.razor*",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAABkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-25T09:06:10.971Z",
               "EditorCaption": ""
             },
             {
@@ -144,12 +127,11 @@
               "RelativeToolTip": "API\\Controllers\\TestQuestionController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T03:28:30.851Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-25T03:28:30.851Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\User.cs",
               "RelativeDocumentMoniker": "Data\\Model\\User.cs",
@@ -157,8 +139,7 @@
               "RelativeToolTip": "Data\\Model\\User.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T03:28:07.447Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-25T03:28:07.447Z"
             },
             {
               "$type": "Document",
@@ -170,8 +151,7 @@
               "RelativeToolTip": "Data\\Model\\Role.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T02:59:09.077Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-25T02:59:09.077Z"
             },
             {
               "$type": "Document",
@@ -183,12 +163,11 @@
               "RelativeToolTip": "Data\\Database\\AppDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T02:46:31.871Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-25T02:46:31.871Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "UserDTO.cs",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\UserDTO.cs",
               "RelativeDocumentMoniker": "Data\\DTOs\\UserDTO.cs",
@@ -196,12 +175,11 @@
               "RelativeToolTip": "Data\\DTOs\\UserDTO.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-24T09:11:36.028Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-24T09:11:36.028Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 14,
               "Title": "NavMenu.razor",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Shared\\NavMenu.razor",
               "RelativeDocumentMoniker": "Blazor\\Shared\\NavMenu.razor",
@@ -209,12 +187,11 @@
               "RelativeToolTip": "Blazor\\Shared\\NavMenu.razor",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-24T07:02:37.403Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-24T07:02:37.403Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "MainLayout.razor.css",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Shared\\MainLayout.razor.css",
               "RelativeDocumentMoniker": "Blazor\\Shared\\MainLayout.razor.css",
@@ -222,25 +199,24 @@
               "RelativeToolTip": "Blazor\\Shared\\MainLayout.razor.css",
               "ViewState": "AgIAAGsAAAAAAAAAAADwv6IAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-09-24T04:22:53.35Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-24T04:22:53.35Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "MainLayout.razor",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Shared\\MainLayout.razor",
               "RelativeDocumentMoniker": "Blazor\\Shared\\MainLayout.razor",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Shared\\MainLayout.razor*",
-              "RelativeToolTip": "Blazor\\Shared\\MainLayout.razor*",
-              "ViewState": "AgIAAFwAAAAAAAAAAAAwwHUAAAAFAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Shared\\MainLayout.razor",
+              "RelativeToolTip": "Blazor\\Shared\\MainLayout.razor",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAABgAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-09-24T04:22:37.026Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 15,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Blazor\\Pages\\_Layout.cshtml",
@@ -248,18 +224,17 @@
               "RelativeToolTip": "Blazor\\Pages\\_Layout.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAADWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-24T04:22:04.749Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-24T04:22:04.749Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "Index.razor",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Index.razor",
               "RelativeDocumentMoniker": "Blazor\\Pages\\Index.razor",
               "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Index.razor",
               "RelativeToolTip": "Blazor\\Pages\\Index.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-09-24T04:21:23.021Z",
               "EditorCaption": ""
@@ -274,12 +249,11 @@
               "RelativeToolTip": "Blazor\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-24T03:59:10.761Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-24T03:59:10.761Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\UserController.cs",
@@ -287,12 +261,11 @@
               "RelativeToolTip": "API\\Controllers\\UserController.cs",
               "ViewState": "AgIAACUAAAAAAAAAAAAmwKcAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:14:27.292Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:14:27.292Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 13,
               "Title": "ExamRoomStudentAnswersHistoriesController.cs",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
@@ -300,12 +273,11 @@
               "RelativeToolTip": "API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:14:16.954Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:14:16.954Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 16,
               "Title": "ExamRoomsController.cs",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamRoomsController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\ExamRoomsController.cs",
@@ -313,12 +285,11 @@
               "RelativeToolTip": "API\\Controllers\\ExamRoomsController.cs",
               "ViewState": "AgIAAB0AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:14:14.681Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:14:14.681Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 17,
               "Title": "ExamHistoriesController.cs",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamHistoriesController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\ExamHistoriesController.cs",
@@ -326,12 +297,11 @@
               "RelativeToolTip": "API\\Controllers\\ExamHistoriesController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:12:20.484Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:12:20.484Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 18,
               "Title": "ClassesController.cs",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ClassesController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\ClassesController.cs",
@@ -339,8 +309,7 @@
               "RelativeToolTip": "API\\Controllers\\ClassesController.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAIBJwBQAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:11:29.682Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:11:29.682Z"
             },
             {
               "$type": "Document",
@@ -352,12 +321,11 @@
               "RelativeToolTip": "API\\Program.cs",
               "ViewState": "AgIAADEAAAAAAAAAAAAewDwAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:05:02.673Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:05:02.673Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 3,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\appsettings.json",
               "RelativeDocumentMoniker": "API\\appsettings.json",
@@ -370,7 +338,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 19,
               "Title": "20240923152425_data.cs",
               "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Migrations\\20240923152425_data.cs",
               "RelativeDocumentMoniker": "Data\\Migrations\\20240923152425_data.cs",
@@ -378,8 +346,7 @@
               "RelativeToolTip": "Data\\Migrations\\20240923152425_data.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-23T16:04:38.694Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T16:04:38.694Z"
             }
           ]
         }
