@@ -1,9 +1,17 @@
 ﻿using Data.Database;
+using Data.DTOs;
 using Data.Model;
 using Database.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.JSInterop;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text;
 
 namespace API.Controllers
 {
@@ -149,18 +157,99 @@ namespace API.Controllers
 
                 return Ok("Thêm thành công");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Lỗi");
-
+                return BadRequest(ex.ToString());
             }
 
         }
+        [HttpPost("validate-test-code")]
+        [Authorize] // Xác thực token của người dùng đã đăng nhập
+        public IActionResult ValidateTestCode([FromBody] TestCodeRequest request)
+        {
+            // Lấy thông tin `StudentId` từ token
+            var studentIdFromToken = User.FindFirst("StudentId")?.Value;
+            if (studentIdFromToken == null)
+            {
+                return Unauthorized(new { Message = "Invalid token. StudentId not found." });
+            }
 
+            // Tìm sinh viên trong bảng `students`
+            var student = _db.students.FirstOrDefault(s => s.Id == Guid.Parse(studentIdFromToken));
+            if (student == null)
+            {
+                return NotFound(new { Message = "Student not found." });
+            }
+
+            // Kiểm tra mã bài thi có tồn tại trong bảng `testCodes`
+            var testCode = _db.testCodes.FirstOrDefault(tc => tc.Code == request.TestCode);
+            if (testCode == null)
+            {
+                return NotFound(new { Message = "Invalid test code." });
+            }
+
+            // Kiểm tra thông tin trong bảng `exam_Room_Students` dựa trên `StudentId` và `TestCode`
+            var examRoomTestCode = _db.exam_Room_TestCodes.FirstOrDefault(ertc => ertc.TestCodeId == testCode.Id);
+            if (examRoomTestCode == null)
+            {
+                return NotFound(new { Message = "Test code not associated with any exam room." });
+            }
+
+            var examRoomStudent = _db.exam_Room_Students.FirstOrDefault(ers => ers.StudentId == student.Id && ers.ExamRoomTestCodeId == examRoomTestCode.Id);
+            if (examRoomStudent == null)
+            {
+                return Unauthorized(new { Message = "Student not assigned to this exam room or invalid test code." });
+            }
+
+            // Xác thực thành công
+            return Ok(new { Message = "Test code and student validated successfully." });
+        }
+
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginModel model)
+        {
+            var data= _db.users.FirstOrDefault(temp=>temp.UserName==model.Username);
+            var student = _db.students.FirstOrDefault(temp => temp.UserId == data.Id);
+            // Kiểm tra tên người dùng và mật khẩu tại đây (có thể kiểm tra trong cơ sở dữ liệu)
+            if (model.Username == data.UserName && model.Password == data.PasswordHash)
+            {
+                // Nếu thông tin đăng nhập đúng, tạo token JWT
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere");
+
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                    new Claim(ClaimTypes.Name, data.FullName),
+                    new Claim("Id", student.Id.ToString())
+                     // Bạn có thể thêm nhiều claim tùy theo nhu cầu
+                    }),
+                    Expires = DateTime.UtcNow.AddMinutes(2), // Thời hạn token
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                    Issuer = "https://localhost:7039/",
+                    Audience = "https://localhost:7257/"
+                };
+
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
+
+                // Trả về token cho client
+                return Ok(new { Token = tokenString });
+            }
+
+            // Nếu đăng nhập thất bại
+            return Unauthorized();
+        }
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            
+            return Ok(new { message = "Logout successful" });
+        }
         [HttpPut("update-user")]
         public async Task<IActionResult> Update(UserDTO userDTO)
         {
-
             var data = await _db.users.FirstOrDefaultAsync(x => x.Id == userDTO.Id);
 
             if (data == null)
