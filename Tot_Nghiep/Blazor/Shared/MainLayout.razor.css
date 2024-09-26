@@ -1,7 +1,9 @@
 ﻿.container-fluid {
     --bs-gutter-x: 0; /* Xóa khoảng cách giữa các cột */
 }
-
+.main {
+    background-color:darkgray;
+}
 .notification-list {
     display: none;
     top: 100%; /* Đặt vị trí dưới icon */
@@ -126,7 +128,7 @@
         border-width: 0 10px 10px 10px;
         border-style: solid;
         border-color: transparent transparent lightgray transparent;
-        .col-1:hover .notification-list
+        .col-1:hover .notification-list;
 
 {
     display: block;
