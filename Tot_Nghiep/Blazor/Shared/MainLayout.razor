@@ -27,17 +27,24 @@
                             <NavLink class="nav-link fw-bolder text-black-50" href="online-exam">Thi online</NavLink>
                         }else
                         {
-                            <NavLink class="nav-link fw-bolder text-black-50" href="/">Thi online</NavLink>
+                            <NavLink class="nav-link fw-bolder text-black-50" href="" @onclick="ShowLoginForm">Thi online</NavLink>
+                            
                         }
                        
                     </li>
                     <li class="nav-item d-flex">
-                        <i class="bi bi-info-circle-fill fs-4 text-primary"></i>
-                        <a class="nav-link fw-bolder text-black-50" href="#">Giới thiệu</a>
+                        <i class="bi bi-postcard-fill fs-4 text-primary"></i>
+                        @if(tokenResponse != null)
+                        {
+                            <a class="nav-link fw-bolder text-black-50" href="/score_online">Bảng điểm</a>
+                        }else{
+                            <a class="nav-link fw-bolder text-black-50" @onclick="ShowLoginForm" href="">Bảng điểm</a>
+                        }
+                        
                     </li>
                     <li class="nav-item d-flex">
                         <i class="bi bi-person-rolodex fs-4 text-primary"></i>
-                        <a class="nav-link fw-bolder text-black-50" aria-disabled="true">Liên hệ</a>
+                        <a class="nav-link fw-bolder text-black-50" aria-disabled="true" href="/contact">Liên hệ</a>
                     </li>
                 </ul>
             </div>
@@ -51,6 +58,7 @@
                 else
                 {
                     <NavLink href="#" @onclick="ShowLoginForm" class="nav-link fw-bold text-black-50 p-2">Đăng nhập</NavLink>
+                    
                 }
             </div>
             <div class="col-1 col-md-1 pt-2 position-relative d-none d-md-block">
@@ -72,31 +80,29 @@
             </div>
         </div>
     </nav>
-    <article class="flex-column min-vh-100">
+    <article class=" flex-column min-vh-100">
         @Body
     </article>
-
     <!-- Form đăng nhập -->
     @if (isLoginFormVisible)
     {
-        <div class="overlay">
-            <div style="position:absolute; padding-left:700px; margin-top:-310px">
-                <span class="ic btn-secondary" @onclick="HideLoginForm">
+        <div class="overlay d-flex justify-content-center align-items-center" style="height: 100vh;">
+            <div class="login-form border rounded-4 shadow position-relative p-4" style="max-width: 600px; width: 100%; overflow: hidden;">
+                <span class="ic btn-secondary position-absolute top-0 end-0 m-2" @onclick="HideLoginForm">
                     <i class="bi bi-x-lg fw-bold fs-3"></i>
                 </span>
-            </div>
-            <div class="login-form border rounded-4 shadow w-50">
                 <div class="row">
-                    <div class="col-6">
-                        <img src="img/Rectangle89.png" alt="Alternate Text" />
+                    <div class="col-12 text-center mb-3">
+                        <h2>Đăng Nhập</h2>
                     </div>
-                    <div class="col-6">
-                        <h2 class="d-flex justify-content-sm-center">Đăng Nhập</h2>
+                    <div class="col-12 col-md-6 mb-3">
+                        <img src="img/Rectangle89.png" alt="Alternate Text" class="img-fluid rounded-3" />
+                    </div>
+                    <div class="col-12 col-md-6">
                         <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
                             <DataAnnotationsValidator />
                             <ValidationSummary />
-
-                            <div class="mb-3 pt-3">
+                            <div class="mb-3">
                                 <label for="username" class="form-label">Tên tài khoản hoặc Email</label>
                                 <InputText id="username" @bind-Value="loginModel.Username" class="form-control" required />
                             </div>
@@ -105,7 +111,7 @@
                                 <InputText id="password" @bind-Value="loginModel.Password" type="password" class="form-control" required />
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary w-50" disabled="@isLoading">
+                                <button type="submit" class="btn btn-primary w-100" disabled="@isLoading">
                                     @if (isLoading)
                                     {
                                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -124,7 +130,6 @@
         </div>
     }
 </main>
-
 <footer class="container-fluid mt-auto">
     <div class="row bg-dark-subtle py-3">
         <div class="col-4">
@@ -146,7 +151,6 @@
         </div>
     </div>
 </footer>
-
 @code {
     private List<NotificationDTO> data = new List<NotificationDTO>();
     private int unreadCount = 0;
@@ -175,14 +179,11 @@
             {
                 // Lưu token vào tokenResponse
                 tokenResponse = new TokenResponse { Token = token };
-
                 // Giải mã token để lấy thông tin người dùng
                 var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
                 var jsonToken = handler.ReadToken(token) as System.IdentityModel.Tokens.Jwt.JwtSecurityToken;
-
                 // Lấy tên người dùng từ claim "name" (nếu được lưu trong token)
                 userName = jsonToken?.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
-
                 // Cập nhật giao diện với tên người dùng
                 StateHasChanged();
             }
@@ -195,15 +196,10 @@
 
         if (response.IsSuccessStatusCode)
         {
-
             var result = await response.Content.ReadFromJsonAsync<TokenResponse>();
-
             // Lưu token vào Local Storage
             await jsRuntime.InvokeVoidAsync("localStorage.setItem", "YourSuperSecretKeyHere", result.Token);
-            // Điều hướng đến trang chính và reload lại trang
-            navigate.NavigateTo("/", forceLoad: true);
-
-            // Reset trạng thái loading và đóng form đăng nhập
+            navigate.NavigateTo("", forceLoad: true);
             isLoading = false;
             HideLoginForm();
             StateHasChanged();
@@ -273,4 +269,5 @@
         color: red;
         background-color: white;
     }
+
 </style>
