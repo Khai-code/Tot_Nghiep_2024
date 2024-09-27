@@ -80,10 +80,9 @@
             </div>
         </div>
     </nav>
-    <article class="flex-column min-vh-100">
+    <article class=" flex-column min-vh-100">
         @Body
     </article>
-
     <!-- Form đăng nhập -->
     @if (isLoginFormVisible)
     {
@@ -130,10 +129,7 @@
             </div>
         </div>
     }
-
-
 </main>
-
 <footer class="container-fluid mt-auto">
     <div class="row bg-dark-subtle py-3">
         <div class="col-4">
@@ -155,7 +151,6 @@
         </div>
     </div>
 </footer>
-
 @code {
     private List<NotificationDTO> data = new List<NotificationDTO>();
     private int unreadCount = 0;
