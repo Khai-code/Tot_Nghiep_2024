@@ -11,10 +11,10 @@
 <main class="container-fluid">
     <nav class="sticky-top">
         <div class="row bg-light border-bottom align-items-center" style="height:85px">
-            <div class="col-6 col-sm-3 col-md-2 text-center">
+            <div class="col-2 col-sm-3 col-md-2 text-center">
                 <img src="img/Rectangle89.png" class="img-fluid" style="height:85px;" alt="" />
             </div>
-            <div class="col-12 col-sm-6 col-md-7 pt-2">
+            <div class="col-8 col-sm-6 col-md-7 pt-2">
                 <ul class="nav justify-content-center">
                     <li class="nav-item d-flex">
                         <i class="bi bi-house-door-fill fs-4 text-primary"></i>
@@ -22,7 +22,14 @@
                     </li>
                     <li class="nav-item d-flex">
                         <i class="bi bi-mortarboard-fill fs-4 text-primary"></i>
-                        <NavLink class="nav-link fw-bolder text-black-50" href="online-exam">Thi online</NavLink>
+                        @if (tokenResponse != null)
+                        {
+                            <NavLink class="nav-link fw-bolder text-black-50" href="online-exam">Thi online</NavLink>
+                        }else
+                        {
+                            <NavLink class="nav-link fw-bolder text-black-50" href="/">Thi online</NavLink>
+                        }
+                       
                     </li>
                     <li class="nav-item d-flex">
                         <i class="bi bi-info-circle-fill fs-4 text-primary"></i>
@@ -34,7 +41,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-6 col-sm-3 col-md-2 pt-2 d-flex justify-content-end">
+            <div class="col-2  pt-2 d-flex justify-content-end">
                 <i class="bi bi-person-circle fs-2 text-primary"></i>
                 @if (tokenResponse != null)
                 {
@@ -65,7 +72,7 @@
             </div>
         </div>
     </nav>
-    <article class="container-fluid d-flex flex-column min-vh-100">
+    <article class="flex-column min-vh-100">
         @Body
     </article>
 
@@ -188,6 +195,7 @@
 
         if (response.IsSuccessStatusCode)
         {
+
             var result = await response.Content.ReadFromJsonAsync<TokenResponse>();
 
             // Lưu token vào Local Storage
