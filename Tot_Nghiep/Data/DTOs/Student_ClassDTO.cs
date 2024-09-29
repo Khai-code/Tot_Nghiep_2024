@@ -1,25 +1,22 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Model
+namespace Data.DTOs
 {
-    public class Student_Class
+    public class Student_ClassDTO
     {
         public Guid Id { get; set; }
         public DateTime JoinTime { get; set; }
 
         [StringLength(500, ErrorMessage = "Độ dài chuỗi ko quá 500 ký tự")]
-        public string? StudentProfilePhoto { get; set; }
+        public IFormFile StudentProfilePhoto { get; set; }
         public int Status { get; set; }
         public Guid ClassId { get; set; }
         public Guid StudentId { get; set; }
-        public string FaceEncoding { get; set; } // Lưu trữ đặc trưng khuôn mặt
-        public virtual Class? Class { get; set; }
-        public virtual Student? Student { get; set; }
     }
 }

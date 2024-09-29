@@ -96,6 +96,8 @@ namespace API.Controllers
             return new string(code);
         }
 
+        
+
         [HttpPost("create-class")]
         public async Task<IActionResult> Create(ClassDTO classDTO)
         {
