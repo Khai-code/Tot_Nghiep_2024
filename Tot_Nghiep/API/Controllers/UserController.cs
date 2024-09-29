@@ -209,8 +209,7 @@ namespace API.Controllers
         public IActionResult Login([FromBody] LoginModel model)
         {
             var data= _db.users.FirstOrDefault(temp=>temp.UserName==model.Username);
-            var student = _db.students.FirstOrDefault(temp => temp.UserId == data.Id);
-            // Kiểm tra tên người dùng và mật khẩu tại đây (có thể kiểm tra trong cơ sở dữ liệu)
+            var student = _db.roles.FirstOrDefault(temp => temp.Id == data.RoleId);
             if (model.Username == data.UserName && model.Password == data.PasswordHash)
             {
                 // Nếu thông tin đăng nhập đúng, tạo token JWT
@@ -222,24 +221,22 @@ namespace API.Controllers
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                     new Claim(ClaimTypes.Name, data.FullName),
-                    new Claim("Id", student.Id.ToString())
-                     // Bạn có thể thêm nhiều claim tùy theo nhu cầu
+                    new Claim("Id",student.Name.ToString())
+                    //new Claim("Id", student != null ? student.Name : "N/A"),
+                    //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(2), // Thời hạn token
+                    Expires = DateTime.UtcNow.AddMinutes(15),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                     Issuer = "https://localhost:7039/",
                     Audience = "https://localhost:7257/"
                 };
-
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
 
                 // Trả về token cho client
                 return Ok(new { Token = tokenString });
             }
-
-            // Nếu đăng nhập thất bại
-            return Unauthorized();
+            return Unauthorized("tên đăng nhập mật khẩu không đúng");
         }
         [HttpPost("logout")]
         public IActionResult Logout()
@@ -344,5 +341,37 @@ namespace API.Controllers
 
             return Ok("Xóa thành công");
         }
-    }
+
+		[HttpPost("upload-avatar")]
+		public async Task<IActionResult> UploadAvatar(Guid Id, IFormFile avatarFile)
+		{
+			if (avatarFile == null || avatarFile.Length == 0)
+			{
+				return BadRequest("Ảnh không hợp lệ");
+			}
+			// Tìm user theo ID
+			var user = await _db.users.FirstOrDefaultAsync(x => x.Id == Id);
+			if (user == null)
+			{
+				return NotFound("Người dùng không tồn tại");
+			}
+			// Đọc file ảnh và chuyển thành base64 hoặc đường dẫn file
+			using (var memoryStream = new MemoryStream())
+			{
+				await avatarFile.CopyToAsync(memoryStream);
+				var imageBytes = memoryStream.ToArray();
+				var base64Image = Convert.ToBase64String(imageBytes);
+
+				//Lưu Base64 của ảnh vào trưởng Avatar
+				user.Avartar = base64Image;
+
+				// Cập nhật thời gian thay đổi cuối cùng
+				user.LastMordificationTime = DateTime.Now;
+
+				// Lưu thay đổi vào db
+				await _db.SaveChangesAsync();
+			}
+			return Ok("Tải ảnh thành công");
+		}
+	}
 }
