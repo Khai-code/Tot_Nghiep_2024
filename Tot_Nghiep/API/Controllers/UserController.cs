@@ -3,13 +3,10 @@ using Data.DTOs;
 using Data.Model;
 using Database.DTOs;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.JSInterop;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 
@@ -208,7 +205,7 @@ namespace API.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel model)
         {
-            var data= _db.users.FirstOrDefault(temp=>temp.UserName==model.Username);
+            var data = _db.users.FirstOrDefault(temp => temp.UserName == model.Username);
             var student = _db.roles.FirstOrDefault(temp => temp.Id == data.RoleId);
             if (model.Username == data.UserName && model.Password == data.PasswordHash)
             {
@@ -241,7 +238,7 @@ namespace API.Controllers
         [HttpPost("logout")]
         public IActionResult Logout()
         {
-            
+
             return Ok(new { message = "Logout successful" });
         }
         [HttpPut("update-user")]
@@ -342,36 +339,36 @@ namespace API.Controllers
             return Ok("Xóa thành công");
         }
 
-		[HttpPost("upload-avatar")]
-		public async Task<IActionResult> UploadAvatar(Guid Id, IFormFile avatarFile)
-		{
-			if (avatarFile == null || avatarFile.Length == 0)
-			{
-				return BadRequest("Ảnh không hợp lệ");
-			}
-			// Tìm user theo ID
-			var user = await _db.users.FirstOrDefaultAsync(x => x.Id == Id);
-			if (user == null)
-			{
-				return NotFound("Người dùng không tồn tại");
-			}
-			// Đọc file ảnh và chuyển thành base64 hoặc đường dẫn file
-			using (var memoryStream = new MemoryStream())
-			{
-				await avatarFile.CopyToAsync(memoryStream);
-				var imageBytes = memoryStream.ToArray();
-				var base64Image = Convert.ToBase64String(imageBytes);
+        [HttpPost("upload-avatar")]
+        public async Task<IActionResult> UploadAvatar(Guid Id, IFormFile avatarFile)
+        {
+            if (avatarFile == null || avatarFile.Length == 0)
+            {
+                return BadRequest("Ảnh không hợp lệ");
+            }
+            // Tìm user theo ID
+            var user = await _db.users.FirstOrDefaultAsync(x => x.Id == Id);
+            if (user == null)
+            {
+                return NotFound("Người dùng không tồn tại");
+            }
+            // Đọc file ảnh và chuyển thành base64 hoặc đường dẫn file
+            using (var memoryStream = new MemoryStream())
+            {
+                await avatarFile.CopyToAsync(memoryStream);
+                var imageBytes = memoryStream.ToArray();
+                var base64Image = Convert.ToBase64String(imageBytes);
 
-				//Lưu Base64 của ảnh vào trưởng Avatar
-				user.Avartar = base64Image;
+                //Lưu Base64 của ảnh vào trưởng Avatar
+                user.Avartar = base64Image;
 
-				// Cập nhật thời gian thay đổi cuối cùng
-				user.LastMordificationTime = DateTime.Now;
+                // Cập nhật thời gian thay đổi cuối cùng
+                user.LastMordificationTime = DateTime.Now;
 
-				// Lưu thay đổi vào db
-				await _db.SaveChangesAsync();
-			}
-			return Ok("Tải ảnh thành công");
-		}
-	}
+                // Lưu thay đổi vào db
+                await _db.SaveChangesAsync();
+            }
+            return Ok("Tải ảnh thành công");
+        }
+    }
 }
