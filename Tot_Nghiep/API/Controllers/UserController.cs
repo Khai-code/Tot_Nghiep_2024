@@ -97,65 +97,78 @@ namespace API.Controllers
 
             return new string(code);
         }
-
         [HttpPost("create-user")]
-        public async Task<IActionResult> Create(UserDTO user)
+        public async Task<IActionResult> Create([FromForm] UserDTO user, IFormFile avatarFile)
         {
             try
             {
-
-                var data = new User
+                if (avatarFile == null || avatarFile.Length == 0)
                 {
-                    Id = Guid.NewGuid(),
-                    FullName = user.FullName,
-                    Avartar = user.Avartar,
-                    Email = user.Email,
-                    UserName = user.UserName,
-                    PasswordHash = user.PasswordHash,
-                    DateOfBirth = user.DateOfBirth,
-                    PhoneNumber = user.PhoneNumber,
-                    IsLocked = user.IsLocked,
-                    LockedEndTime = user.LockedEndTime,
-                    CreationTime = DateTime.UtcNow,
-                    LastMordificationTime = user.LastMordificationTime,
-                    Status = user.Status,
-                    RoleId = user.RoleId,
-                };
-                await _db.users.AddAsync(data);
-                await _db.SaveChangesAsync();
-
-                // Kiểm tra để tạo Student hoặc Teacher
-
-                var roleid = _db.roles.FirstOrDefault(x => x.Id == data.RoleId);
-
-                if (roleid.Name == "Student")
+                    return BadRequest("Ảnh không hợp lệ");
+                }
+                // Đọc file ảnh và chuyển thành base64 hoặc đường dẫn file
+                using (var memoryStream = new MemoryStream())
                 {
-                    var student = new Student
+                    await avatarFile.CopyToAsync(memoryStream);
+                    var imageBytes = memoryStream.ToArray();
+                    var base64Image = Convert.ToBase64String(imageBytes);
+
+                    // Cập nhật thời gian thay đổi cuối cùng
+                    user.LastMordificationTime = DateTime.Now;
+                    var data = new User
                     {
                         Id = Guid.NewGuid(),
-                        Code = RandomCode(8),
-                        UserId = data.Id
+                        FullName = user.FullName,
+                        Avartar = user.Avartar = base64Image,
+                        Email = user.Email,
+                        UserName = user.UserName,
+                        PasswordHash = user.PasswordHash,
+                        DateOfBirth = user.DateOfBirth,
+                        PhoneNumber = user.PhoneNumber,
+                        IsLocked = user.IsLocked,
+                        LockedEndTime = user.LockedEndTime,
+                        CreationTime = DateTime.UtcNow,
+                        LastMordificationTime = user.LastMordificationTime,
+                        Status = user.Status,
+                        RoleId = user.RoleId,
                     };
-
-                    await _db.students.AddAsync(student);
+                    await _db.users.AddAsync(data);
                     await _db.SaveChangesAsync();
-                }
 
-                if (roleid.Name == "Teacher")
-                {
-                    var teachr = new Teacher
+                    // Kiểm tra để tạo Student hoặc Teacher
+
+                    var roleid = _db.roles.FirstOrDefault(x => x.Id == data.RoleId);
+
+                    if (roleid.Name == "Student")
                     {
-                        Id = Guid.NewGuid(),
-                        Code = RandomCode(8),
-                        UserId = data.Id
-                    };
+                        var student = new Student
+                        {
+                            Id = Guid.NewGuid(),
+                            Code = RandomCode(8),
+                            UserId = data.Id
+                        };
 
-                    await _db.teachers.AddAsync(teachr);
-                    await _db.SaveChangesAsync();
+                        await _db.students.AddAsync(student);
+                        await _db.SaveChangesAsync();
+                    }
+
+                    if (roleid.Name == "Teacher")
+                    {
+                        var teachr = new Teacher
+                        {
+                            Id = Guid.NewGuid(),
+                            Code = RandomCode(8),
+                            UserId = data.Id
+                        };
+
+                        await _db.teachers.AddAsync(teachr);
+                        await _db.SaveChangesAsync();
+
+                    }
 
                 }
-
                 return Ok("Thêm thành công");
+
             }
             catch (Exception ex)
             {
@@ -208,7 +221,7 @@ namespace API.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel model)
         {
-            var data= _db.users.FirstOrDefault(temp=>temp.UserName==model.Username);
+            var data = _db.users.FirstOrDefault(temp => temp.UserName == model.Username);
             var student = _db.students.FirstOrDefault(temp => temp.UserId == data.Id);
             // Kiểm tra tên người dùng và mật khẩu tại đây (có thể kiểm tra trong cơ sở dữ liệu)
             if (model.Username == data.UserName && model.Password == data.PasswordHash)
@@ -244,7 +257,7 @@ namespace API.Controllers
         [HttpPost("logout")]
         public IActionResult Logout()
         {
-            
+
             return Ok(new { message = "Logout successful" });
         }
         [HttpPut("update-user")]
@@ -299,7 +312,7 @@ namespace API.Controllers
 
             if (newrole.Name == "Teacher")
             {
-                // Kiểm tra và thêm Student nếu chưa tồn tại
+                // Kiểm tra và thêm Teacher nếu chưa tồn tại
                 var studentid = await _db.students.FirstOrDefaultAsync(x => x.UserId == data.Id);
                 if (studentid != null)
                 {
@@ -344,37 +357,5 @@ namespace API.Controllers
 
             return Ok("Xóa thành công");
         }
-
-		[HttpPost("upload-avatar")]
-		public async Task<IActionResult> UploadAvatar(Guid Id, IFormFile avatarFile)
-		{
-			if (avatarFile == null || avatarFile.Length == 0)
-			{
-				return BadRequest("Ảnh không hợp lệ");
-			}
-			// Tìm user theo ID
-			var user = await _db.users.FirstOrDefaultAsync(x => x.Id == Id);
-			if (user == null)
-			{
-				return NotFound("Người dùng không tồn tại");
-			}
-			// Đọc file ảnh và chuyển thành base64 hoặc đường dẫn file
-			using (var memoryStream = new MemoryStream())
-			{
-				await avatarFile.CopyToAsync(memoryStream);
-				var imageBytes = memoryStream.ToArray();
-				var base64Image = Convert.ToBase64String(imageBytes);
-
-				//Lưu Base64 của ảnh vào trưởng Avatar
-				user.Avartar = base64Image;
-
-				// Cập nhật thời gian thay đổi cuối cùng
-				user.LastMordificationTime = DateTime.Now;
-
-				// Lưu thay đổi vào db
-				await _db.SaveChangesAsync();
-			}
-			return Ok("Tải ảnh thành công");
-		}
-	}
+    }
 }
