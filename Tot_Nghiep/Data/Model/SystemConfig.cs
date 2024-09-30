@@ -20,9 +20,10 @@ namespace Data.Model
         public string Email { get; set; }
 
         [StringLength(12, ErrorMessage = "Tên không được quá 12 ký tự")]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public string? address { get; set; }
         public int Type { get; set; }
+        public bool IsViewed { get; set; } = false;
 
         [MaxLength]
         public string Value { get; set; }

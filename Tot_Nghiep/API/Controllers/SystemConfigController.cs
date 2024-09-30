@@ -1,7 +1,6 @@
 ﻿using Data.Database;
 using Data.DTOs;
 using Data.Model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +25,10 @@ namespace API.Controllers
             {
                 Id = x.Id,
                 Name = x.Name,
+                Email = x.Email,
+                PhoneNumber = x.PhoneNumber,
+                address = x.address,
+                IsViewed = x.IsViewed,
                 Type = x.Type,
                 Value = x.Value,
             }).ToList();
@@ -49,6 +52,10 @@ namespace API.Controllers
                 {
                     Id = data.Id,
                     Name = data.Name,
+                    Email = data.Email,
+                    PhoneNumber = data.PhoneNumber,
+                    address = data.address,
+                    IsViewed = data.IsViewed,
                     Type = data.Type,
                     Value = data.Value,
                 };
@@ -70,7 +77,11 @@ namespace API.Controllers
                 {
                     Id = Guid.NewGuid(),
                     Name = sysdto.Name,
-                    Type = sysdto.Type,
+                    Email = sysdto.Email,
+                    PhoneNumber = sysdto.PhoneNumber,
+                    address = sysdto.address,
+                    IsViewed = sysdto.IsViewed,
+                    Type = 1,
                     Value = sysdto.Value,
                 };
 
@@ -93,6 +104,10 @@ namespace API.Controllers
             if (data != null)
             {
                 data.Name = sysdto.Name;
+                data.Email = sysdto.Email;
+                data.PhoneNumber = sysdto.PhoneNumber;
+                data.address = sysdto.address;
+                data.IsViewed = sysdto.IsViewed;
                 data.Type = sysdto.Type;
                 data.Value = sysdto.Value;
                 _db.systemConfigs.Update(data);
@@ -117,6 +132,26 @@ namespace API.Controllers
             }
 
             return BadRequest("Khong co Id nay");
+        }
+
+        [HttpPost("mark-as-viewed/{id}")]
+        public async Task<IActionResult> MarkAsViewed(Guid id)
+        {
+            // Tìm kiếm bản ghi trong cơ sở dữ liệu
+            var config = await _db.systemConfigs.FindAsync(id);
+
+            if (config == null)
+            {
+                return NotFound(); // Trả về 404 nếu không tìm thấy
+            }
+
+            // Cập nhật trạng thái IsViewed
+            config.IsViewed = true;
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            await _db.SaveChangesAsync();
+
+            return NoContent(); // Trả về 204 No Content nếu thành công
         }
     }
 }
