@@ -1,11 +1,4 @@
-﻿using Data.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data.DTOs
+﻿namespace Data.DTOs
 {
     public class TestDTO
     {
@@ -14,7 +7,9 @@ namespace Data.DTOs
         public DateTime CreationTime { get; set; }
         public int Status { get; set; }
         public Guid SubjectId { get; set; }
-    
-       
+        public string? Name { get; set; }
+        public int? Minute { get; set; }
+        public int? NumberOfTestCode { get; set; }
+
     }
 }

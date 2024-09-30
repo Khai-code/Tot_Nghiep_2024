@@ -1,12 +1,8 @@
 ﻿using Data.Database;
 using Data.DTOs;
 using Data.Model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Net.WebSockets;
 
 namespace API.Controllers
 {
@@ -57,8 +53,62 @@ namespace API.Controllers
             //return Ok(results);
 
         }
+
+        [HttpGet("get-list-test")]
+        public async Task<List<TestGridDTO>> GetListTest([FromQuery] GetListTestQueryDTO input)
+        {
+
+
+            var query = _DbContext.testCodes
+                .Include(t => t.Test)
+                .Include(t => t.Test.Subject)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(input.Code))
+            {
+                query = query.Where(t => t.Code.ToLower().Contains(input.Code.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(input.Name))
+            {
+                query = query.Where(t => t.Test.Name.ToLower().Contains(input.Name.ToLower())); // Using Contains for partial matches
+            }
+
+            if (!string.IsNullOrEmpty(input.SubjectName))
+            {
+                query = query.Where(t => t.Test.Subject.Name.ToLower().Contains(input.SubjectName.ToLower()));
+            }
+
+            if (input.Type.HasValue && input.Type.Value > -1)
+            {
+                query = query.Where(t => t.Test.Type == input.Type.Value);
+            }
+
+            var testList = await query
+                .Select(t => new TestGridDTO
+                {
+                    Id = t.Test.Id,
+                    Type = t.Test.Type,
+                    Name = t.Test.Name,
+                    Code = t.Code,
+                    NumberOfTestCode = t.Test.NumberOfTestCode,
+                    SubjectName = t.Test.Subject.Name,
+                    Status = t.Status,
+                    SubjectId = t.Test.SubjectId,
+                    Minute = t.Test.Minute,
+                })
+                .ToListAsync();
+
+            return testList;
+        }
+        [HttpGet("get-detail-test/{id}")]
+        public async Task<IActionResult> GetListTest([FromRoute] Guid id)
+        {
+            var test = await _DbContext.tests.FindAsync(id);
+            return Ok(test);
+        }
         [HttpPost("Post_Test")]
-        public async Task<ActionResult> Post_Test(TestDTO testDTO)
+        public async Task<ActionResult> Post_Test([FromBody] TestDTO testDTO)
         {
             var subject = await _DbContext.subjects.FirstOrDefaultAsync(temp => temp.Id == testDTO.SubjectId);
 
@@ -72,13 +122,14 @@ namespace API.Controllers
             {
                 Test test = new Test
                 {
-                    Id = Guid.NewGuid(),
                     Type = testDTO.Type,
-                    CreationTime = testDTO.CreationTime,
-                    Status = 1,
+                    Name = testDTO.Name,
+                    Minute = testDTO.Minute,
+                    NumberOfTestCode = testDTO.NumberOfTestCode,
+                    CreationTime = DateTime.Now,
+                    Status = testDTO.Status,
                     SubjectId = subject.Id
                 };
-
                 await _DbContext.tests.AddAsync(test);
                 await _DbContext.SaveChangesAsync();
 
@@ -104,12 +155,15 @@ namespace API.Controllers
             }
         }
         [HttpPut("Update_Test")]
-        public async Task<ActionResult> Update_Test(TestDTO testDTO)
+        public async Task<ActionResult> Update_Test([FromBody] TestDTO testDTO)
         {
             var update = _DbContext.tests.FirstOrDefault(temp => temp.Id == testDTO.Id);
             if (update != null)
             {
                 update.Type = testDTO.Type;
+                update.Name = testDTO.Name;
+                update.Minute = testDTO.Minute;
+                update.NumberOfTestCode = testDTO.NumberOfTestCode;
                 update.CreationTime = testDTO.CreationTime;
                 update.Status = testDTO.Status;
                 update.SubjectId = testDTO.SubjectId;
@@ -122,7 +176,7 @@ namespace API.Controllers
         [HttpPut("Update_TestCode")]
         public async Task<ActionResult> Update_TestCode(TestCode testCode)
         {
-           var code= _DbContext.testCodes.FirstOrDefault(temp=>temp.Id == testCode.Id);
+            var code = _DbContext.testCodes.FirstOrDefault(temp => temp.Id == testCode.Id);
             if (code != null)
             {
                 code.Code = RandomCode(8);
@@ -137,11 +191,11 @@ namespace API.Controllers
         [HttpDelete("Delete_Test")]
         public async Task<ActionResult> Delete_Test(Guid Id)
         {
-            var delete= _DbContext.tests.FirstOrDefault(x => x.Id == Id);
-            if(delete != null)
+            var delete = _DbContext.tests.FirstOrDefault(x => x.Id == Id);
+            if (delete != null)
             {
                 _DbContext.tests.Remove(delete);
-              await  _DbContext.SaveChangesAsync();
+                await _DbContext.SaveChangesAsync();
                 return Ok("xóa thành công");
             }
             return BadRequest("xóa thất bại");
