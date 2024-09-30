@@ -124,5 +124,24 @@ namespace API.Controllers
             }
             return BadRequest("Lỗi");
         }
+        [HttpGet("get-piechart-data")]
+        public IActionResult GetPieChartData()
+        {
+            var data = new List<PieChartData>
+        {
+            new PieChartData { Label = "khối 1", Value = 40 },
+            new PieChartData { Label = "khối 2", Value = 30 },
+            new PieChartData { Label = "khối 3", Value = 20 },
+            new PieChartData { Label = "khối 4", Value = 10 }
+        };
+            return Ok(data);
+        }
+    }
+
+    public class PieChartData
+    {
+        public string Label { get; set; }
+        public int Value { get; set; }
     }
 }
+

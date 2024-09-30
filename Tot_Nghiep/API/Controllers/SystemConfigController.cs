@@ -1,8 +1,6 @@
 ﻿using Data.Database;
 using Data.DTOs;
 using Data.Model;
-using Database.Migrations;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -83,7 +81,7 @@ namespace API.Controllers
                     PhoneNumber = sysdto.PhoneNumber,
                     address = sysdto.address,
                     IsViewed = sysdto.IsViewed,
-                    Type = sysdto.Type,
+                    Type = 1,
                     Value = sysdto.Value,
                 };
 

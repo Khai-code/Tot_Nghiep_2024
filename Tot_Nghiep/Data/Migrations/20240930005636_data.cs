@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Database.Migrations
+namespace Data.Migrations
 {
     public partial class data : Migration
     {
@@ -86,7 +86,11 @@ namespace Database.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
+                    address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Type = table.Column<int>(type: "int", nullable: false),
+                    IsViewed = table.Column<bool>(type: "bit", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -299,13 +303,13 @@ namespace Database.Migrations
                         column: x => x.ExamId,
                         principalTable: "exams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_exam_Rooms_rooms_RoomId",
                         column: x => x.RoomId,
                         principalTable: "rooms",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_exam_Rooms_teachers_TeacherId1",
                         column: x => x.TeacherId1,
@@ -398,10 +402,11 @@ namespace Database.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     JoinTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StudentProfilePhoto = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    StudentProfilePhoto = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ClassId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FaceEncoding = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

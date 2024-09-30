@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240929072548_updateSystem")]
-    partial class updateSystem
+    [Migration("20240929173847_RenameFieldNumberOfQuestion")]
+    partial class RenameFieldNumberOfQuestion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -536,6 +536,16 @@ namespace Database.Migrations
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("Minute")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NumberOfTestCode")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");

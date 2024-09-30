@@ -121,7 +121,8 @@
                             </div>
                             @if (!string.IsNullOrEmpty(errorMessage))
                             {
-                                <div class="alert alert-danger mt-3">@errorMessage</div>
+                                
+                                <div class="alert alert-danger mt-3" id="error">@errorMessage</div>
                             }
                         </EditForm>
                     </div>
@@ -238,6 +239,7 @@
             StateHasChanged();
         }
     }
+    
     private async Task HandleLogout()
     {
         var response = await httpclient.PostAsync("api/User/logout", null);
@@ -296,3 +298,8 @@
     }
 
 </style>
+<script>
+    function.error(){
+        document.getElementById("erro").window.alert("mật khẩu sai")
+    }
+</script>
