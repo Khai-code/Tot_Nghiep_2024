@@ -221,14 +221,8 @@ namespace API.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel model)
         {
-<<<<<<< HEAD
-            var data = _db.users.FirstOrDefault(temp => temp.UserName == model.Username);
-            var student = _db.students.FirstOrDefault(temp => temp.UserId == data.Id);
-            // Kiểm tra tên người dùng và mật khẩu tại đây (có thể kiểm tra trong cơ sở dữ liệu)
-=======
             var data= _db.users.FirstOrDefault(temp=>temp.UserName==model.Username);
             var student = _db.roles.FirstOrDefault(temp => temp.Id == data.RoleId);
->>>>>>> Demo
             if (model.Username == data.UserName && model.Password == data.PasswordHash)
             {
                 // Nếu thông tin đăng nhập đúng, tạo token JWT
