@@ -1,67 +1,72 @@
 ﻿@page "/teacher-system"
+@using global::Data.DTOs
 @using global::Data.Model
 @layout Teacherlayout
 @inject HttpClient client
+@inject IJSRuntime jsRuntime
+@inject NavigationManager navigate
 
-<h3>Teacher_System</h3>
-<div style="display: flex;">
-    <div style="flex: 2; padding-right: 20px;">
-        <table class="table-fixed">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Họ tên</th>
-                    <th>SĐT</th>
-                    <th>Email</th>
-                    <th>Trạng thái</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var n in systemConfigs)
-                {
+<div class="container-fluid pt-5">
+    <div style="display: flex;">
+        <div style="flex: 2; padding-right: 20px;">
+            <table class="table-fixed">
+                <thead>
                     <tr>
-                        <td>@(systemConfigs.IndexOf(n) + 1)</td>
-                        <td>@n.Name</td>
-                        <td>@n.PhoneNumber</td>
-                        <td>@n.Email</td>
-                        <td>
-                            @if (n.IsViewed)
-                            {
-                                <span class="status viewed">Đã xem</span>
-                            }
-                            else
-                            {
-                                <span class="status not-viewed">Chưa xem</span>
-                            }
-                        </td>
-                        <td>
-                            <button class="btn-view" @onclick="() => ShowDetails(n)">Xem chi tiết</button>
-                            <button class="btn-delete">Xóa</button>
-                        </td>
+                        <th>STT</th>
+                        <th>Họ tên</th>
+                        <th>SĐT</th>
+                        <th>Email</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div style="flex: 1; padding: 20px; border-left: 1px solid #ddd; background-color: #f9f9f9;">
-        @if (selectedConfig != null)
-        {
-            <h4>Chi tiết thông tin</h4>
-            <div class="details">
-                <p><strong>Họ tên:</strong> @selectedConfig.Name</p>
-                <p><strong>SĐT:</strong> @selectedConfig.PhoneNumber</p>
-                <p><strong>Email:</strong> @selectedConfig.Email</p>
-                <p><strong>Địa chỉ:</strong> @selectedConfig.address</p>
-                <p><strong>Thông tin:</strong> @selectedConfig.Value</p>
-            </div>
-        }
-        else
-        {
-            <p>Vui lòng chọn một giáo viên để xem chi tiết.</p>
-        }
+                </thead>
+                <tbody>
+                    @foreach (var n in systemConfigs)
+                    {
+                        <tr>
+                            <td>@(systemConfigs.IndexOf(n) + 1)</td>
+                            <td>@n.Name</td>
+                            <td>@n.PhoneNumber</td>
+                            <td>@n.Email</td>
+                            <td>
+                                @if (n.IsViewed)
+                                {
+                                    <span class="status viewed">Đã xem</span>
+                                }
+                                else
+                                {
+                                    <span class="status not-viewed">Chưa xem</span>
+                                }
+                            </td>
+                            <td>
+                                <button class="btn-view" @onclick="() => ShowDetails(n)">Xem chi tiết</button>
+                                <button class="btn-delete" @onclick="()=> delete(n.Id)">Xóa</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div style="flex: 1; padding: 20px; border-left: 1px solid #ddd; background-color: #f9f9f9;">
+            @if (selectedConfig != null)
+            {
+                <h4>Chi tiết thông tin</h4>
+                <div class="details">
+                    <p><strong>Họ tên:</strong> @selectedConfig.Name</p>
+                    <p><strong>SĐT:</strong> @selectedConfig.PhoneNumber</p>
+                    <p><strong>Email:</strong> @selectedConfig.Email</p>
+                    <p><strong>Địa chỉ:</strong> @selectedConfig.address</p>
+                    <p><strong>Thông tin:</strong> @selectedConfig.Value</p>
+                </div>
+            }
+            else
+            {
+                <p>Vui lòng chọn một giáo viên để xem chi tiết.</p>
+            }
+        </div>
     </div>
 </div>
+
 
 <style>
     .table-fixed {
@@ -81,9 +86,7 @@
             border-bottom: 1px solid #ddd;
         }
 
-        .table-fixed tr:hover {
-            background-color: #f2f2f2;
-        }
+       
 
     .status {
         font-weight: bold;
@@ -111,7 +114,7 @@
     }
 
     .btn-delete {
-        background-color: #dc3545;
+          background-color: #dc3545; 
         color: white;
     }
 
@@ -138,7 +141,6 @@
 @code {
     private List<SystemConfig> systemConfigs = new List<SystemConfig>();
     private SystemConfig selectedConfig; // Lưu thông tin giáo viên đã chọn
-
     protected override async Task OnInitializedAsync()
     {
         systemConfigs = await client.GetFromJsonAsync<List<SystemConfig>>("api/SystemConfig/get-all-SystemConfig");
@@ -164,7 +166,32 @@
             }
         }
     }
-
+    private async Task delete(Guid Id)
+    {
+        var response = await client.DeleteAsync($"api/SystemConfig/delete-system?Id={Id}");
+        if (response.IsSuccessStatusCode)
+        {
+            await jsRuntime.InvokeVoidAsync("Swal.fire", new
+            {
+                title = "Thành công!",
+                text = "Xóa đữ liệu thành công!",
+                icon = "success",
+                confirmButtonText = "OK"
+            });
+            navigate.NavigateTo(navigate.Uri, forceLoad: true);
+        }
+        else
+        {
+            await jsRuntime.InvokeVoidAsync("Swal.fire", new
+            {
+                title = "Thất bại!",
+                text = "Xóa dữ liệu thất bại.",
+                icon = "error",
+                confirmButtonText = "OK"
+            });
+            navigate.NavigateTo(navigate.Uri, forceLoad: true);
+        }
+    }
     private async Task ShowDetails(SystemConfig config)
     {
         await MarkAsViewed(config.Id); // Đánh dấu là đã xem

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.JSInterop;
+using System.Buffers.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -176,6 +177,7 @@ namespace API.Controllers
             }
 
         }
+
         [HttpPost("validate-test-code")]
         [Authorize] // Xác thực token của người dùng đã đăng nhập
         public IActionResult ValidateTestCode([FromBody] TestCodeRequest request)
@@ -234,7 +236,9 @@ namespace API.Controllers
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                     new Claim(ClaimTypes.Name, data.FullName),
-                    new Claim("Id",student.Name.ToString())
+                    new Claim("Id",student.Name.ToString()),
+                    new Claim("email",data.Email.ToString()),
+                    new Claim("numberPhone",data.PhoneNumber.ToString())
                     //new Claim("Id", student != null ? student.Name : "N/A"),
                     //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
                     }),

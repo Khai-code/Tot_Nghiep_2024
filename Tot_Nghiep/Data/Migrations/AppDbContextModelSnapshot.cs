@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Database.Migrations
+namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -375,6 +375,10 @@ namespace Database.Migrations
                     b.Property<Guid>("ClassId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("FaceEncoding")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("JoinTime")
                         .HasColumnType("datetime2");
 
@@ -385,7 +389,6 @@ namespace Database.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("StudentProfilePhoto")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
