@@ -157,7 +157,7 @@
               "Title": "Microsoft.Common.CurrentVersion.targets",
               "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
               "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
-              "ViewState": "AgIAAMIUAAAAAAAAAAAiwMgUAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAMIUAAAAAAAAAAAiwMgUAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
               "WhenOpened": "2024-09-30T02:52:37.589Z",
               "EditorCaption": ""
@@ -172,7 +172,8 @@
               "RelativeToolTip": "Data\\DTOs\\TokenResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.372Z"
+              "WhenOpened": "2024-09-30T02:47:29.372Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -182,9 +183,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\TestQuestionDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestQuestionDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\TestQuestionDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.403Z"
+              "WhenOpened": "2024-09-30T02:47:29.403Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -194,9 +196,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\TestQuestionAnswersDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestQuestionAnswersDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\TestQuestionAnswersDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.406Z"
+              "WhenOpened": "2024-09-30T02:47:29.406Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -206,9 +209,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\TestDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\TestDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.409Z"
+              "WhenOpened": "2024-09-30T02:47:29.409Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -218,9 +222,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\TestCodeRequest.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestCodeRequest.cs",
               "RelativeToolTip": "Data\\DTOs\\TestCodeRequest.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.412Z"
+              "WhenOpened": "2024-09-30T02:47:29.412Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -230,9 +235,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\UserDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\UserDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\UserDTO.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAywBQAAAAqAAAA",
+              "ViewState": "AgIAAAoAAAAAAAAAAADwvxQAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.415Z"
+              "WhenOpened": "2024-09-30T02:47:29.415Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -255,9 +261,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\TesCodeDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TesCodeDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\TesCodeDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.421Z"
+              "WhenOpened": "2024-09-30T02:47:29.421Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -267,9 +274,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\TeacherSubjectDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TeacherSubjectDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\TeacherSubjectDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.424Z"
+              "WhenOpened": "2024-09-30T02:47:29.424Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -279,9 +287,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\SystemConfigDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\SystemConfigDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\SystemConfigDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.427Z"
+              "WhenOpened": "2024-09-30T02:47:29.427Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -291,9 +300,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\SubjectDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\SubjectDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\SubjectDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.43Z"
+              "WhenOpened": "2024-09-30T02:47:29.43Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -303,9 +313,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\RoomDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\RoomDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\RoomDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.433Z"
+              "WhenOpened": "2024-09-30T02:47:29.433Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -315,9 +326,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\RoleDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\RoleDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\RoleDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.436Z"
+              "WhenOpened": "2024-09-30T02:47:29.436Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -327,9 +339,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\RefreshTokenRequest.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\RefreshTokenRequest.cs",
               "RelativeToolTip": "Data\\DTOs\\RefreshTokenRequest.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.439Z"
+              "WhenOpened": "2024-09-30T02:47:29.439Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -339,9 +352,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\NotificationDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\NotificationDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\NotificationDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.443Z"
+              "WhenOpened": "2024-09-30T02:47:29.443Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -351,9 +365,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\LoginModel.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\LoginModel.cs",
               "RelativeToolTip": "Data\\DTOs\\LoginModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.446Z"
+              "WhenOpened": "2024-09-30T02:47:29.446Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -363,9 +378,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\GradeDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\GradeDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\GradeDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.449Z"
+              "WhenOpened": "2024-09-30T02:47:29.449Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -375,9 +391,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\ExamRoomTestCodeDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\ExamRoomTestCodeDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\ExamRoomTestCodeDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.452Z"
+              "WhenOpened": "2024-09-30T02:47:29.452Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -387,9 +404,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\ExamRoomStudentDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\ExamRoomStudentDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\ExamRoomStudentDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.454Z"
+              "WhenOpened": "2024-09-30T02:47:29.454Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -399,9 +417,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\ExamRoomStudentAnswersHistoriesDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\ExamRoomStudentAnswersHistoriesDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\ExamRoomStudentAnswersHistoriesDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.457Z"
+              "WhenOpened": "2024-09-30T02:47:29.457Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -411,9 +430,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\ExamRoomDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\ExamRoomDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\ExamRoomDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.46Z"
+              "WhenOpened": "2024-09-30T02:47:29.46Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -423,9 +443,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\ExamHistoriesDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\ExamHistoriesDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\ExamHistoriesDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.462Z"
+              "WhenOpened": "2024-09-30T02:47:29.462Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -435,9 +456,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\ExamDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\ExamDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\ExamDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.464Z"
+              "WhenOpened": "2024-09-30T02:47:29.464Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -447,9 +469,10 @@
               "RelativeDocumentMoniker": "Data\\DTOs\\ClassDTO.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\ClassDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\ClassDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.466Z"
+              "WhenOpened": "2024-09-30T02:47:29.466Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -459,9 +482,10 @@
               "RelativeDocumentMoniker": "Blazor\\Pages\\Thionline.razor",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Thionline.razor",
               "RelativeToolTip": "Blazor\\Pages\\Thionline.razor",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAAA4AAABXAAAA",
+              "ViewState": "AgIAAAkAAAAAAAAAAIBJwA4AAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-30T02:47:29.469Z"
+              "WhenOpened": "2024-09-30T02:47:29.469Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -473,7 +497,8 @@
               "RelativeToolTip": "API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.473Z"
+              "WhenOpened": "2024-09-30T02:47:29.473Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -485,7 +510,8 @@
               "RelativeToolTip": "API\\Controllers\\ExamRoomsController.cs",
               "ViewState": "AgIAAB0AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.476Z"
+              "WhenOpened": "2024-09-30T02:47:29.476Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -497,7 +523,8 @@
               "RelativeToolTip": "API\\Controllers\\ExamHistoriesController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.478Z"
+              "WhenOpened": "2024-09-30T02:47:29.478Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -507,9 +534,10 @@
               "RelativeDocumentMoniker": "API\\Controllers\\ClassesController.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ClassesController.cs",
               "RelativeToolTip": "API\\Controllers\\ClassesController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABQAAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAIBJwBQAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.481Z"
+              "WhenOpened": "2024-09-30T02:47:29.481Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -519,9 +547,10 @@
               "RelativeDocumentMoniker": "API\\Program.cs",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Program.cs",
               "RelativeToolTip": "API\\Program.cs",
-              "ViewState": "AQIAAC8AAAAAAAAAAAAvwD0AAAAAAAAA",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAvwD0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.484Z"
+              "WhenOpened": "2024-09-30T02:47:29.484Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -531,9 +560,10 @@
               "RelativeDocumentMoniker": "API\\appsettings.json",
               "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\appsettings.json",
               "RelativeToolTip": "API\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-09-30T02:47:29.487Z"
+              "WhenOpened": "2024-09-30T02:47:29.487Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -545,7 +575,8 @@
               "RelativeToolTip": "Data\\Migrations\\20240923152425_data.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T02:47:29.49Z"
+              "WhenOpened": "2024-09-30T02:47:29.49Z",
+              "EditorCaption": ""
             }
           ]
         }
