@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data.Model
+﻿namespace Data.Model
 {
     public class Test
     {
         public Guid Id { get; set; }
-        public int Type {  get; set; }
+        public int Type { get; set; }
+        public string Name { get; set; }
+        public int? Minute { get; set; }
+        public int? NumberOfTestCode { get; set; }
         public DateTime CreationTime { get; set; }
         public int Status { get; set; }
         public Guid SubjectId { get; set; }
