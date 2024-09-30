@@ -1,0 +1,143 @@
+﻿@page "/exam-room"
+@using global::Data.Model
+@using global::Data.DTOs
+@using System.Net.Http.Json
+@layout Teacherlayout
+@inject HttpClient client
+@inject IHttpClientFactory clientFactory
+<h3>Danh sách ca thi</h3>
+<div style="display: flex;">
+    <div style="flex: 2; padding-right: 20px;">
+        <table class="table-fixed">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Thời gian bắt đầu</th>
+                    <th>Thời gian kết thúc</th>
+                    <th>Trạng thái</th>
+                    <th>Phòng thi</th>
+                    <th>Mã Giáo Viên 1</th>
+                    <th>Mã Giáo Viên 2</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var n in lstExamRoom)
+                {
+                    <tr>
+                        <td>@(lstExamRoom.IndexOf(n) + 1)</td>
+                        <td>@n.StartTime</td>
+                        <td>@n.EndTime</td>
+                        <td>
+                            @if (n.Status == 0)
+                            {
+                                <span>Chưa thi</span>
+                            }
+                            else if (n.Status == 1)
+                            {
+                                <span>Đang thi</span>
+                            }
+                            else
+                            {
+                                <span>Trạng thái không xác định</span>
+                            }
+                        </td>
+                        <td>@n.RoomName</td>
+                        <td>@n.Teacher1Code</td>
+                        <td>@n.Teacher2Code</td>
+                        <td>
+                            <button class="btn-view">Xem chi tiết</button>
+                            <button class="btn-delete">Xóa</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .table-fixed {
+        width: 100%;
+        border-collapse: collapse;
+        overflow-y: scroll;
+    }
+
+        .table-fixed thead {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+        .table-fixed th, .table-fixed td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table-fixed tr:hover {
+            background-color: #f2f2f2;
+        }
+
+    .status {
+        font-weight: bold;
+    }
+
+        .status.viewed {
+            color: green;
+        }
+
+        .status.not-viewed {
+            color: orange;
+        }
+
+    .btn-view, .btn-delete {
+        padding: 8px 12px;
+        margin: 0 5px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-view {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-view:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-delete:hover {
+        background-color: #c82333;
+    }
+
+    .details {
+        background-color: #ffffff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+        .details p {
+            margin: 5px 0;
+        }
+</style>
+
+@code {
+    private List<ExamRoomDTO2> lstExamRoom = new List<ExamRoomDTO2>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var httpClient = clientFactory.CreateClient("ExamRoom");
+        lstExamRoom = await httpClient.GetFromJsonAsync<List<ExamRoomDTO2>>("https://localhost:7039/api/ExamRooms/get-all-ExamRoomName");
+        StateHasChanged();
+    }
+
+
+
+}
