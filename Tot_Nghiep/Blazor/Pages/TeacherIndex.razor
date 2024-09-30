@@ -1,0 +1,58 @@
+﻿@page "/teacherindex"
+@using global::Data.Model
+@layout Teacherlayout
+@inject HttpClient client
+
+
+<h3>TeacherIndex</h3>
+<div>
+
+</div>
+<div class="row">
+    <div class="col-md-7 border ">
+        
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-4 border">
+        <h2>Bảng thông báo</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Thông báo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var notification in notifications)
+                {
+                    <tr>
+                         <td>@notification.Title</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    private List<Notification>? notifications = new List<Notification>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        notifications = await client.GetFromJsonAsync<List<Notification>>("api/Notification/get-all-notification");
+    }
+}
+
+<style>
+    /* Giới hạn chiều cao của bảng và cho phép cuộn */
+    .table-fixed {
+        height: 250px; /* Chiều cao cố định */
+        overflow-y: scroll;
+    }
+
+    .table-fixed thead {
+        position: sticky;
+        top: 0;
+        background-color: #343a40; /* Màu nền tối cho tiêu đề */
+        z-index: 100;
+    }
+</style>
