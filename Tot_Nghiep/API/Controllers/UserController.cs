@@ -237,7 +237,9 @@ namespace API.Controllers
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                     new Claim(ClaimTypes.Name, data.FullName),
-                    new Claim("Id",student.Name.ToString())
+                    new Claim("Id",student.Name.ToString()),
+                    new Claim("email",data.Email.ToString()),
+                    new Claim("numberPhone",data.PhoneNumber.ToString())
                     //new Claim("Id", student != null ? student.Name : "N/A"),
                     //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
                     }),

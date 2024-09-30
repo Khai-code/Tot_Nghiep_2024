@@ -1,7 +1,10 @@
 ﻿@page "/teacher-system"
+@using global::Data.DTOs
 @using global::Data.Model
 @layout Teacherlayout
 @inject HttpClient client
+@inject IJSRuntime jsRuntime
+@inject NavigationManager navigate
 
 <h3>Teacher_System</h3>
 <div style="display: flex;">
@@ -37,7 +40,7 @@
                         </td>
                         <td>
                             <button class="btn-view" @onclick="() => ShowDetails(n)">Xem chi tiết</button>
-                            <button class="btn-delete">Xóa</button>
+                            <button class="btn-delete" @onclick="()=> delete(n.Id)">Xóa</button>
                         </td>
                     </tr>
                 }
@@ -111,7 +114,7 @@
     }
 
     .btn-delete {
-        background-color: #dc3545;
+          background-color: #dc3545; 
         color: white;
     }
 
@@ -138,7 +141,6 @@
 @code {
     private List<SystemConfig> systemConfigs = new List<SystemConfig>();
     private SystemConfig selectedConfig; // Lưu thông tin giáo viên đã chọn
-
     protected override async Task OnInitializedAsync()
     {
         systemConfigs = await client.GetFromJsonAsync<List<SystemConfig>>("api/SystemConfig/get-all-SystemConfig");
@@ -164,7 +166,32 @@
             }
         }
     }
-
+    private async Task delete(Guid Id)
+    {
+        var response = await client.DeleteAsync($"api/SystemConfig/delete-system?Id={Id}");
+        if (response.IsSuccessStatusCode)
+        {
+            await jsRuntime.InvokeVoidAsync("Swal.fire", new
+            {
+                title = "Thành công!",
+                text = "Xóa đữ liệu thành công!",
+                icon = "success",
+                confirmButtonText = "OK"
+            });
+            navigate.NavigateTo(navigate.Uri, forceLoad: true);
+        }
+        else
+        {
+            await jsRuntime.InvokeVoidAsync("Swal.fire", new
+            {
+                title = "Thất bại!",
+                text = "Xóa dữ liệu thất bại.",
+                icon = "error",
+                confirmButtonText = "OK"
+            });
+            navigate.NavigateTo(navigate.Uri, forceLoad: true);
+        }
+    }
     private async Task ShowDetails(SystemConfig config)
     {
         await MarkAsViewed(config.Id); // Đánh dấu là đã xem

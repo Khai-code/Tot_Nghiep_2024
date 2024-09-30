@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Data.Database;
 using Data.DTOs;
 using Data.Model;
-using FaceRecognitionDotNet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
