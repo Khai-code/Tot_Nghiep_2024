@@ -80,10 +80,9 @@
             </div>
         </div>
     </nav>
-    <article class="flex-column min-vh-100">
+    <article class=" flex-column min-vh-100">
         @Body
     </article>
-
     <!-- Form đăng nhập -->
     @if (isLoginFormVisible)
     {
@@ -122,7 +121,8 @@
                             </div>
                             @if (!string.IsNullOrEmpty(errorMessage))
                             {
-                                <div class="alert alert-danger mt-3">@errorMessage</div>
+                                
+                                <div class="alert alert-danger mt-3" id="error">@errorMessage</div>
                             }
                         </EditForm>
                     </div>
@@ -130,10 +130,7 @@
             </div>
         </div>
     }
-
-
 </main>
-
 <footer class="container-fluid mt-auto">
     <div class="row bg-dark-subtle py-3">
         <div class="col-4">
@@ -155,7 +152,6 @@
         </div>
     </div>
 </footer>
-
 @code {
     private List<NotificationDTO> data = new List<NotificationDTO>();
     private int unreadCount = 0;
@@ -188,7 +184,31 @@
                 var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
                 var jsonToken = handler.ReadToken(token) as System.IdentityModel.Tokens.Jwt.JwtSecurityToken;
                 // Lấy tên người dùng từ claim "name" (nếu được lưu trong token)
-                userName = jsonToken?.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+                var time = jsonToken?.Claims.FirstOrDefault(temp => temp.Type == "exp");
+                if (time != null)
+                {
+                    var off = DateTimeOffset.FromUnixTimeSeconds(long.Parse(time.Value)).UtcDateTime;
+                    if (off < DateTime.UtcNow.AddMinutes(1))
+                    {
+                        var response = await httpclient.PostAsync("api/User/logout", null);
+                        await jsRuntime.InvokeVoidAsync("localStorage.removeItem", "YourSuperSecretKeyHere");
+                        tokenResponse = null;
+                        userName = null;
+                        navigate.NavigateTo("/",forceLoad:true);
+                        
+                    }
+                }
+                var role= jsonToken?.Claims.FirstOrDefault(temp=>temp.Type=="Id")?.Value;
+                if (role == "Student")
+                {
+                    userName = jsonToken?.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+                    navigate.NavigateTo("/");
+                }
+                else if(role=="Teacher")
+                {
+                    userName = jsonToken?.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+                    navigate.NavigateTo("/teacherindex");
+                }
                 // Cập nhật giao diện với tên người dùng
                 StateHasChanged();
             }
@@ -208,6 +228,7 @@
             isLoading = false;
             HideLoginForm();
             StateHasChanged();
+            navigate.NavigateTo("/");
         }
         else
         {
@@ -218,6 +239,7 @@
             StateHasChanged();
         }
     }
+    
     private async Task HandleLogout()
     {
         var response = await httpclient.PostAsync("api/User/logout", null);
@@ -276,3 +298,8 @@
     }
 
 </style>
+<script>
+    function.error(){
+        document.getElementById("erro").window.alert("mật khẩu sai")
+    }
+</script>

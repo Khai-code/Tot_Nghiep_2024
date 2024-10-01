@@ -1,0 +1,77 @@
+﻿@page "/Cauhoi"
+@using global::Data.DTOs
+@inject HttpClient http
+@layout Teacherlayout
+@inject NavigationManager navi
+
+<h3>QuestionList</h3>
+
+<button class="btn btn-primary" @onclick="CreateNewQuestion">Tạo câu hỏi mới</button>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Nội dung câu hỏi</th>
+            <th>Loại</th>
+            <th>Đáp án đúng</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (questions != null)
+        {
+            @foreach (var question in questions)
+            {
+                <tr>
+                    <td>@questions.IndexOf(question) + 1</td>
+                    <td>@question.QuestionName</td>
+                    <td>@GetQuestionType(question.Type)</td>
+                    <td>@question.RightAnswer</td>
+                    <td>
+                        <button class="btn btn-warning" @onclick="() => EditQuestion(question.Id)">Chỉnh sửa</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteQuestion(question.Id)">Xóa</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<TestQuestionDTO> questions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        questions = await http.GetFromJsonAsync<List<TestQuestionDTO>>("/api/TestQuestion/GetAll_TesTQuestion");
+    }
+
+    private string GetQuestionType(int type)
+    {
+        return type switch
+        {
+            1 => "Trắc nghiệm 1 đáp án",
+            2 => "Trắc nghiệm nhiều đáp án",
+            3 => "Tự luận",
+            4 => "Đúng/sai"
+        };
+    }
+
+    private void CreateNewQuestion()
+    {
+        navi.NavigateTo("/create");
+    }
+    private void EditQuestion(Guid id)
+    {
+        navi.NavigateTo($"/edit/{id}");
+    }
+    private async Task DeleteQuestion(Guid id)
+    {
+        var response = await http.DeleteAsync($"/api/TestQuestion/Delete_TestQuestion?id={id}");
+        if (response.IsSuccessStatusCode)
+        {
+            questions = await http.GetFromJsonAsync<List<TestQuestionDTO>>("/api/TestQuestion/GetAll_TesTQuestion");
+        }
+    }
+
+}
