@@ -1,0 +1,127 @@
+﻿@page "/create-or-update-test/{id:guid?}"
+@inject NavigationManager NavigationManager
+@using global::Data.DTOs
+@layout MainLayout
+@inject IHttpClientFactory clientFactory;
+
+<div class="container-fluid row p-3">
+<EditForm Model="@testDTO" OnValidSubmit="HandleValidSubmit">
+    <div class="form-container">
+        <div class="row">
+                <div class="col-10 offset-1 cover-space">
+                    <div class="row">
+                        <div class="col-lg-12 mb-5">
+                            <h3 class="text-center">@(id.HasValue?"Chỉnh sửa đề thi ":"Tạo đề thi")</h3>
+                        </div>
+                        <div class="col-lg-6">
+
+                            <label>Tên đề:</label>
+                            <InputText class="form-control" @bind-Value="testDTO.Name" />
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label>Thời gian thi (Phút):</label>
+                            <InputNumber class="form-control" @bind-Value="testDTO.Minute" />
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label>Số đề thi:</label>
+                            <InputNumber class="form-control" @bind-Value="testDTO.NumberOfTestCode" />
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label>Chọn loại bài thi:</label>
+                            <InputSelect class="form-control" @bind-Value="testDTO.Type">
+                                <option value=1>60 phút</option>
+                                <option value=0>15 phút</option>
+                            </InputSelect>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label>Môn học:</label>
+                            <InputSelect class="form-control" @bind-Value="testDTO.SubjectId">
+                                <option >Chon mon hoc</option>
+                                @foreach (var x in lstSubject)
+                                {
+                                    <option value="@x.Id">@x.Name</option>
+                                }
+                            </InputSelect>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label>Trạng thái:</label>
+                            <InputSelect class="form-control" @bind-Value="testDTO.Status">
+                                <option value=1>Hiệu lực</option>
+                                <option value=0>Không hiệu lực</option>
+                            </InputSelect>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 mt-3">
+                        <button type="button" class="btn btn-secondary" @onclick="Cancel">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+
+                    </div>
+                    </div>
+                
+                </div>
+        
+    </div>
+</EditForm>
+</div>
+@code {
+    [Parameter]
+    public Guid? id { get; set; } 
+    private GetListTestQueryDTO queryDTO = new GetListTestQueryDTO();
+    private List<SubjectDTO> lstSubject = new List<SubjectDTO>();
+    private TestDTO testDTO = new TestDTO();
+    protected override async void OnInitialized()
+    {
+        var httpClient = clientFactory.CreateClient("Subject");
+        lstSubject = await httpClient.GetFromJsonAsync<List<SubjectDTO>>("https://localhost:7039/api/Subject/get-all-subject");
+        StateHasChanged();
+        if (id.HasValue)
+        {
+            await GetTestDetail(id.Value);
+        }
+    }
+
+    private async Task GetTestDetail(Guid id)
+    {
+        var httpClient = clientFactory.CreateClient("Test");
+        var url = $"https://localhost:7039/api/Test/get-detail-test/{id}";
+        testDTO = await httpClient.GetFromJsonAsync<TestDTO>(url);
+        StateHasChanged();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (testDTO.SubjectId == Guid.Empty)
+        {
+            return;
+        }
+        if (id.HasValue)
+        {
+            
+
+            var httpClient = clientFactory.CreateClient("Test-Update");
+            var url = $"https://localhost:7039/api/Test/Update_Test";
+            var response = await httpClient.PutAsJsonAsync<TestDTO>(url, testDTO);
+            NavigationManager.NavigateTo("/manage-test");
+        }
+        else
+        {
+            var httpClient = clientFactory.CreateClient("Test-Create");
+            var url = $"https://localhost:7039/api/Test/Post_Test";
+            var response = await httpClient.PostAsJsonAsync<TestDTO>(url, testDTO);
+            NavigationManager.NavigateTo("/manage-test");
+        }
+    }
+
+    private void Cancel()
+    {
+       
+    }
+    
+
+}
