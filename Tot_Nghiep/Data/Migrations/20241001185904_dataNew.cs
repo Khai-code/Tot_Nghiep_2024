@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class data : Migration
+    public partial class dataNew : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,6 +36,18 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_notifications", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "pointTypes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_pointTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -149,6 +161,32 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "pointType_Subjects",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PointTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_pointType_Subjects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_pointType_Subjects_pointTypes_PointTypeId",
+                        column: x => x.PointTypeId,
+                        principalTable: "pointTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_pointType_Subjects_subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "subjects_Grades",
                 columns: table => new
                 {
@@ -179,14 +217,24 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<int>(type: "int", nullable: false),
+                    Minute = table.Column<int>(type: "int", nullable: true),
+                    NumberOfTestCode = table.Column<int>(type: "int", nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PointTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_tests_pointTypes_PointTypeId",
+                        column: x => x.PointTypeId,
+                        principalTable: "pointTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_tests_subjects_SubjectId",
                         column: x => x.SubjectId,
@@ -249,6 +297,77 @@ namespace Data.Migrations
                         name: "FK_testCodes_tests_TestId",
                         column: x => x.TestId,
                         principalTable: "tests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "learning_Summarys",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Attendance = table.Column<double>(type: "float", nullable: false),
+                    Point_15 = table.Column<double>(type: "float", nullable: false),
+                    Point_45 = table.Column<double>(type: "float", nullable: false),
+                    Point_Midterm = table.Column<double>(type: "float", nullable: false),
+                    Point_Final = table.Column<double>(type: "float", nullable: false),
+                    Point_Summary = table.Column<double>(type: "float", nullable: false),
+                    IsView = table.Column<bool>(type: "bit", nullable: false),
+                    PointTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_learning_Summarys", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_learning_Summarys_pointTypes_PointTypeId",
+                        column: x => x.PointTypeId,
+                        principalTable: "pointTypes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_learning_Summarys_students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_learning_Summarys_subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "scores",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PointTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Scores = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_scores", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_scores_pointTypes_PointTypeId",
+                        column: x => x.PointTypeId,
+                        principalTable: "pointTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_scores_students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_scores_subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "subjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -614,6 +733,21 @@ namespace Data.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_learning_Summarys_PointTypeId",
+                table: "learning_Summarys",
+                column: "PointTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_learning_Summarys_StudentId",
+                table: "learning_Summarys",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_learning_Summarys_SubjectId",
+                table: "learning_Summarys",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_notification_Classes_ClassId",
                 table: "notification_Classes",
                 column: "ClassId");
@@ -622,6 +756,31 @@ namespace Data.Migrations
                 name: "IX_notification_Classes_NotificationId",
                 table: "notification_Classes",
                 column: "NotificationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_pointType_Subjects_PointTypeId",
+                table: "pointType_Subjects",
+                column: "PointTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_pointType_Subjects_SubjectId",
+                table: "pointType_Subjects",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_scores_PointTypeId",
+                table: "scores",
+                column: "PointTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_scores_StudentId",
+                table: "scores",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_scores_SubjectId",
+                table: "scores",
+                column: "SubjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_student_Classes_ClassId",
@@ -679,6 +838,11 @@ namespace Data.Migrations
                 column: "TestCodeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tests_PointTypeId",
+                table: "tests",
+                column: "PointTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tests_SubjectId",
                 table: "tests",
                 column: "SubjectId");
@@ -698,7 +862,16 @@ namespace Data.Migrations
                 name: "examHistories");
 
             migrationBuilder.DropTable(
+                name: "learning_Summarys");
+
+            migrationBuilder.DropTable(
                 name: "notification_Classes");
+
+            migrationBuilder.DropTable(
+                name: "pointType_Subjects");
+
+            migrationBuilder.DropTable(
+                name: "scores");
 
             migrationBuilder.DropTable(
                 name: "student_Classes");
@@ -756,6 +929,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "users");
+
+            migrationBuilder.DropTable(
+                name: "pointTypes");
 
             migrationBuilder.DropTable(
                 name: "subjects");
