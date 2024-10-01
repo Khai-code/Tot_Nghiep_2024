@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Database.Migrations
+namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240923152425_data")]
+    [Migration("20240930005636_data")]
     partial class data
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -377,6 +377,10 @@ namespace Database.Migrations
                     b.Property<Guid>("ClassId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("FaceEncoding")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("JoinTime")
                         .HasColumnType("datetime2");
 
@@ -387,7 +391,6 @@ namespace Database.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("StudentProfilePhoto")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -457,16 +460,32 @@ namespace Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("IsViewed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("address")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

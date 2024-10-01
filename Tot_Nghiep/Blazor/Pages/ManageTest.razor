@@ -1,0 +1,129 @@
+﻿
+@page "/manage-test"
+@using global::Data.DTOs
+@layout Teacherlayout
+@inject IHttpClientFactory clientFactory;
+@inject NavigationManager NavigationManager
+<div class="container-fluid row p-3">
+
+
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col">
+                <h2>Danh sách đề</h2>
+            </div>
+            <div class="col text-end">
+                
+                <button class="btn btn-primary" @onclick="SearchTests">Tìm kiếm</button>
+                <button class="btn btn-primary" @onclick="()=>RedirectToCreateOrUpadate(false,null)">Tạo đề thi</button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Mã đề</th>
+                        <th scope="col">Tên đề</th>
+                        <th scope="col">Loại đề</th>
+                        <th scope="col">Môn</th>
+                        <th scope="col">Người tạo</th>
+                        <th scope="col">Hành động</th>
+                    </tr><tr>
+                        <th scope="col"> <input @bind="queryDTO.Code" class="form-control" placeholder="Code" /></th>
+                        <th scope="col"><input @bind="queryDTO.Name" class="form-control" placeholder="Name" /></th>
+                        <th scope="col">
+                            <select @bind="queryDTO.Type" class="form-control">
+                                <option value=-1>Chọn...</option>
+                                <option value=0>15 phút</option>
+                                <option value=1>60 phút</option>
+                            </select>
+                        </th>
+                        <th scope="col"><input @bind="queryDTO.SubjectName" class="form-control" placeholder="Name" /></th>
+                        <th scope="col"><input @bind="queryDTO.Creator" class="form-control" placeholder="Name" /></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (testList.ListTest == null)
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center">Loading...</td>
+                        </tr>
+                    }
+                    else if (!testList.ListTest.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center">Khong tim thay de thi</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var test in testList.ListTest)
+                        {
+                            <tr>
+                                <td>@test.Code</td>
+                                <td>@test.Name</td>
+                                <td>@(test.Type == 1 ? "60 phút" : "15 phút")</td>
+                                <td>@test.SubjectName</td>
+                                <td>Admin</td>
+                                <td>
+                                    <button class="btn btn-info" @onclick="()=>RedirectToCreateOrUpadate(true,test.Id)">Sửa</button>
+                                    <button class="btn btn-danger" @onclick="()=>Delete(test.Id)">Xóa</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+   
+</div>
+@code {
+
+    private TestResponseDTO testList= new  TestResponseDTO();
+    private GetListTestQueryDTO queryDTO = new GetListTestQueryDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await SearchTests();
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+    private void RedirectToCreateOrUpadate(bool isUpdate, Guid? id)
+    {
+        NavigationManager.NavigateTo(isUpdate ? $"create-or-update-test/{id}" : "create-or-update-test");
+    }
+    private async Task Delete(Guid id)
+    {
+        var httpClient = clientFactory.CreateClient("Delete");
+        var url = $"https://localhost:7039/api/Test/Delete_Test?Id={id}";
+        var res = await httpClient.DeleteAsync(url);
+        await SearchTests();
+    }
+    private async Task SearchTests()
+    {
+        var query = new List<string>();
+        if (!string.IsNullOrWhiteSpace(queryDTO.Code)) query.Add($"code={queryDTO.Code.Trim()}");
+        if (!string.IsNullOrWhiteSpace(queryDTO.SubjectName)) query.Add($"subjectName={queryDTO.SubjectName.Trim()}");
+        if (!string.IsNullOrWhiteSpace(queryDTO.Creator)) query.Add($"creator={queryDTO.Creator.Trim()}");
+        if (!string.IsNullOrWhiteSpace(queryDTO.Name)) query.Add($"subjectName={queryDTO.Name.Trim()}");
+        if (queryDTO.Type.HasValue) query.Add($"type={queryDTO.Type}");
+        var queryString = string.Join("&", query);
+        var httpClient = clientFactory.CreateClient("Get");
+        var url = $"https://localhost:7039/api/Test/get-list-test?{queryString}";
+        testList.ListTest = await httpClient.GetFromJsonAsync<List<TestGridDTO>>(url);
+    }
+}
+<style>
+    .row {
+        --bs-gutter-x: 0;
+    }
+</style>

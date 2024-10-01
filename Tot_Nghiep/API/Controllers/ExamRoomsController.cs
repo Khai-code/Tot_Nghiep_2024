@@ -16,8 +16,8 @@ namespace API.Controllers
         {
             _db = db;
         }
-        [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        [HttpGet("get-all-ExamRoom")]
+        public async Task<ActionResult<List<ExamRoomDTO>>> GetAllAsync()
         {
             var listExamRoom = await _db.exam_Rooms.AsQueryable().ToListAsync();
             return Ok(listExamRoom);
@@ -94,6 +94,33 @@ namespace API.Controllers
             _db.exam_Rooms.Remove(checkExamRoomToDelete);
             await _db.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet("get-all-ExamRoomName")]
+        public async Task<ActionResult<List<ExamRoomDTO2>>> GetAllName()
+        {
+            var listExamRoom = await _db.exam_Rooms
+                .Include(er => er.Room)        // Lấy thông tin Room
+                .Include(er => er.Exam)        // Lấy thông tin Exam
+                .Include(er => er.Teacher1)    // Lấy thông tin Teacher1
+                .Include(er => er.Teacher2)    // Lấy thông tin Teacher2
+                .Select(er => new ExamRoomDTO2
+                {
+                    Id = er.Id,
+                    StartTime = er.StartTime,
+                    EndTime = er.EndTime,
+                    Status = er.Status,
+                    RoomId = er.RoomId,
+                    RoomName = er.Room.Name,           // Lấy tên của Room
+                    ExamId = er.ExamId, 
+                    TeacherId1 = er.TeacherId1,
+                    Teacher1Code = er.Teacher1.Code,   // Lấy tên của Teacher1
+                    TeacherId2 = er.TeacherId2,
+                    Teacher2Code = er.Teacher2.Code    // Lấy tên của Teacher2
+                })
+                .ToListAsync();
+
+            return Ok(listExamRoom);
         }
     }
 }
