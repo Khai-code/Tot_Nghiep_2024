@@ -1,0 +1,111 @@
+﻿@page "/class/manage/{mode}/{id:guid?}"
+@using global::Data.Model
+@inject HttpClient http
+@layout Teacherlayout
+@inject NavigationManager navi
+
+<h3>@(IsCreateMode ? "Tạo lớp học" : IsUpdateMode ? "Chỉnh sửa" : "Chi tiết")</h3>
+@if (!IsDetailMode)
+{
+	<EditForm Model="classItem">
+		<DataAnnotationsValidator />
+		<ValidationSummary />
+
+		<div class="mb-3">
+			<label for="code" class="form-label">Mã lớp</label>
+			<InputText id="code" class="form-control" @bind-Value="classItem.Code" required disabled="@IsDetailMode" />
+		</div>
+
+		<div class="mb-3">
+			<label for="name" class="form-label">Tên lớp</label>
+			<InputText id="name" class="form-control" @bind-Value="classItem.Name" required disabled="@IsDetailMode" />
+		</div>
+
+		<div class="mb-3">
+			<label for="maxStudent" class="form-label">Sĩ số</label>
+			<InputNumber id="maxStudent" class="form-control" @bind-Value="classItem.MaxStudent" required disabled="@IsDetailMode" />
+		</div>
+
+		<div class="mb-3">
+			<label for="teacher" class="form-label">Giáo viên</label>
+			<select id="teacher" class="form-select" @bind="classItem.TeacherId" disabled="@IsDetailMode">
+				@foreach (var teacher in teachers)
+				{
+					<option value="@teacher.Id.ToString()">@teacher.Code</option> <!-- Chuyển Guid thành chuỗi -->
+				}
+			</select>
+		</div>
+
+        <div class="mb-3">
+            <label for="grade" class="form-label">Khối lớp</label>
+            <select id="grade" class="form-select" @bind="classItem.GradeId" disabled="@IsDetailMode">
+                @foreach (var grade in grades)
+                {
+                    <option value="@grade.Id">@grade.Name</option>
+                }
+            </select>
+        </div>
+
+
+
+		<div class="mb-3">
+			<label for="status" class="form-label">Ghi chú</label>
+			<InputNumber id="status" class="form-control" @bind-Value="classItem.Status" required disabled="@IsDetailMode" />
+		</div>
+
+		<div class="mb-3">
+			<button type="submit" class="btn btn-primary" hidden="@IsDetailMode">Lưu</button>
+			<button class="btn btn-secondary" @onclick="Cancel">Quay lại</button>
+		</div>
+
+
+		
+	</EditForm>
+}
+@code {
+	[Parameter] public Guid? Id { get; set; }
+	[Parameter] public string Mode { get; set; }
+
+	private Class classItem = new Class();
+	private List<Teacher> teachers = new List<Teacher>();
+	private List<Grade> grades = new List<Grade>();
+
+
+	private bool IsCreateMode => Mode == "create";
+	private bool IsUpdateMode => Mode == "edit" && Id.HasValue;
+	private bool IsDetailMode => Mode == "detail" && Id.HasValue;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await LoadTeachersAndGrades();
+		if(IsUpdateMode || IsDetailMode)
+		{
+			classItem = await http.GetFromJsonAsync<Class>($"api/Classes/gte-by-id-class/{Id}");
+		}
+	}
+
+	private async Task HandleValidSubmit()
+	{
+		if (IsCreateMode)
+		{
+			await http.PostAsJsonAsync("api/Classes/create-class", classItem);
+		}
+		else if (IsUpdateMode)
+		{
+			await http.PutAsJsonAsync("api/Classes/update-class", classItem);
+		}
+		navi.NavigateTo("/Lop");
+	}
+
+	private async Task LoadTeachersAndGrades()
+    {
+        teachers = await http.GetFromJsonAsync<List<Teacher>>("api/Teachers/get-all-teachers");
+        grades = await http.GetFromJsonAsync<List<Grade>>("api/Grades/get-all-grades");
+    }
+
+
+	private void Cancel()
+	{
+		navi.NavigateTo("/Lop");
+	}
+}
