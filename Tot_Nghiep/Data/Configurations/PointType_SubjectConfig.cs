@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace Data.Configurations
 {
-    internal class TestConfig : IEntityTypeConfiguration<Test>
+    public class PointType_SubjectConfig : IEntityTypeConfiguration<PointType_Subject>
     {
-        public void Configure(EntityTypeBuilder<Test> builder)
+        public void Configure(EntityTypeBuilder<PointType_Subject> builder)
         {
-            builder.ToTable("Test");
-            
+            builder.ToTable("PointType_Subject");
+
             builder.HasKey(x => x.Id);
 
             builder.HasOne(x => x.Subject)
-                .WithMany(x => x.Test)
+                .WithMany(x => x.PointType_Subjects)
                 .HasForeignKey(x => x.SubjectId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(x => x.PointType)
-                .WithMany(x => x.tests)
+                .WithMany(x => x.PointType_Subjects)
                 .HasForeignKey(x => x.PointTypeId)
                 .OnDelete(DeleteBehavior.NoAction);
         }

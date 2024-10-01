@@ -9,21 +9,26 @@ using System.Threading.Tasks;
 
 namespace Data.Configurations
 {
-    internal class TestConfig : IEntityTypeConfiguration<Test>
+    public class ScoreConfig : IEntityTypeConfiguration<Score>
     {
-        public void Configure(EntityTypeBuilder<Test> builder)
+        public void Configure(EntityTypeBuilder<Score> builder)
         {
-            builder.ToTable("Test");
-            
+            builder.ToTable("Score");
+
             builder.HasKey(x => x.Id);
 
-            builder.HasOne(x => x.Subject)
-                .WithMany(x => x.Test)
+            builder.HasOne(x => x.Students)
+                .WithMany(x => x.Scores)
+                .HasForeignKey(x => x.StudentId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(x => x.Subjects)
+                .WithMany(x => x.Scores)
                 .HasForeignKey(x => x.SubjectId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(x => x.PointType)
-                .WithMany(x => x.tests)
+            builder.HasOne(x => x.PointTypes)
+                .WithMany(x => x.Scores)
                 .HasForeignKey(x => x.PointTypeId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
