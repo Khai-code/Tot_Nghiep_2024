@@ -7,7 +7,7 @@
     public class TestGridDTO
     {
         public Guid Id { get; set; }
-        public int Type { get; set; }
+        //public int Type { get; set; }
         public int? Minute { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
