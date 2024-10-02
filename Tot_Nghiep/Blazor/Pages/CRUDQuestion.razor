@@ -1,0 +1,130 @@
+﻿@page "/create"
+@page "/edit/{id:guid}"
+@using global::Data.DTOs
+@inject HttpClient http
+@inject NavigationManager navi
+@layout Teacherlayout
+
+    <h3>@(isEditing ? "Sửa" : "Thêm mới")</h3>
+
+    <div class="form-group">
+        <label for="questionName">Nội dung câu hỏi</label>
+        <input id="questionName" class="form-control" @bind="questionDTO.QuestionName" />
+    </div>
+    <div class="form-group">
+        <label for="questionType">Loại câu hỏi</label>
+        <select id="questionType" class="form-control" @bind="questionDTO.Type">
+            <option value="1">Trắc nghiệm 1 đáp án</option>
+            <option value="2">Trắc nghiệm nhiều đáp án</option>
+            <option value="3">Tự luận</option>
+            <option value="4">Đúng/Sai</option>
+        </select>
+    </div>
+    @if (questionDTO.Type == 1 || questionDTO.Type == 2)
+    {
+        <div class="form-group">
+            <label>Đáp án A</label>
+            <input class="form-control" @bind="answers[0]" />
+            <label>Đáp án B</label>
+            <input class="form-control" @bind="answers[1]" />
+            <label>Đáp án C</label>
+            <input class="form-control" @bind="answers[2]" />
+            <label>Đáp án D</label>
+            <input class="form-control" @bind="answers[3]" />
+
+        @if (questionDTO.Type == 1)
+        {
+            <!-- Trắc nghiệm 1 đáp án (không dùng multiple) -->
+            <select class="form-control" @bind="questionDTO.RightAnswer">
+                <option value="A">Đáp án A</option>
+                <option value="B">Đáp án B</option>
+                <option value="C">Đáp án C</option>
+                <option value="D">Đáp án D</option>
+            </select>
+        }
+        else if (questionDTO.Type == 2)
+        {
+            <!-- Trắc nghiệm nhiều đáp án (dùng multiple) -->
+            <select class="form-control" multiple @bind="selectedRightAnswers">
+                <option value="A">Đáp án A</option>
+                <option value="B">Đáp án B</option>
+                <option value="C">Đáp án C</option>
+                <option value="D">Đáp án D</option>
+            </select>
+        }
+        </div>
+    }
+    @if (questionDTO.Type == 3) // Câu hỏi tự luận 
+    {
+        <div class="form-group">
+            <label>Đáp án tự luận</label>
+            <textarea class="form-control" @bind="questionDTO.RightAnswer"></textarea>
+        </div>
+    }
+    @if (questionDTO.Type == 4)
+    {
+        <div class="form-group">
+            <label>Chọn đáp án đúng</label>
+            <select class="form-control" @bind="questionDTO.RightAnswer">
+                <option value="True">Đúng</option>
+                <option value="False">Sai</option>
+            </select>
+        </div>
+    }
+
+    <button class="btn btn-primary" @onclick="SaveQuestion">Lưu</button>
+
+
+
+@code {
+    [Parameter] public Guid? id { get; set; }
+    private TestQuestionDTO questionDTO = new TestQuestionDTO();
+    private bool isEditing = false;
+    private List<string> answers = new List<string> { "", "", "", "" };
+    private List<string> selectedRightAnswers = new List<string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id.HasValue)
+        {
+            isEditing = true;
+            questionDTO = await http.GetFromJsonAsync<TestQuestionDTO>($"/api/TestQuestion/GetById?id={id.Value}");
+            if (questionDTO.Answers != null)
+            {
+                answers = questionDTO.Answers.Select(a => a.Answer).ToList();
+            }
+        }
+    }
+
+    private async Task SaveQuestion()
+    {
+
+        if (questionDTO.Type == 2)
+        {
+            // Lưu nhiều đáp án đúng dưới dạng chuỗi (phân tách bằng dấu phẩy)
+            questionDTO.RightAnswer = string.Join(",", selectedRightAnswers);
+        }
+        else if (questionDTO.Type == 1)
+        {
+            // Lưu 1 đáp án đúng
+            questionDTO.RightAnswer = selectedRightAnswers.FirstOrDefault();
+        }
+
+        // Lưu danh sách câu trả lời
+        questionDTO.Answers = answers.Select(a => new AnswerDTO { Answer = a }).ToList();
+
+        // Lưu hoặc cập nhật câu hỏi
+        if (isEditing)
+        {
+            await http.PutAsJsonAsync("/api/TestQuestion/Update_TestQuestion", questionDTO);
+        }
+        else
+        {
+            await http.PostAsJsonAsync("/api/TestQuestion/CreateQuestionWithAnswers", questionDTO);
+        }
+
+        // Điều hướng về trang danh sách câu hỏi
+        navi.NavigateTo("/Cauhoi");
+    }
+
+}
