@@ -18,7 +18,9 @@ namespace Data.Model
         public double Point_Final { get; set; }
         public double Point_Summary { get; set; }
         public bool IsView { get; set; } = false;
+        public Guid SemesterID { get; set; }
         public virtual Subject? Subject { get; set; }
         public virtual Student? Student { get;set; }
+        public virtual Semester? Semester { get; set; }
     }
 }
