@@ -18,6 +18,7 @@ namespace Data.Model
         public virtual User? User { get; set; }
         public virtual ICollection<Student_Class>? Student_Class { get; set; }
         public virtual ICollection<Exam_Room_Student>? Exam_Room_Student { get; set; }
-
+        public virtual ICollection<Learning_Summary>? Learning_Summaries { get; set; }
+        public virtual ICollection<Score>? Scores { get; set; }
     }
 }
