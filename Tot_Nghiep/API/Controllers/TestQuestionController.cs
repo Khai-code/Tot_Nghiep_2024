@@ -4,6 +4,7 @@ using Data.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Net.WebSockets;
 
 namespace API.Controllers
@@ -22,29 +23,82 @@ namespace API.Controllers
         {
             return Ok(_Dbcontext.testQuestionAnswers.ToList());
         }
-        [HttpGet("GetAll_TesTQuestion")]
-        public IActionResult Get_TestQuestion()
+        [HttpGet("GetAll_Question")]
+        public async Task<ActionResult<List<ListQuestionDTO>>> Get_Question()
         {
-            return Ok(_Dbcontext.testQuestions.ToList());
+            var list = await _Dbcontext.testQuestions
+                .Include(tc => tc.TestCode)
+                    .ThenInclude(tc => tc.Test)
+                        .ThenInclude(t => t.Subject)
+                            .ThenInclude(s => s.Subject_Grade)
+                                .ThenInclude(sg => sg.Grade)
+                .ToListAsync();
+            var groupedData = list.GroupBy(tc => new
+            {
+                code=tc.TestCode.Code,
+                name=tc.CreatedByName,
+                tc.TestCodeId,
+                GradeName = tc.TestCode.Test.Subject.Subject_Grade.FirstOrDefault().Grade.Name,
+                TestName = tc.TestCode.Test.Name,
+                SubjectName = tc.TestCode.Test.Subject.Name,
+                
+                        })
+                 .Select(group => new ListQuestionDTO
+                 {
+                     
+                     namegrade = group.Key.GradeName,
+                     nametest = group.Key.TestName,
+                     name = group.Key.SubjectName,
+                     usermane=group.Key.name,
+                     totalquestion = group.Count() ,
+                    
+                 })
+                 .ToList();
+
+            return Ok(groupedData);
+
+        }
+        [HttpGet("GetAll_TestQuestion")]
+        public async Task<ActionResult<List<TesCodeDTO>>> Get_TestQuestion()
+        {
+            try
+            {
+                var testCodes = await _Dbcontext.testCodes
+                    .Include(tc => tc.Test) 
+                    .ToListAsync();
+                var testDTOs = testCodes.Select(tc => new TesCodeDTO
+                {
+                    Id = tc.Id,         
+                    Name = tc.Test.Name 
+                }).ToList();
+
+                return Ok(testDTOs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi máy chủ: {ex.Message}");
+            }
+
         }
         [HttpPost("CreateQuestionWithAnswers")]
         public async Task<ActionResult> CreateQuestionWithAnswers(TestQuestionDTO testQuestionDTO)
         {
             try
             {
-                // Tạo câu hỏi mới
+                var username =  User.Claims.FirstOrDefault(c => c.Type == "name");
+               
                 var testQuestion = new TestQuestion
                 {
                     Id = Guid.NewGuid(),
                     QuestionName = testQuestionDTO.QuestionName,
                     Type = testQuestionDTO.Type,
                     RightAnswer = testQuestionDTO.RightAnswer,
-                    TestCodeId = testQuestionDTO.TestCodeId // Liên kết với TestCode
+                    TestCodeId = testQuestionDTO.TestCodeId ,
+                    CreatedByName=testQuestionDTO.CreatedByName,
                 };
 
                 await _Dbcontext.testQuestions.AddAsync(testQuestion);
 
-                // Tạo danh sách câu trả lời dựa trên số lượng câu trả lời mà người dùng nhập
                 if (testQuestionDTO.Answers != null && testQuestionDTO.Answers.Count > 0)
                 {
                     foreach (var answerDTO in testQuestionDTO.Answers)
@@ -52,8 +106,8 @@ namespace API.Controllers
                         var testAnswer = new TestQuestionAnswer
                         {
                             Id = Guid.NewGuid(),
-                            Answer = answerDTO.Answer, // Lấy câu trả lời từ answerDTO
-                            TestQuestionId = testQuestion.Id // Liên kết với câu hỏi
+                            Answer = answerDTO.Answer, 
+                            TestQuestionId = testQuestion.Id 
                         };
 
                         await _Dbcontext.testQuestionAnswers.AddAsync(testAnswer);

@@ -17,6 +17,7 @@ namespace Data.DTOs
         public int Type { get; set; }
         [MaxLength]
         public string RightAnswer { get; set; }
+        public string CreatedByName { get; set; }
         public Guid TestCodeId { get; set; }
         public List<AnswerDTO> Answers { get; set; }
        
