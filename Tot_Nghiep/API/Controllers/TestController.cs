@@ -3,6 +3,7 @@ using Data.DTOs;
 using Data.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace API.Controllers
 {
@@ -54,6 +55,22 @@ namespace API.Controllers
 
         }
 
+        private int RandomCodeTest(int length)
+        {
+            const string CodeNew = "0123456789";
+
+            Random random = new Random();
+
+            char[] code = new char[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                code[i] = CodeNew[random.Next(CodeNew.Length)];
+            }
+
+            return int.Parse(code);
+        }
+
         [HttpGet("get-list-test")]
         public async Task<List<TestGridDTO>> GetListTest([FromQuery] GetListTestQueryDTO input)
         {
@@ -79,16 +96,11 @@ namespace API.Controllers
                 query = query.Where(t => t.Test.Subject.Name.ToLower().Contains(input.SubjectName.ToLower()));
             }
 
-            if (input.Type.HasValue && input.Type.Value > -1)
-            {
-                query = query.Where(t => t.Test.Type == input.Type.Value);
-            }
-
             var testList = await query
                 .Select(t => new TestGridDTO
                 {
                     Id = t.Test.Id,
-                    Type = t.Test.Type,
+                    //Code = t.Test.Code,
                     Name = t.Test.Name,
                     Code = t.Code,
                     NumberOfTestCode = t.Test.NumberOfTestCode,
@@ -122,13 +134,14 @@ namespace API.Controllers
             {
                 Test test = new Test
                 {
-                    Type = testDTO.Type,
                     Name = testDTO.Name,
+                    Code = RandomCodeTest(6),
                     Minute = testDTO.Minute,
                     NumberOfTestCode = testDTO.NumberOfTestCode,
                     CreationTime = DateTime.Now,
                     Status = testDTO.Status,
-                    SubjectId = subject.Id
+                    SubjectId = subject.Id,
+                    PointTypeId = testDTO.PointTypeId,
                 };
                 await _DbContext.tests.AddAsync(test);
                 await _DbContext.SaveChangesAsync();
@@ -160,8 +173,8 @@ namespace API.Controllers
             var update = _DbContext.tests.FirstOrDefault(temp => temp.Id == testDTO.Id);
             if (update != null)
             {
-                update.Type = testDTO.Type;
                 update.Name = testDTO.Name;
+                update.Code = testDTO.Code;
                 update.Minute = testDTO.Minute;
                 update.NumberOfTestCode = testDTO.NumberOfTestCode;
                 update.CreationTime = testDTO.CreationTime;

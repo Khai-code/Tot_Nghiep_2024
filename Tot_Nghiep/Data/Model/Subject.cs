@@ -22,6 +22,9 @@ namespace Data.Model
         public virtual ICollection<Test> Test { get; set; } 
         public virtual ICollection<Exam> Exam { get; set; } 
         public virtual ICollection<Teacher_Subject> Teacher_Subject { get; set; } 
+        public virtual ICollection<Score>? Scores {  get; set; }
+        public virtual ICollection<Learning_Summary>? Learning_Summaries { get; set; }
+        public virtual ICollection<PointType_Subject>? PointType_Subjects { get; set; }
     }
 }
 

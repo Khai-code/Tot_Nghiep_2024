@@ -1,0 +1,82 @@
+﻿@page "/Lop"
+@using global::Data.Model
+@inject HttpClient http
+@layout Teacherlayout
+@inject NavigationManager navigationManager
+
+
+<h3>Danh Sách Lớp Học</h3>
+<button @onclick="Create">Thêm mới lớp</button>
+<hr>
+<table class="table">
+	<thead>
+		<tr>
+			<th>STT</th>
+			<th>Mã lớp</th>
+			<th>Tên lớp</th>
+			<th>Sĩ số</th>
+			<th>Giáo viên</th>
+			<th>Khối</th>
+			<th>Ghi chú</th>
+			<th>Hành động</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var classItem in classes)
+		{
+			<tr>
+				<td>@(classes.IndexOf(classItem) +1)</td>
+				<td>@classItem.Code</td>
+				<td>@classItem.Name</td>
+				<td>@classItem.MaxStudent</td>
+				<td>@classItem.TeacherId</td>
+				<td>@classItem.GradeId</td>
+				<td>@classItem.Status</td>
+				<td>
+					<button class="btn btn-warning" @onclick="(() => UpdateClass(classItem.Id))">Sửa</button>
+					<button class="btn btn-danger" @onclick="(() => DeleteClass(classItem.Id))">Xóa</button>
+					<button class="btn btn-info" @onclick="(() => DetailClass(classItem.Id))">Chi tiết</button>
+				</td>
+			</tr>
+		}
+		
+	</tbody>
+
+</table>
+
+@code {
+	private List<Class> classes = new List<Class>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		await LoadClasses();
+	}
+
+	private async Task LoadClasses()
+	{
+		classes = await http.GetFromJsonAsync<List<Class>>("api/Classes/get-all-class");
+	}
+
+	private void Create()
+	{
+		navigationManager.NavigateTo("/class/manage/create");
+	}
+
+	private void UpdateClass(Guid id)
+	{
+		navigationManager.NavigateTo($"/class/manage/update/{id}");
+	}
+
+	private async void DeleteClass(Guid id)
+	{
+		var response = await http.DeleteAsync($"api/Classes/delete-class/{id}");
+		if (response.IsSuccessStatusCode)
+		{
+			await LoadClasses();
+		}
+	}
+	private void DetailClass(Guid id)
+	{
+		navigationManager.NavigateTo($"/class/manage/detail/{id}");
+	}
+}
