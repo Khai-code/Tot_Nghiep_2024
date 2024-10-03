@@ -43,5 +43,10 @@ namespace Data.Database
         public DbSet<TestQuestionAnswer> testQuestionAnswers { get; set; }
         public DbSet<Exam_Room_TestCode> exam_Room_TestCodes { get; set; }
         public DbSet<Teacher_Subject> teacher_Subjects { get; set; }
+        public DbSet<Learning_Summary> learning_Summarys { get; set; }
+        public DbSet<Score> scores { get; set; }
+        public DbSet<PointType_Subject> pointType_Subjects { get; set; }
+        public DbSet<PointType> pointTypes { get; set; }
+        public DbSet<Semester> Semesters { get; set; }
     }
 }

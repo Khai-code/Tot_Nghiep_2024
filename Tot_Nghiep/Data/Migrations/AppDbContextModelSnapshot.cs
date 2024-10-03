@@ -249,6 +249,58 @@ namespace Data.Migrations
                     b.ToTable("grades");
                 });
 
+            modelBuilder.Entity("Data.Model.Learning_Summary", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Attendance")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsView")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("PointTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Point_15")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Point_45")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Point_Final")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Point_Midterm")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Point_Summary")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("SemesterID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PointTypeId");
+
+                    b.HasIndex("SemesterID");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("learning_Summarys");
+                });
+
             modelBuilder.Entity("Data.Model.Notification", b =>
                 {
                     b.Property<Guid>("Id")
@@ -302,6 +354,45 @@ namespace Data.Migrations
                     b.ToTable("notification_Classes");
                 });
 
+            modelBuilder.Entity("Data.Model.PointType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("pointTypes");
+                });
+
+            modelBuilder.Entity("Data.Model.PointType_Subject", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PointTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PointTypeId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("pointType_Subjects");
+                });
+
             modelBuilder.Entity("Data.Model.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -343,6 +434,56 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("rooms");
+                });
+
+            modelBuilder.Entity("Data.Model.Score", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PointTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Scores")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PointTypeId");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("scores");
+                });
+
+            modelBuilder.Entity("Data.Model.Semester", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Semesters");
                 });
 
             modelBuilder.Entity("Data.Model.Student", b =>
@@ -539,6 +680,9 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -552,16 +696,18 @@ namespace Data.Migrations
                     b.Property<int?>("NumberOfTestCode")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("PointTypeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<Guid>("SubjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("PointTypeId");
 
                     b.HasIndex("SubjectId");
 
@@ -823,6 +969,37 @@ namespace Data.Migrations
                     b.Navigation("Exam_Room_Student");
                 });
 
+            modelBuilder.Entity("Data.Model.Learning_Summary", b =>
+                {
+                    b.HasOne("Data.Model.PointType", null)
+                        .WithMany("Learning_Summaries")
+                        .HasForeignKey("PointTypeId");
+
+                    b.HasOne("Data.Model.Semester", "Semester")
+                        .WithMany("Learning_Summarys")
+                        .HasForeignKey("SemesterID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Model.Student", "Student")
+                        .WithMany("Learning_Summaries")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Model.Subject", "Subject")
+                        .WithMany("Learning_Summaries")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Semester");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("Data.Model.Notification_Class", b =>
                 {
                     b.HasOne("Data.Model.Class", "Class")
@@ -840,6 +1017,52 @@ namespace Data.Migrations
                     b.Navigation("Class");
 
                     b.Navigation("Notification");
+                });
+
+            modelBuilder.Entity("Data.Model.PointType_Subject", b =>
+                {
+                    b.HasOne("Data.Model.PointType", "PointType")
+                        .WithMany("PointType_Subjects")
+                        .HasForeignKey("PointTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Model.Subject", "Subject")
+                        .WithMany("PointType_Subjects")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PointType");
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("Data.Model.Score", b =>
+                {
+                    b.HasOne("Data.Model.PointType", "PointTypes")
+                        .WithMany("Scores")
+                        .HasForeignKey("PointTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Model.Student", "Students")
+                        .WithMany("Scores")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Model.Subject", "Subjects")
+                        .WithMany("Scores")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PointTypes");
+
+                    b.Navigation("Students");
+
+                    b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("Data.Model.Student", b =>
@@ -923,11 +1146,19 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Model.Test", b =>
                 {
+                    b.HasOne("Data.Model.PointType", "PointType")
+                        .WithMany("tests")
+                        .HasForeignKey("PointTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Model.Subject", "Subject")
                         .WithMany("Test")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("PointType");
 
                     b.Navigation("Subject");
                 });
@@ -1017,6 +1248,17 @@ namespace Data.Migrations
                     b.Navigation("Notification_Classe");
                 });
 
+            modelBuilder.Entity("Data.Model.PointType", b =>
+                {
+                    b.Navigation("Learning_Summaries");
+
+                    b.Navigation("PointType_Subjects");
+
+                    b.Navigation("Scores");
+
+                    b.Navigation("tests");
+                });
+
             modelBuilder.Entity("Data.Model.Role", b =>
                 {
                     b.Navigation("User");
@@ -1027,9 +1269,18 @@ namespace Data.Migrations
                     b.Navigation("Exam_Room");
                 });
 
+            modelBuilder.Entity("Data.Model.Semester", b =>
+                {
+                    b.Navigation("Learning_Summarys");
+                });
+
             modelBuilder.Entity("Data.Model.Student", b =>
                 {
                     b.Navigation("Exam_Room_Student");
+
+                    b.Navigation("Learning_Summaries");
+
+                    b.Navigation("Scores");
 
                     b.Navigation("Student_Class");
                 });
@@ -1037,6 +1288,12 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Model.Subject", b =>
                 {
                     b.Navigation("Exam");
+
+                    b.Navigation("Learning_Summaries");
+
+                    b.Navigation("PointType_Subjects");
+
+                    b.Navigation("Scores");
 
                     b.Navigation("Subject_Grade");
 
