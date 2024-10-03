@@ -1,4 +1,5 @@
 ﻿using Data.Database;
+using Data.DTOs;
 using Data.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,27 @@ namespace API.Controllers
         {
             var coute = await _db.students.CountAsync();
             return Ok(coute);
+        }
+
+        [HttpGet("get-all-student2")]
+        public async Task<ActionResult<List<StudentDTO>>> GetAllName()
+        {
+            var listStudent = await _db.students
+                .Include(er => er.User)
+                .Include(er => er.Student_Class)
+                .Select(er => new StudentDTO
+                {
+                    Id = er.Id,
+                    Code = er.Code,
+                    UserId = er.UserId,
+                    Name = er.User.FullName,
+                    Email = er.User.Email,
+                    DateOfBirth = er.User.DateOfBirth,
+                    PhoneNumber = er.User.PhoneNumber
+                })
+                .ToListAsync();
+
+            return Ok(listStudent);
         }
     }
 }

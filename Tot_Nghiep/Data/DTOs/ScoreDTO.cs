@@ -4,17 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Model
+namespace Data.DTOs
 {
-    public class PointType_Subject
+    public class ScoreDTO
     {
         public Guid Id { get; set; }
+        public Guid StudentId { get; set; }
         public Guid SubjectId { get; set; }
         public Guid PointTypeId { get; set; }
-        public int Quantity { get; set; }
-        public virtual Subject? Subject { get; set; }
-        public virtual PointType? PointType { get; set; }
-
-        
+        public double Scores { get; set; }
+        public string SubjectName { get; set; }
+        public string PointTypeName { get; set; }
     }
 }

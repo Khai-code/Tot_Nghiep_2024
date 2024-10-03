@@ -1,0 +1,72 @@
+﻿@* @page "/student-score"
+@using global::Data.Model
+@using global::Data.DTOs
+@using System.Net.Http.Json
+@layout Teacherlayout
+@inject HttpClient client
+@inject IHttpClientFactory clientFactory
+
+
+<h3 class="mb-4">Bảng điểm học sinh</h3>
+
+<div style="display: flex; flex-direction: column;">
+    @foreach (var student in students)
+    {
+        <div style="margin-bottom: 20px;">
+            <h4>@student.Name</h4>
+
+            <h5>Kỳ 1</h5>
+            <table class="table-fixed">
+                <thead>
+                    <tr>
+                        <th>Môn học</th>
+                        <th>Loại điểm</th>
+                        <th>Điểm số</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var subject in student.Semester1Scores)
+                    {
+                        @foreach (var scoreDetail in subject.ScoreDetails)
+                        {
+                            <tr>
+                                <td>@subject.Subject</td>
+                                <td>@scoreDetail.ScoreType</td>
+                                <td>@scoreDetail.Score</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+            <h5>Kỳ 2</h5>
+            <table class="table-fixed">
+                <thead>
+                    <tr>
+                        <th>Môn học</th>
+                        <th>Loại điểm</th>
+                        <th>Điểm số</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var subject in student.Semester2Scores)
+                    {
+                        @foreach (var scoreDetail in subject.ScoreDetails)
+                        {
+                            <tr>
+                                <td>@subject.Subject</td>
+                                <td>@scoreDetail.ScoreType</td>
+                                <td>@scoreDetail.Score</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@code {
+    private List<StudentDTO> students = new List<StudentDTO>();
+}
+ *@

@@ -1,0 +1,118 @@
+﻿@page "/quanlystudent"
+@using global::Data.Model
+@using global::Data.DTOs
+@using System.Net.Http.Json
+@layout Teacherlayout
+@inject HttpClient client
+@inject IHttpClientFactory clientFactory
+
+<h3 class="mb-4">Quản lý học sinh</h3>
+
+<div class="container student-management">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered custom-table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Mã HS</th>
+                            <th scope="col">Họ và tên</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Ngày sinh</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Điểm số</th>
+                            <th scope="col">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var n in listStudents)
+                        {
+                            <tr>
+                                <td>@(listStudents.IndexOf(n) + 1)</td>
+                                <td>@n.Code</td>
+                                <td>@n.Name</td>
+                                <td>@n.Email</td>
+                                <td>@n.DateOfBirth.ToShortDateString()</td>
+                                <td>@n.PhoneNumber</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm">Xem điểm số</button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">Viết đánh giá</button>
+                                    <button class="btn btn-success btn-sm">Tổng kết học tập</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .student-management {
+        margin-top: 20px;
+    }
+
+    .custom-table {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    thead.thead-dark th {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .table td, .table th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    button.btn {
+        margin: 5px;
+    }
+
+    button.btn-warning {
+        background-color: #FFCC66;
+        border-color: #FFCC66;
+    }
+
+    button.btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    button.btn-success {
+        background-color: #33FF00;
+        border-color: #33FF00;
+    }
+
+    button.btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+</style>
+
+@code {
+    private List<StudentDTO> listStudents = new List<StudentDTO>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var httpClient = clientFactory.CreateClient("student");
+        listStudents = await httpClient.GetFromJsonAsync<List<StudentDTO>>("https://localhost:7039/api/Student/get-all-student2");
+        StateHasChanged();
+    }
+}
