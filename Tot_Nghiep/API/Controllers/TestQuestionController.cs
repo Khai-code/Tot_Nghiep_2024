@@ -4,6 +4,8 @@ using Data.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Net.WebSockets;
 
@@ -23,10 +25,29 @@ namespace API.Controllers
         {
             return Ok(_Dbcontext.testQuestionAnswers.ToList());
         }
+        [HttpGet("get-question-details/{id}")]
+        public async Task<List<listdetailquestion>> GetQuestionDetails(Guid id)
+        {
+            var questionDetails = await _Dbcontext.testQuestions
+                .Where(q => q.TestCodeId == id)
+                .Select(q => new listdetailquestion
+                {
+                    Id = q.Id,
+                    Questionname = q.QuestionName,
+                    RightAnswer = q.RightAnswer,
+                    answer = q.TestQuestionAnswer.Select(a => new AnswerDTO
+                    {
+                        Answer = a.Answer,
+                    }).ToList()
+                }).ToListAsync();
+
+            return questionDetails;
+        }
+
         [HttpGet("GetAll_Question")]
         public async Task<ActionResult<List<ListQuestionDTO>>> Get_Question()
         {
-            var list = await _Dbcontext.testQuestions
+            var list = await _Dbcontext.testQuestions.Include(tc=>tc.TestQuestionAnswer)
                 .Include(tc => tc.TestCode)
                     .ThenInclude(tc => tc.Test)
                         .ThenInclude(t => t.Subject)
@@ -35,17 +56,20 @@ namespace API.Controllers
                 .ToListAsync();
             var groupedData = list.GroupBy(tc => new
             {
-                code=tc.TestCode.Code,
+               idnew= tc.TestCode,
+                id=tc.TestCode.Id,
                 name=tc.CreatedByName,
-                tc.TestCodeId,
+                 tc.TestCode.Id,
                 GradeName = tc.TestCode.Test.Subject.Subject_Grade.FirstOrDefault().Grade.Name,
                 TestName = tc.TestCode.Test.Name,
                 SubjectName = tc.TestCode.Test.Subject.Name,
+                code=tc.TestCode.Code,
                 
                         })
                  .Select(group => new ListQuestionDTO
                  {
-                     
+                     id=group.Key.Id,
+                     code=group.Key.code,
                      namegrade = group.Key.GradeName,
                      nametest = group.Key.TestName,
                      name = group.Key.SubjectName,
@@ -80,13 +104,15 @@ namespace API.Controllers
             }
 
         }
+
+
         [HttpPost("CreateQuestionWithAnswers")]
         public async Task<ActionResult> CreateQuestionWithAnswers(TestQuestionDTO testQuestionDTO)
         {
             try
             {
                 var username =  User.Claims.FirstOrDefault(c => c.Type == "name");
-               
+                
                 var testQuestion = new TestQuestion
                 {
                     Id = Guid.NewGuid(),
@@ -126,33 +152,29 @@ namespace API.Controllers
         {
             try
             {
-                // Tìm câu hỏi cần cập nhật
+                
                 var updateQuestion = _Dbcontext.testQuestions.FirstOrDefault(temp => temp.Id == testQuestionDTO.Id);
                 if (updateQuestion != null)
                 {
-                    // Cập nhật thông tin câu hỏi
+                  
                     updateQuestion.QuestionName = testQuestionDTO.QuestionName;
                     updateQuestion.Type = testQuestionDTO.Type;
                     updateQuestion.RightAnswer = testQuestionDTO.RightAnswer;
                     updateQuestion.TestCodeId = testQuestionDTO.TestCodeId;
 
-                    // Cập nhật từng câu trả lời
                     if (testQuestionDTO.Answers != null && testQuestionDTO.Answers.Count > 0)
                     {
                         foreach (var answerDTO in testQuestionDTO.Answers)
                         {
-                            // Tìm câu trả lời trong database dựa trên ID của nó
                             var existingAnswer = _Dbcontext.testQuestionAnswers
                                 .FirstOrDefault(a => a.Id == answerDTO.Id);
 
                             if (existingAnswer != null)
                             {
-                                // Nếu câu trả lời đã tồn tại, cập nhật thông tin
                                 existingAnswer.Answer = answerDTO.Answer;
                             }
                             else
                             {
-                                // Nếu câu trả lời chưa tồn tại, thêm mới
                                 var newAnswer = new TestQuestionAnswer
                                 {
                                     Id = Guid.NewGuid(),
@@ -189,5 +211,149 @@ namespace API.Controllers
             }
             return BadRequest("Xóa thất bại");
         }
+        [HttpGet("export")]
+        public IActionResult ExportToExcel()
+        {
+            // Lấy dữ liệu từ bảng Questions và Answers
+            var testQuestions = _Dbcontext.testQuestions.ToList();
+            var testAnswers = _Dbcontext.testQuestionAnswers.ToList();
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("TestQuestions");
+
+                // Thêm tiêu đề cột
+                worksheet.Cells[1, 1].Value = "ID";
+                worksheet.Cells[1, 2].Value = "Câu hỏi";
+                worksheet.Cells[1, 3].Value = "Câu A";
+                worksheet.Cells[1, 4].Value = "Câu B";
+                worksheet.Cells[1, 5].Value = "Câu C";
+                worksheet.Cells[1, 6].Value = "Câu D";
+                worksheet.Cells[1, 7].Value = "Câu đúng";
+
+                // Điền dữ liệu vào các ô
+                int row = 2;
+                foreach (var question in testQuestions)
+                {
+                    worksheet.Cells[row, 1].Value = question.Id;
+                    worksheet.Cells[row, 2].Value = question.QuestionName;
+
+                    // Lấy danh sách câu trả lời cho từng câu hỏi
+                    var answers = testAnswers.Where(a => a.TestQuestionId == question.Id).ToList();
+
+                    // Đặt câu trả lời vào các cột tương ứng
+                    for (int i = 0; i < answers.Count && i < 4; i++)
+                    {
+                        worksheet.Cells[row, 3 + i].Value = answers[i].Answer;
+                    }
+
+                    // Thêm câu trả lời đúng vào cột cuối
+                    worksheet.Cells[row, 7].Value = question.RightAnswer;
+
+                    row++;
+                }
+
+                // Định dạng file Excel
+                worksheet.Cells["A1:G1"].Style.Font.Bold = true;
+                worksheet.Cells.AutoFitColumns();
+
+                var stream = new MemoryStream(package.GetAsByteArray());
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "TestQuestions.xlsx");
+            }
+        }
+      
+        [HttpPost("import")]
+        public async Task<IActionResult> ImportFromExcel(IFormFile file)
+        {
+            if (file == null || file.Length <= 0)
+            {
+                return BadRequest("File không hợp lệ.");
+            }
+
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+
+                using (var package = new ExcelPackage(stream))
+                {
+                    var worksheet = package.Workbook.Worksheets[0]; // Lấy worksheet đầu tiên
+                    var rowCount = worksheet.Dimension.Rows;
+
+                    using (var transaction = await _Dbcontext.Database.BeginTransactionAsync())
+                    {
+                        try
+                        {
+                            for (int row = 2; row <= rowCount; row++)
+                            {
+                                // Khởi tạo dữ liệu từ file Excel
+                                //var Id= worksheet.Cells[row, 1].Value?.ToString();
+                                var questionName = worksheet.Cells[row, 2].Value?.ToString();
+                                var rightAnswer = worksheet.Cells[row, 7].Value?.ToString();
+                                var type = worksheet.Cells[row, 8].Value?.ToString();
+                                var answers = new List<string>();
+
+                                if (string.IsNullOrWhiteSpace(questionName) || string.IsNullOrWhiteSpace(rightAnswer) || string.IsNullOrWhiteSpace(type))
+                                {
+                                    return BadRequest($"Dữ liệu không hợp lệ tại dòng {row}. Vui lòng kiểm tra file Excel.");
+                                }
+
+                                if (!int.TryParse(type, out int parsedType))
+                                {
+                                    return BadRequest($"Giá trị không hợp lệ cho trường Type tại dòng {row}.");
+                                }
+
+                                for (int col = 3; col <= 6; col++)
+                                {
+                                    var answer = worksheet.Cells[row, col].Value?.ToString();
+                                    if (!string.IsNullOrEmpty(answer))
+                                    {
+                                        answers.Add(answer);
+                                    }
+                                }
+                                var testCodeId = Guid.Parse(""); 
+                                var testCode = await _Dbcontext.testCodes
+                                    .FirstOrDefaultAsync(tc => tc.Id == testCodeId);
+
+                                var question = new TestQuestion
+                                {
+                                    Id = Guid.NewGuid(),
+                                    QuestionName = questionName,
+                                    Type = int.Parse(type),
+                                    RightAnswer = rightAnswer,
+                                    CreatedByName = "ninh minh quang",
+                                    TestCodeId = testCode.Id
+                                };
+
+                                await _Dbcontext.testQuestions.AddAsync(question);
+                             
+                                foreach (var answer in answers)
+                                {
+                                    var answerEntity = new TestQuestionAnswer
+                                    {
+                                        TestQuestionId = question.Id,
+                                        Answer = answer
+                                    };
+                                    await _Dbcontext.testQuestionAnswers.AddAsync(answerEntity);
+                                }
+                            }
+
+                            // Lưu và commit transaction
+                            await _Dbcontext.SaveChangesAsync();
+                            await transaction.CommitAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            await transaction.RollbackAsync();
+                            var innerExceptionMessage = ex.InnerException?.Message ?? ex.Message;
+                            return StatusCode(500, $"Lỗi khi nhập dữ liệu: {innerExceptionMessage}");
+                        }
+                    }
+                }
+            }
+
+            return Ok("Dữ liệu đã được nhập thành công.");
+        }
+
+
     }
 }

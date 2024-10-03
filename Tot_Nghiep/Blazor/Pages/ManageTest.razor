@@ -31,13 +31,13 @@
                     </tr><tr>
                         <th scope="col"> <input @bind="queryDTO.Code" class="form-control" placeholder="Code" /></th>
                         <th scope="col"><input @bind="queryDTO.Name" class="form-control" placeholder="Name" /></th>
-                        @* <th scope="col">
+                        <th scope="col">
                             <select @bind="queryDTO.Type" class="form-control">
                                 <option value=-1>Chọn...</option>
                                 <option value=0>15 phút</option>
                                 <option value=1>60 phút</option>
                             </select>
-                        </th> *@
+                        </th>
                         <th scope="col"><input @bind="queryDTO.SubjectName" class="form-control" placeholder="Name" /></th>
                         <th scope="col"><input @bind="queryDTO.Creator" class="form-control" placeholder="Name" /></th>
                         <th scope="col"></th>
@@ -53,7 +53,7 @@
                     else if (!testList.ListTest.Any())
                     {
                         <tr>
-                            <td colspan="6" class="text-center">Khong tim thay de thi</td>
+                            <td colspan="6" class="text-center">không tìm thấy đề thi</td>
                         </tr>
                     }
                     else
@@ -63,7 +63,7 @@
                             <tr>
                                 <td>@test.Code</td>
                                 <td>@test.Name</td>
-                                @* <td>@(test.Type == 1 ? "60 phút" : "15 phút")</td> *@
+                                <td>@test.namepoint</td> 
                                 <td>@test.SubjectName</td>
                                 <td>Admin</td>
                                 <td>

@@ -29,13 +29,16 @@
                             <InputNumber class="form-control" @bind-Value="testDTO.NumberOfTestCode" />
                         </div>
 
-                        @* <div class="col-lg-6">
-                            <label>Chọn loại bài thi:</label>
-                            <InputSelect class="form-control" @bind-Value="testDTO.Type">
-                                <option value=1>60 phút</option>
-                                <option value=0>15 phút</option>
+                        <div class="col-lg-6">
+                            <label>Chọn điểm:</label>
+                            <InputSelect class="form-control" @bind-Value="testDTO.PointTypeId">
+                                <option value=1>--chọn điểm--</option>
+                                @foreach(var a in pointTypeDTOs)
+                                {
+                                    <option value="@a.Id">@a.Name</option>
+                                }
                             </InputSelect>
-                        </div> *@
+                        </div>
 
                         <div class="col-lg-6">
                             <label>Môn học:</label>
@@ -75,17 +78,20 @@
     private GetListTestQueryDTO queryDTO = new GetListTestQueryDTO();
     private List<SubjectDTO> lstSubject = new List<SubjectDTO>();
     private TestDTO testDTO = new TestDTO();
+    private List<PointTypeDTO> pointTypeDTOs = new List<PointTypeDTO>();
     protected override async void OnInitialized()
     {
         var httpClient = clientFactory.CreateClient("Subject");
         lstSubject = await httpClient.GetFromJsonAsync<List<SubjectDTO>>("https://localhost:7039/api/Subject/get-all-subject");
+        var http= clientFactory.CreateClient("PointType");
+        pointTypeDTOs = await httpClient.GetFromJsonAsync<List<PointTypeDTO>>("https://localhost:7039/api/Test/GetAll_pointtype");
         StateHasChanged();
         if (id.HasValue)
         {
             await GetTestDetail(id.Value);
         }
     }
-
+    
     private async Task GetTestDetail(Guid id)
     {
         var httpClient = clientFactory.CreateClient("Test");

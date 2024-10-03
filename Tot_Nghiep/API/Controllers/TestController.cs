@@ -12,6 +12,9 @@ namespace API.Controllers
     public class TestController : ControllerBase
     {
         AppDbContext _DbContext;
+    
+       
+
         public TestController(AppDbContext appDbContext)
         {
             _DbContext = appDbContext;
@@ -39,20 +42,7 @@ namespace API.Controllers
         [HttpGet("GetALl_Test")]
         public ActionResult GetALL_Test()
         {
-            //var test = _DbContext.tests.ToList();
-            //var testcode = _DbContext.testCodes.ToList();
-            //var resutl = new
-            //{
-            //    test = test,
-            //    testcode = testcode
-            //};
             return Ok(_DbContext.tests.ToList());
-            //var results = _DbContext.tests
-            //.Include(t => t.TestCodes) // Eager loading bảng test_code liên quan
-            //.ToList();
-
-            //return Ok(results);
-
         }
 
         private int RandomCodeTest(int length)
@@ -70,39 +60,34 @@ namespace API.Controllers
 
             return int.Parse(code);
         }
-
+        [HttpGet("GetAll_pointtype")]
+        public ActionResult GetAll()
+        {
+            return Ok(_DbContext.pointTypes.ToList());
+        }
+        
+        [HttpGet("get-detail-test/{id}")]
+        public async Task<IActionResult> GetListTest([FromRoute] Guid id)
+        {
+            var test = await _DbContext.tests.FindAsync(id);
+            return Ok(test);
+        }
         [HttpGet("get-list-test")]
         public async Task<List<TestGridDTO>> GetListTest([FromQuery] GetListTestQueryDTO input)
         {
-
-
             var query = _DbContext.testCodes
                 .Include(t => t.Test)
                 .Include(t => t.Test.Subject)
+                .Include(t=>t.Test.PointType)
                 .AsQueryable();
-
-            if (!string.IsNullOrEmpty(input.Code))
-            {
-                query = query.Where(t => t.Code.ToLower().Contains(input.Code.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(input.Name))
-            {
-                query = query.Where(t => t.Test.Name.ToLower().Contains(input.Name.ToLower())); // Using Contains for partial matches
-            }
-
-            if (!string.IsNullOrEmpty(input.SubjectName))
-            {
-                query = query.Where(t => t.Test.Subject.Name.ToLower().Contains(input.SubjectName.ToLower()));
-            }
-
+            
             var testList = await query
                 .Select(t => new TestGridDTO
                 {
                     Id = t.Test.Id,
-                    //Code = t.Test.Code,
+                    namepoint=t.Test.PointType.Name,
                     Name = t.Test.Name,
-                    Code = t.Code,
+                    Code = t.Test.Code.ToString(),
                     NumberOfTestCode = t.Test.NumberOfTestCode,
                     SubjectName = t.Test.Subject.Name,
                     Status = t.Status,
@@ -113,16 +98,11 @@ namespace API.Controllers
 
             return testList;
         }
-        [HttpGet("get-detail-test/{id}")]
-        public async Task<IActionResult> GetListTest([FromRoute] Guid id)
-        {
-            var test = await _DbContext.tests.FindAsync(id);
-            return Ok(test);
-        }
         [HttpPost("Post_Test")]
-        public async Task<ActionResult> Post_Test([FromBody] TestDTO testDTO)
+        public async Task<ActionResult> Post_Test(TestDTO testDTO)
         {
             var subject = await _DbContext.subjects.FirstOrDefaultAsync(temp => temp.Id == testDTO.SubjectId);
+            var point = await _DbContext.pointTypes.FirstOrDefaultAsync(temp => temp.Id == testDTO.PointTypeId);
 
             if (subject == null)
             {
@@ -134,6 +114,7 @@ namespace API.Controllers
             {
                 Test test = new Test
                 {
+                    Id = Guid.NewGuid(),
                     Name = testDTO.Name,
                     Code = RandomCodeTest(6),
                     Minute = testDTO.Minute,
@@ -144,21 +125,19 @@ namespace API.Controllers
                     PointTypeId = testDTO.PointTypeId,
                 };
                 await _DbContext.tests.AddAsync(test);
-                await _DbContext.SaveChangesAsync();
-
-                TestCode testCode = new TestCode
-                {
-                    Id = Guid.NewGuid(),
-                    Code = RandomCode(8),
-                    Status = 1,
-                    TestId = test.Id,
-                };
-
-                await _DbContext.testCodes.AddAsync(testCode);
-                await _DbContext.SaveChangesAsync();
-
+                await _DbContext.SaveChangesAsync(); 
+               
+                    TestCode testCode = new TestCode
+                    {
+                        Id = Guid.NewGuid(),
+                        Code = RandomCode(8),
+                        Status = 1,
+                        TestId = test.Id,
+                    };
+                  
+                await _DbContext.testCodes.AddRangeAsync(testCode);
+                await _DbContext.SaveChangesAsync();  
                 await transaction.CommitAsync();
-
                 return Ok(testCode);
             }
             catch (Exception ex)
@@ -180,11 +159,30 @@ namespace API.Controllers
                 update.CreationTime = testDTO.CreationTime;
                 update.Status = testDTO.Status;
                 update.SubjectId = testDTO.SubjectId;
+                update.PointTypeId = testDTO.PointTypeId;
                 _DbContext.tests.Update(update);
                 await _DbContext.SaveChangesAsync();
                 return Ok("update thành công");
             }
             return BadRequest("Update failed");
+        }
+        [HttpPost("post_pointype")]
+        public async Task<ActionResult> create_pointtype(PointTypeDTO pointType)
+        {
+            try
+            {
+                PointType point = new PointType
+                {
+                    Id = Guid.NewGuid(),
+                    Name = pointType.Name,
+                };
+                await _DbContext.pointTypes.AddAsync(point);
+                await _DbContext.SaveChangesAsync();
+                return Ok("thêm thành công");
+            }catch (Exception)
+            {
+                return BadRequest("thêm thất bại");
+            }
         }
         [HttpPut("Update_TestCode")]
         public async Task<ActionResult> Update_TestCode(TestCode testCode)

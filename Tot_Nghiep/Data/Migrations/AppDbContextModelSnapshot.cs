@@ -730,7 +730,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("TestCodeId")
+                    b.Property<Guid?>("TestCodeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Type")
@@ -1148,9 +1148,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Model.TestCode", "TestCode")
                         .WithMany("TestQuestion")
-                        .HasForeignKey("TestCodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TestCodeId");
 
                     b.Navigation("TestCode");
                 });

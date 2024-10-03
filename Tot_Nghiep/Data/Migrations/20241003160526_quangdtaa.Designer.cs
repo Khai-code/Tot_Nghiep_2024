@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241001185904_dataNew")]
-    partial class dataNew
+    [Migration("20241003160526_quangdtaa")]
+    partial class quangdtaa
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -720,6 +720,10 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CreatedByName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("QuestionName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -728,7 +732,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("TestCodeId")
+                    b.Property<Guid?>("TestCodeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Type")
@@ -1146,9 +1150,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Model.TestCode", "TestCode")
                         .WithMany("TestQuestion")
-                        .HasForeignKey("TestCodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TestCodeId");
 
                     b.Navigation("TestCode");
                 });

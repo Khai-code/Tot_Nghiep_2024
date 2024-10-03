@@ -15,5 +15,6 @@
         public virtual Subject? Subject { get; set; }
         public virtual PointType? PointType { get; set; }
         public virtual ICollection<TestCode>? TestCodes { get; set; }
+      
     }
 }
