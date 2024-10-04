@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class dataNew : Migration
+    public partial class data : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -476,6 +476,7 @@ namespace Data.Migrations
                     QuestionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     RightAnswer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedByName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TestCodeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

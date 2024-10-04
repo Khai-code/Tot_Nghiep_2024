@@ -14,6 +14,7 @@ namespace Data.DTOs
 
         [StringLength(30, ErrorMessage = "Code ko quá 30 ký tự")]
         public string Code { get; set; }
+        public string Name { get; set; }
         public int Status { get; set; }
         public Guid TestId { get; set; }
        

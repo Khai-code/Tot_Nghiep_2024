@@ -20,7 +20,9 @@ namespace Data.Configurations
             builder.HasOne(x => x.TestCode)
                 .WithMany(x => x.TestQuestion)
                 .HasForeignKey(x => x.TestCodeId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.NoAction).OnDelete(DeleteBehavior.Restrict);
+
+
         }
     }
 }

@@ -4,6 +4,7 @@ using Data.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241003064310_data")]
+    partial class data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -279,9 +281,6 @@ namespace Data.Migrations
                     b.Property<double>("Point_Summary")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("SemesterID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
@@ -291,8 +290,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PointTypeId");
-
-                    b.HasIndex("SemesterID");
 
                     b.HasIndex("StudentId");
 
@@ -463,27 +460,6 @@ namespace Data.Migrations
                     b.HasIndex("SubjectId");
 
                     b.ToTable("scores");
-                });
-
-            modelBuilder.Entity("Data.Model.Semester", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Semesters");
                 });
 
             modelBuilder.Entity("Data.Model.Student", b =>
@@ -756,7 +732,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("TestCodeId")
+                    b.Property<Guid>("TestCodeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Type")
@@ -979,12 +955,6 @@ namespace Data.Migrations
                         .WithMany("Learning_Summaries")
                         .HasForeignKey("PointTypeId");
 
-                    b.HasOne("Data.Model.Semester", "Semester")
-                        .WithMany("Learning_Summarys")
-                        .HasForeignKey("SemesterID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Data.Model.Student", "Student")
                         .WithMany("Learning_Summaries")
                         .HasForeignKey("StudentId")
@@ -996,8 +966,6 @@ namespace Data.Migrations
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Semester");
 
                     b.Navigation("Student");
 
@@ -1182,7 +1150,9 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Model.TestCode", "TestCode")
                         .WithMany("TestQuestion")
-                        .HasForeignKey("TestCodeId");
+                        .HasForeignKey("TestCodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TestCode");
                 });
@@ -1269,11 +1239,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Model.Room", b =>
                 {
                     b.Navigation("Exam_Room");
-                });
-
-            modelBuilder.Entity("Data.Model.Semester", b =>
-                {
-                    b.Navigation("Learning_Summarys");
                 });
 
             modelBuilder.Entity("Data.Model.Student", b =>
