@@ -4,6 +4,7 @@ using Data.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241002111111_Them_Semester")]
+    partial class Them_Semester
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -744,10 +746,6 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreatedByName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("QuestionName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -756,7 +754,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("TestCodeId")
+                    b.Property<Guid>("TestCodeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Type")
@@ -1182,7 +1180,9 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Model.TestCode", "TestCode")
                         .WithMany("TestQuestion")
-                        .HasForeignKey("TestCodeId");
+                        .HasForeignKey("TestCodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TestCode");
                 });
