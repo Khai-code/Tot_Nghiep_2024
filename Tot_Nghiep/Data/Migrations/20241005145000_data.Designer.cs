@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241003160526_quangdtaa")]
-    partial class quangdtaa
+    [Migration("20241005145000_data")]
+    partial class data
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -281,6 +281,9 @@ namespace Data.Migrations
                     b.Property<double>("Point_Summary")
                         .HasColumnType("float");
 
+                    b.Property<Guid>("SemesterID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
@@ -290,6 +293,8 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PointTypeId");
+
+                    b.HasIndex("SemesterID");
 
                     b.HasIndex("StudentId");
 
@@ -460,6 +465,27 @@ namespace Data.Migrations
                     b.HasIndex("SubjectId");
 
                     b.ToTable("scores");
+                });
+
+            modelBuilder.Entity("Data.Model.Semester", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Semesters");
                 });
 
             modelBuilder.Entity("Data.Model.Student", b =>
@@ -669,9 +695,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumberOfTestCode")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("PointTypeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -735,12 +758,17 @@ namespace Data.Migrations
                     b.Property<Guid?>("TestCodeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("TestId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TestCodeId");
+
+                    b.HasIndex("TestId");
 
                     b.ToTable("testQuestions");
                 });
@@ -955,6 +983,12 @@ namespace Data.Migrations
                         .WithMany("Learning_Summaries")
                         .HasForeignKey("PointTypeId");
 
+                    b.HasOne("Data.Model.Semester", "Semester")
+                        .WithMany("Learning_Summarys")
+                        .HasForeignKey("SemesterID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Model.Student", "Student")
                         .WithMany("Learning_Summaries")
                         .HasForeignKey("StudentId")
@@ -966,6 +1000,8 @@ namespace Data.Migrations
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Semester");
 
                     b.Navigation("Student");
 
@@ -1137,22 +1173,26 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Model.TestCode", b =>
                 {
-                    b.HasOne("Data.Model.Test", "Test")
-                        .WithMany("TestCodes")
+                    b.HasOne("Data.Model.Test", "Tests")
+                        .WithMany("testCodes")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Test");
+                    b.Navigation("Tests");
                 });
 
             modelBuilder.Entity("Data.Model.TestQuestion", b =>
                 {
-                    b.HasOne("Data.Model.TestCode", "TestCode")
+                    b.HasOne("Data.Model.TestCode", null)
                         .WithMany("TestQuestion")
                         .HasForeignKey("TestCodeId");
 
-                    b.Navigation("TestCode");
+                    b.HasOne("Data.Model.Test", "Tests")
+                        .WithMany("testQuestions")
+                        .HasForeignKey("TestId");
+
+                    b.Navigation("Tests");
                 });
 
             modelBuilder.Entity("Data.Model.TestQuestionAnswer", b =>
@@ -1239,6 +1279,11 @@ namespace Data.Migrations
                     b.Navigation("Exam_Room");
                 });
 
+            modelBuilder.Entity("Data.Model.Semester", b =>
+                {
+                    b.Navigation("Learning_Summarys");
+                });
+
             modelBuilder.Entity("Data.Model.Student", b =>
                 {
                     b.Navigation("Exam_Room_Student");
@@ -1280,7 +1325,9 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Model.Test", b =>
                 {
-                    b.Navigation("TestCodes");
+                    b.Navigation("testCodes");
+
+                    b.Navigation("testQuestions");
                 });
 
             modelBuilder.Entity("Data.Model.TestCode", b =>

@@ -10,7 +10,8 @@
         public Guid PointTypeId { get; set; }
         public string? Name { get; set; }
         public int? Minute { get; set; }
-        public int? NumberOfTestCode { get; set; }
+        //public int? NumberOfTestCode { get; set; }
+        public string ClassCode { get; set; }
 
     }
 }

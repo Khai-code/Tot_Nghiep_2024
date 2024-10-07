@@ -36,7 +36,7 @@
                             </div>
                             <div class="mb-3">
                                 <label>Gói đề:</label>
-                                <select @bind="testQuestionDTO.TestCodeId" class="form-control">
+                                <select @bind="testQuestionDTO.TestId" class="form-control">
                                     <option>--chọn gói đề--</option>
                                     @foreach (var a in testcode)
                                     {
@@ -297,7 +297,7 @@
     private List<listdetailquestion> testQuestions = new List<listdetailquestion>();
     private string Message;
     private AnswerDTO answerDTO = new AnswerDTO();
-    private List<TesCodeDTO> testcode = new List<TesCodeDTO>();
+    private List<TestDTO> testcode = new List<TestDTO>();//
     private List<ListQuestionDTO> listQuestionDTOs = new List<ListQuestionDTO>();
     private string username;
     protected override async Task OnInitializedAsync()
@@ -307,7 +307,7 @@
         {
             testQuestionDTO.Answers.Add(new AnswerDTO());
         }
-        testcode = await Http.GetFromJsonAsync<List<TesCodeDTO>>("api/TestQuestion/GetAll_TestQuestion");
+        testcode = await Http.GetFromJsonAsync<List<TestDTO>>("api/TestQuestion/GetAll_TestQuestion");//
         listQuestionDTOs = await Http.GetFromJsonAsync<List<ListQuestionDTO>>("https://localhost:7039/api/TestQuestion/GetAll_Question");
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
