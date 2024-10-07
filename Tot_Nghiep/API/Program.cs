@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using Data.Database;
 using Data.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,7 +10,6 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var m = "m";
 var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere");
-builder.Services.AddAutoMapper(typeof(Program));
 // Add services to the container.
 builder.Services.AddAuthentication(options =>
 {

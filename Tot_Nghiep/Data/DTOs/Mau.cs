@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Model
+namespace Data.DTOs
 {
-    public class TestQuestion
+    public class Mau
     {
         public Guid Id { get; set; }
         [MaxLength]
@@ -16,9 +15,6 @@ namespace Data.Model
         public int Type { get; set; }
         [MaxLength]
         public string RightAnswer { get; set; }
-        public string CreatedByName { get; set; }
-        public Guid? TestId { get; set; }
-        public virtual Test? Tests { get; set; }
-        public virtual ICollection<TestQuestionAnswer>? TestQuestionAnswer { get; set; }
+        public Guid? TestCodeId { get; set; }
     }
 }

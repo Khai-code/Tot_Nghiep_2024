@@ -1,65 +1,253 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\",
+  "WorkspaceRootPath": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\testquestiondtocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\testquestiondtocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\mapping\\mappingtestquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\mapping\\mappingtestquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\testquestion_testquestionanswersdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\testquestion_testquestionanswersdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\testquestion.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\testquestion.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Migrations\\20241003160526_quangdtaa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Data\\Migrations\\20241003160526_quangdtaa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\testquestiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\testquestiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\model\\testquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\model\\testquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\model\\testquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\model\\testquestionanswer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\testquestionanswersdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\testquestionanswersdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\model\\testquestionanswer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\model\\testquestionanswer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\configurations\\testquestionconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\configurations\\testquestionconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\createorupdatetest.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\createorupdatetest.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\pointtypedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\pointtypedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\testdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\testdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\testquestioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\testquestioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\model\\test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\model\\test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\managetest.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\model\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\model\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\notificationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\notificationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\test_class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\test_class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\model\\exam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\model\\exam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\database\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\database\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\configurations\\testcodeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\configurations\\testcodeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\configurations\\testconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\configurations\\testconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\testquestion.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\testquestion.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\configurations\\testquestionconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\configurations\\testquestionconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\mapping\\mappingtestquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\mapping\\mappingtestquestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\classescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\classescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\examhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\examhistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\examroomscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\examroomscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\examroomstudentanswershistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\examroomstudentanswershistoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\examroomtestcodecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\examroomtestcodecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\examscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\examscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\gradecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\gradecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\pointypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\pointypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\roomscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\roomscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\scorecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\scorecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\student_classcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\student_classcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\subjectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\subjectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\systemconfigcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\systemconfigcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\teachersubjectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\teachersubjectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFF47259-1231-4743-A19F-276BE8449D44}|API\\API.csproj|solutionrelative:api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\_host.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\_host.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\classes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\classes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\contact.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\contact.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\crudclasses.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\crudclasses.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\crudquestion.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\crudquestion.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\managetest.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\managetest.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\model\\testcode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\model\\testcode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\questionlist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\questionlist.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\tescodedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\scoreonline.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\scoreonline.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\teacher_examroom_index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\teacher_examroom_index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\teacher_managestudent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\teacher_managestudent.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\teacher_studentscore.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\teacher_studentscore.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\teacher_system.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\teacher_system.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\teacherindex.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\teacherindex.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\blazor\\pages\\thionline.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3F2E8C90-833C-4092-8249-20F87E709D7B}|Blazor\\Blazor.csproj|solutionrelative:blazor\\pages\\thionline.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\configurations\\classconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\configurations\\classconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\pointtypedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\pointtypedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\tescodedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\tescodedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|c:\\users\\minh-quang\\documents\\github\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\testresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|d:\\t\u00F4t nghi\u1EC7p\\tot_nghiep_2024\\tot_nghiep\\data\\dtos\\testresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A125FA76-CE0A-4A5C-B840-2C4407DCDE85}|Data\\Data.csproj|solutionrelative:data\\dtos\\testresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -73,179 +261,616 @@
           "SelectedChildIndex": 3,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:1:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TestController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\TestController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\TestController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\TestController.cs",
+              "RelativeToolTip": "API\\Controllers\\TestController.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAIwFoAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T08:54:38.038Z",
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Program.cs",
-              "RelativeDocumentMoniker": "API\\Program.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Program.cs*",
-              "RelativeToolTip": "API\\Program.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA8AAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "TestDTO.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestDTO.cs",
+              "RelativeDocumentMoniker": "Data\\DTOs\\TestDTO.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestDTO.cs",
+              "RelativeToolTip": "Data\\DTOs\\TestDTO.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA/wAwAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T16:37:36.881Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-05T01:45:11.359Z",
+              "IsPinned": true
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "MappingTestQuestion.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Mapping\\MappingTestQuestion.cs",
-              "RelativeDocumentMoniker": "Data\\Mapping\\MappingTestQuestion.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Mapping\\MappingTestQuestion.cs",
-              "RelativeToolTip": "Data\\Mapping\\MappingTestQuestion.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABEAAAAAAAAAA==",
+              "Title": "TestQuestion_TestQuestionAnswersDTO.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestQuestion_TestQuestionAnswersDTO.cs",
+              "RelativeDocumentMoniker": "Data\\DTOs\\TestQuestion_TestQuestionAnswersDTO.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestQuestion_TestQuestionAnswersDTO.cs",
+              "RelativeToolTip": "Data\\DTOs\\TestQuestion_TestQuestionAnswersDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T16:32:24.005Z",
+              "WhenOpened": "2024-10-06T09:05:18.539Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "20241003160526_quangdtaa.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Migrations\\20241003160526_quangdtaa.cs",
-              "RelativeDocumentMoniker": "Data\\Migrations\\20241003160526_quangdtaa.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Migrations\\20241003160526_quangdtaa.cs",
-              "RelativeToolTip": "Data\\Migrations\\20241003160526_quangdtaa.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "TestQuestionDTOController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\TestQuestionDTOController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\TestQuestionDTOController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\TestQuestionDTOController.cs",
+              "RelativeToolTip": "API\\Controllers\\TestQuestionDTOController.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAcwBQAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T16:05:27.041Z",
+              "WhenOpened": "2024-10-05T01:40:45.116Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TestQuestionDTO.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestQuestionDTO.cs",
-              "RelativeDocumentMoniker": "Data\\DTOs\\TestQuestionDTO.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestQuestionDTO.cs",
-              "RelativeToolTip": "Data\\DTOs\\TestQuestionDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T16:02:52.148Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "TestQuestion.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\TestQuestion.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\TestQuestion.cs",
               "RelativeDocumentMoniker": "Data\\Model\\TestQuestion.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\TestQuestion.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\TestQuestion.cs",
               "RelativeToolTip": "Data\\Model\\TestQuestion.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABMAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-03T16:02:37.942Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
+              "Title": "TestQuestionAnswersDTO.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestQuestionAnswersDTO.cs",
+              "RelativeDocumentMoniker": "Data\\DTOs\\TestQuestionAnswersDTO.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestQuestionAnswersDTO.cs",
+              "RelativeToolTip": "Data\\DTOs\\TestQuestionAnswersDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-06T09:04:37.61Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "TestQuestionAnswer.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\TestQuestionAnswer.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\TestQuestionAnswer.cs",
               "RelativeDocumentMoniker": "Data\\Model\\TestQuestionAnswer.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\TestQuestionAnswer.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\TestQuestionAnswer.cs",
               "RelativeToolTip": "Data\\Model\\TestQuestionAnswer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-03T16:02:33.765Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "TestQuestionConfig.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Configurations\\TestQuestionConfig.cs",
-              "RelativeDocumentMoniker": "Data\\Configurations\\TestQuestionConfig.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Configurations\\TestQuestionConfig.cs",
-              "RelativeToolTip": "Data\\Configurations\\TestQuestionConfig.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T16:01:28.901Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "PointTypeDTO.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\PointTypeDTO.cs",
-              "RelativeDocumentMoniker": "Data\\DTOs\\PointTypeDTO.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\PointTypeDTO.cs",
-              "RelativeToolTip": "Data\\DTOs\\PointTypeDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T15:54:51.033Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "TestQuestionController.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\TestQuestionController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\TestQuestionController.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\TestQuestionController.cs",
-              "RelativeToolTip": "API\\Controllers\\TestQuestionController.cs",
-              "ViewState": "AgIAADIBAAAAAAAAAAAAADgBAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-02T09:48:13.621Z",
-              "EditorCaption": ""
+              "DocumentIndex": 5,
+              "Title": "CreateOrUpdateTest.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\CreateOrUpdateTest.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\CreateOrUpdateTest.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\CreateOrUpdateTest.razor",
+              "RelativeToolTip": "Blazor\\Pages\\CreateOrUpdateTest.razor",
+              "ViewState": "AgIAABUAAAAAAAAAAAAcwCkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-04T17:39:45.015Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "TestController.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\TestController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\TestController.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\TestController.cs",
-              "RelativeToolTip": "API\\Controllers\\TestController.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAowEQAAAApAAAAAAAAAA==",
+              "Title": "Test.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\Test.cs",
+              "RelativeDocumentMoniker": "Data\\Model\\Test.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\Test.cs",
+              "RelativeToolTip": "Data\\Model\\Test.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T08:54:38.038Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-05T01:18:51.275Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Testquestion.razor",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Testquestion.razor",
-              "RelativeDocumentMoniker": "Blazor\\Pages\\Testquestion.razor",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Testquestion.razor",
-              "RelativeToolTip": "Blazor\\Pages\\Testquestion.razor",
-              "ViewState": "AgIAAJkAAAAAAAAAAAAAwB0BAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-03T07:34:34.458Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "TesCodeDTO.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TesCodeDTO.cs",
-              "RelativeDocumentMoniker": "Data\\DTOs\\TesCodeDTO.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TesCodeDTO.cs",
-              "RelativeToolTip": "Data\\DTOs\\TesCodeDTO.cs",
+              "DocumentIndex": 9,
+              "Title": "Class.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\Class.cs",
+              "RelativeDocumentMoniker": "Data\\Model\\Class.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\Class.cs",
+              "RelativeToolTip": "Data\\Model\\Class.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T02:07:53.234Z"
+              "WhenOpened": "2024-10-05T14:39:51.841Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "TestCodeConfig.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Configurations\\TestCodeConfig.cs",
+              "RelativeDocumentMoniker": "Data\\Configurations\\TestCodeConfig.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Configurations\\TestCodeConfig.cs",
+              "RelativeToolTip": "Data\\Configurations\\TestCodeConfig.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAUwBoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:50:42.375Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Exam.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\Exam.cs",
+              "RelativeDocumentMoniker": "Data\\Model\\Exam.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\Exam.cs",
+              "RelativeToolTip": "Data\\Model\\Exam.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T02:03:33.516Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "NotificationController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\NotificationController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\NotificationController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\NotificationController.cs",
+              "RelativeToolTip": "API\\Controllers\\NotificationController.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:20.121Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
+              "Title": "Test_Class.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\Test_Class.cs",
+              "RelativeDocumentMoniker": "Data\\DTOs\\Test_Class.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\Test_Class.cs",
+              "RelativeToolTip": "Data\\DTOs\\Test_Class.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T02:59:27.485Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "TestConfig.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Configurations\\TestConfig.cs",
+              "RelativeDocumentMoniker": "Data\\Configurations\\TestConfig.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Configurations\\TestConfig.cs",
+              "RelativeToolTip": "Data\\Configurations\\TestConfig.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAqwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:46:15.521Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Database\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\Database\\AppDbContext.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Database\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\Database\\AppDbContext.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:44:22.349Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\appsettings.json",
+              "RelativeDocumentMoniker": "API\\appsettings.json",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\appsettings.json",
+              "RelativeToolTip": "API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-10-04T17:36:27.312Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Program.cs",
+              "RelativeDocumentMoniker": "API\\Program.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Program.cs",
+              "RelativeToolTip": "API\\Program.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAADsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T16:37:36.881Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "MappingTestQuestion.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Mapping\\MappingTestQuestion.cs",
+              "RelativeDocumentMoniker": "Data\\Mapping\\MappingTestQuestion.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Mapping\\MappingTestQuestion.cs",
+              "RelativeToolTip": "Data\\Mapping\\MappingTestQuestion.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T16:32:24.005Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Testquestion.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Testquestion.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Testquestion.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Testquestion.razor",
+              "RelativeToolTip": "Blazor\\Pages\\Testquestion.razor",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAQwJ4AAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-03T07:34:34.458Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "TestQuestionConfig.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Configurations\\TestQuestionConfig.cs",
+              "RelativeDocumentMoniker": "Data\\Configurations\\TestQuestionConfig.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Configurations\\TestQuestionConfig.cs",
+              "RelativeToolTip": "Data\\Configurations\\TestQuestionConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T16:01:28.901Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "UserDTO.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\UserDTO.cs",
+              "RelativeDocumentMoniker": "Data\\DTOs\\UserDTO.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\UserDTO.cs",
+              "RelativeToolTip": "Data\\DTOs\\UserDTO.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAqwBsAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:44:30.556Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ExamHistoriesController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamHistoriesController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ExamHistoriesController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamHistoriesController.cs",
+              "RelativeToolTip": "API\\Controllers\\ExamHistoriesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:13.78Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ExamRoomsController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamRoomsController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ExamRoomsController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamRoomsController.cs",
+              "RelativeToolTip": "API\\Controllers\\ExamRoomsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:15.021Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "ExamRoomStudentAnswersHistoriesController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
+              "RelativeToolTip": "API\\Controllers\\ExamRoomStudentAnswersHistoriesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:15.957Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ClassesController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ClassesController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ClassesController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ClassesController.cs",
+              "RelativeToolTip": "API\\Controllers\\ClassesController.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAYwDkAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:12.168Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ExamRoomTestCodeController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamRoomTestCodeController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ExamRoomTestCodeController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamRoomTestCodeController.cs",
+              "RelativeToolTip": "API\\Controllers\\ExamRoomTestCodeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:16.929Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "ExamsController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamsController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ExamsController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ExamsController.cs",
+              "RelativeToolTip": "API\\Controllers\\ExamsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:17.978Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "GradeController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\GradeController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\GradeController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\GradeController.cs",
+              "RelativeToolTip": "API\\Controllers\\GradeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:19.282Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "PointypeController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\PointypeController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\PointypeController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\PointypeController.cs",
+              "RelativeToolTip": "API\\Controllers\\PointypeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:21.269Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "RoleController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\RoleController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\RoleController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\RoleController.cs",
+              "RelativeToolTip": "API\\Controllers\\RoleController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:22.362Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "RoomsController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\RoomsController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\RoomsController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\RoomsController.cs",
+              "RelativeToolTip": "API\\Controllers\\RoomsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:23.27Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "ScoreController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ScoreController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ScoreController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\ScoreController.cs",
+              "RelativeToolTip": "API\\Controllers\\ScoreController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:25.652Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "StudentController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\StudentController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\StudentController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\StudentController.cs",
+              "RelativeToolTip": "API\\Controllers\\StudentController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:28.101Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "Student_ClassController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\Student_ClassController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\Student_ClassController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\Student_ClassController.cs",
+              "RelativeToolTip": "API\\Controllers\\Student_ClassController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:27.043Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "SubjectController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\SubjectController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\SubjectController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\SubjectController.cs",
+              "RelativeToolTip": "API\\Controllers\\SubjectController.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T17:39:59.903Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "SystemConfigController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\SystemConfigController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\SystemConfigController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\SystemConfigController.cs",
+              "RelativeToolTip": "API\\Controllers\\SystemConfigController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:29.335Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "TeacherController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\TeacherController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\TeacherController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\TeacherController.cs",
+              "RelativeToolTip": "API\\Controllers\\TeacherController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:32.878Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "TeacherSubjectController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\TeacherSubjectController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\TeacherSubjectController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\TeacherSubjectController.cs",
+              "RelativeToolTip": "API\\Controllers\\TeacherSubjectController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:32:33.859Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\UserController.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\API\\Controllers\\UserController.cs",
+              "RelativeToolTip": "API\\Controllers\\UserController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:36:07.901Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "_Host.cshtml",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\_Host.cshtml",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\_Host.cshtml",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\_Host.cshtml",
+              "RelativeToolTip": "Blazor\\Pages\\_Host.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:16.331Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\_Layout.cshtml",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\_Layout.cshtml",
+              "RelativeToolTip": "Blazor\\Pages\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:17.581Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "Classes.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Classes.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Classes.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Classes.razor",
+              "RelativeToolTip": "Blazor\\Pages\\Classes.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:18.884Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "Contact.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Contact.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Contact.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Contact.razor",
+              "RelativeToolTip": "Blazor\\Pages\\Contact.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:19.942Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "Counter.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Counter.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Counter.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Counter.razor",
+              "RelativeToolTip": "Blazor\\Pages\\Counter.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:21.015Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "CRUDClasses.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\CRUDClasses.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\CRUDClasses.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\CRUDClasses.razor",
+              "RelativeToolTip": "Blazor\\Pages\\CRUDClasses.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:41:43.373Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "CRUDQuestion.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\CRUDQuestion.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\CRUDQuestion.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\CRUDQuestion.razor",
+              "RelativeToolTip": "Blazor\\Pages\\CRUDQuestion.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-04T17:39:43.823Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "Error.cshtml",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Error.cshtml",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Error.cshtml",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Error.cshtml",
+              "RelativeToolTip": "Blazor\\Pages\\Error.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:26.022Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "Index.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Index.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Index.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Index.razor",
+              "RelativeToolTip": "Blazor\\Pages\\Index.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:27.396Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
               "Title": "ManageTest.razor",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\ManageTest.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\ManageTest.razor",
               "RelativeDocumentMoniker": "Blazor\\Pages\\ManageTest.razor",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\ManageTest.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\ManageTest.razor",
               "RelativeToolTip": "Blazor\\Pages\\ManageTest.razor",
               "ViewState": "AgIAAB4AAAAAAAAAAAAAADwAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -253,27 +878,147 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 50,
+              "Title": "QuestionList.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\QuestionList.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\QuestionList.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\QuestionList.razor",
+              "RelativeToolTip": "Blazor\\Pages\\QuestionList.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:31.702Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "Scoreonline.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Scoreonline.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Scoreonline.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Scoreonline.razor",
+              "RelativeToolTip": "Blazor\\Pages\\Scoreonline.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:33.336Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "Teacher_ExamRoom_Index.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Teacher_ExamRoom_Index.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Teacher_ExamRoom_Index.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Teacher_ExamRoom_Index.razor",
+              "RelativeToolTip": "Blazor\\Pages\\Teacher_ExamRoom_Index.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:35.045Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "Teacher_ManageStudent.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Teacher_ManageStudent.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Teacher_ManageStudent.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Teacher_ManageStudent.razor",
+              "RelativeToolTip": "Blazor\\Pages\\Teacher_ManageStudent.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:36.583Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "Teacher_StudentScore.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Teacher_StudentScore.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Teacher_StudentScore.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Teacher_StudentScore.razor",
+              "RelativeToolTip": "Blazor\\Pages\\Teacher_StudentScore.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:37.651Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "Teacher_System.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Teacher_System.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Teacher_System.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Teacher_System.razor",
+              "RelativeToolTip": "Blazor\\Pages\\Teacher_System.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:39.48Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "TeacherIndex.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\TeacherIndex.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\TeacherIndex.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\TeacherIndex.razor",
+              "RelativeToolTip": "Blazor\\Pages\\TeacherIndex.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:40.756Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "Thionline.razor",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Thionline.razor",
+              "RelativeDocumentMoniker": "Blazor\\Pages\\Thionline.razor",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Blazor\\Pages\\Thionline.razor",
+              "RelativeToolTip": "Blazor\\Pages\\Thionline.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-05T01:36:43.801Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "ClassConfig.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Configurations\\ClassConfig.cs",
+              "RelativeDocumentMoniker": "Data\\Configurations\\ClassConfig.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Configurations\\ClassConfig.cs",
+              "RelativeToolTip": "Data\\Configurations\\ClassConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T01:36:11.559Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "PointTypeDTO.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\PointTypeDTO.cs",
+              "RelativeDocumentMoniker": "Data\\DTOs\\PointTypeDTO.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\PointTypeDTO.cs",
+              "RelativeToolTip": "Data\\DTOs\\PointTypeDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T15:54:51.033Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "TesCodeDTO.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TesCodeDTO.cs",
+              "RelativeDocumentMoniker": "Data\\DTOs\\TesCodeDTO.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TesCodeDTO.cs",
+              "RelativeToolTip": "Data\\DTOs\\TesCodeDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-03T02:07:53.234Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
               "Title": "TestResponseDTO.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestResponseDTO.cs",
+              "DocumentMoniker": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestResponseDTO.cs",
               "RelativeDocumentMoniker": "Data\\DTOs\\TestResponseDTO.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestResponseDTO.cs",
+              "ToolTip": "D:\\T\u00F4t nghi\u1EC7p\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\DTOs\\TestResponseDTO.cs",
               "RelativeToolTip": "Data\\DTOs\\TestResponseDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-03T01:44:19.45Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "TestCode.cs",
-              "DocumentMoniker": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\TestCode.cs",
-              "RelativeDocumentMoniker": "Data\\Model\\TestCode.cs",
-              "ToolTip": "C:\\Users\\MINH-QUANG\\Documents\\GitHub\\Tot_Nghiep_2024\\Tot_Nghiep\\Data\\Model\\TestCode.cs",
-              "RelativeToolTip": "Data\\Model\\TestCode.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAIBJwAoAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-03T01:37:17.196Z"
             }
           ]
         }

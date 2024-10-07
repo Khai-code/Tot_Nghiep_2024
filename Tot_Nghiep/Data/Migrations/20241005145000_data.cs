@@ -78,6 +78,20 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Semesters",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Semesters", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "subjects",
                 columns: table => new
                 {
@@ -220,7 +234,6 @@ namespace Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Code = table.Column<int>(type: "int", nullable: false),
                     Minute = table.Column<int>(type: "int", nullable: true),
-                    NumberOfTestCode = table.Column<int>(type: "int", nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -315,6 +328,7 @@ namespace Data.Migrations
                     Point_Final = table.Column<double>(type: "float", nullable: false),
                     Point_Summary = table.Column<double>(type: "float", nullable: false),
                     IsView = table.Column<bool>(type: "bit", nullable: false),
+                    SemesterID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PointTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -325,6 +339,12 @@ namespace Data.Migrations
                         column: x => x.PointTypeId,
                         principalTable: "pointTypes",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_learning_Summarys_Semesters_SemesterID",
+                        column: x => x.SemesterID,
+                        principalTable: "Semesters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_learning_Summarys_students_StudentId",
                         column: x => x.StudentId,
@@ -422,13 +442,13 @@ namespace Data.Migrations
                         column: x => x.ExamId,
                         principalTable: "exams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_exam_Rooms_rooms_RoomId",
                         column: x => x.RoomId,
                         principalTable: "rooms",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_exam_Rooms_teachers_TeacherId1",
                         column: x => x.TeacherId1,
@@ -477,7 +497,8 @@ namespace Data.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     RightAnswer = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedByName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TestCodeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TestCodeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -486,8 +507,12 @@ namespace Data.Migrations
                         name: "FK_testQuestions_testCodes_TestCodeId",
                         column: x => x.TestCodeId,
                         principalTable: "testCodes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_testQuestions_tests_TestId",
+                        column: x => x.TestId,
+                        principalTable: "tests",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -739,6 +764,11 @@ namespace Data.Migrations
                 column: "PointTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_learning_Summarys_SemesterID",
+                table: "learning_Summarys",
+                column: "SemesterID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_learning_Summarys_StudentId",
                 table: "learning_Summarys",
                 column: "StudentId");
@@ -839,6 +869,11 @@ namespace Data.Migrations
                 column: "TestCodeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_testQuestions_TestId",
+                table: "testQuestions",
+                column: "TestId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tests_PointTypeId",
                 table: "tests",
                 column: "PointTypeId");
@@ -891,6 +926,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "exam_Room_Students");
+
+            migrationBuilder.DropTable(
+                name: "Semesters");
 
             migrationBuilder.DropTable(
                 name: "notifications");

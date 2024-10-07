@@ -29,7 +29,7 @@ namespace API.Controllers
         public async Task<List<listdetailquestion>> GetQuestionDetails(Guid id)
         {
             var questionDetails = await _Dbcontext.testQuestions
-                .Where(q => q.TestCodeId == id)
+                .Where(q => q.TestId == id)
                 .Select(q => new listdetailquestion
                 {
                     Id = q.Id,
@@ -48,28 +48,28 @@ namespace API.Controllers
         public async Task<ActionResult<List<ListQuestionDTO>>> Get_Question()
         {
             var list = await _Dbcontext.testQuestions.Include(tc=>tc.TestQuestionAnswer)
-                .Include(tc => tc.TestCode)
-                    .ThenInclude(tc => tc.Test)
+                .Include(tc => tc.Tests)
+
                         .ThenInclude(t => t.Subject)
                             .ThenInclude(s => s.Subject_Grade)
                                 .ThenInclude(sg => sg.Grade)
                 .ToListAsync();
             var groupedData = list.GroupBy(tc => new
             {
-               idnew= tc.TestCode,
-                id=tc.TestCode.Id,
+               idnew= tc.Tests,
+                id=tc.Tests.Id,
                 name=tc.CreatedByName,
-                 tc.TestCode.Id,
-                GradeName = tc.TestCode.Test.Subject.Subject_Grade.FirstOrDefault().Grade.Name,
-                TestName = tc.TestCode.Test.Name,
-                SubjectName = tc.TestCode.Test.Subject.Name,
-                code=tc.TestCode.Code,
+                 tc.Tests.Id,
+                GradeName = tc.Tests.Subject.Subject_Grade.FirstOrDefault().Grade.Name,
+                TestName = tc.Tests.Name,
+                SubjectName = tc.Tests.Subject.Name,
+                code=tc.Tests.Code,
                 
                         })
                  .Select(group => new ListQuestionDTO
                  {
                      id=group.Key.Id,
-                     code=group.Key.code,
+                     //code= group.Key.code,
                      namegrade = group.Key.GradeName,
                      nametest = group.Key.TestName,
                      name = group.Key.SubjectName,
@@ -88,12 +88,12 @@ namespace API.Controllers
             try
             {
                 var testCodes = await _Dbcontext.testCodes
-                    .Include(tc => tc.Test) 
+                    .Include(tc => tc.Tests) 
                     .ToListAsync();
                 var testDTOs = testCodes.Select(tc => new TesCodeDTO
                 {
                     Id = tc.Id,         
-                    Name = tc.Test.Name 
+                    Name = tc.Tests.Name 
                 }).ToList();
 
                 return Ok(testDTOs);
@@ -119,7 +119,7 @@ namespace API.Controllers
                     QuestionName = testQuestionDTO.QuestionName,
                     Type = testQuestionDTO.Type,
                     RightAnswer = testQuestionDTO.RightAnswer,
-                    TestCodeId = testQuestionDTO.TestCodeId ,
+                    TestId = testQuestionDTO.TestId ,
                     CreatedByName=testQuestionDTO.CreatedByName,
                 };
 
@@ -160,7 +160,7 @@ namespace API.Controllers
                     updateQuestion.QuestionName = testQuestionDTO.QuestionName;
                     updateQuestion.Type = testQuestionDTO.Type;
                     updateQuestion.RightAnswer = testQuestionDTO.RightAnswer;
-                    updateQuestion.TestCodeId = testQuestionDTO.TestCodeId;
+                    updateQuestion.TestId = testQuestionDTO.TestId;
 
                     if (testQuestionDTO.Answers != null && testQuestionDTO.Answers.Count > 0)
                     {
@@ -321,7 +321,7 @@ namespace API.Controllers
                                     Type = int.Parse(type),
                                     RightAnswer = rightAnswer,
                                     CreatedByName = "ninh minh quang",
-                                    TestCodeId = testCode.Id
+                                    TestId = testCode.Id
                                 };
 
                                 await _Dbcontext.testQuestions.AddAsync(question);

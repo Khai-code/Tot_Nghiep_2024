@@ -693,9 +693,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumberOfTestCode")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("PointTypeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -759,12 +756,17 @@ namespace Data.Migrations
                     b.Property<Guid?>("TestCodeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("TestId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TestCodeId");
+
+                    b.HasIndex("TestId");
 
                     b.ToTable("testQuestions");
                 });
@@ -1169,22 +1171,26 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Model.TestCode", b =>
                 {
-                    b.HasOne("Data.Model.Test", "Test")
-                        .WithMany("TestCodes")
+                    b.HasOne("Data.Model.Test", "Tests")
+                        .WithMany("testCodes")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Test");
+                    b.Navigation("Tests");
                 });
 
             modelBuilder.Entity("Data.Model.TestQuestion", b =>
                 {
-                    b.HasOne("Data.Model.TestCode", "TestCode")
+                    b.HasOne("Data.Model.TestCode", null)
                         .WithMany("TestQuestion")
                         .HasForeignKey("TestCodeId");
 
-                    b.Navigation("TestCode");
+                    b.HasOne("Data.Model.Test", "Tests")
+                        .WithMany("testQuestions")
+                        .HasForeignKey("TestId");
+
+                    b.Navigation("Tests");
                 });
 
             modelBuilder.Entity("Data.Model.TestQuestionAnswer", b =>
@@ -1317,7 +1323,9 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Model.Test", b =>
                 {
-                    b.Navigation("TestCodes");
+                    b.Navigation("testCodes");
+
+                    b.Navigation("testQuestions");
                 });
 
             modelBuilder.Entity("Data.Model.TestCode", b =>
