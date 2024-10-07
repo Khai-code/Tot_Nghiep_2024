@@ -1,0 +1,442 @@
+﻿@page "/create-question"
+@using global::Data.DTOs
+@layout Teacherlayout
+@inject HttpClient Http
+@inject IJSRuntime jsruntime
+@inject NavigationManager navigate
+<PageTitle>question</PageTitle>
+@using System.Net.Http.Json
+<div class="container">
+    <div class="mt-3  bg-white rounded-3 d-flex justify-content-end ">
+        <button class="btn btn-primary" @onclick="show">tạo câu hỏi</button>
+        <button class="btn btn-warning"><i class="bi bi-play"></i>Sinh đề</button>
+    </div>
+    <div class="modal fade @(modalVisibles ? "show" : "")" tabindex="-1" style="display:@(modalVisibles ? "block" : "none")" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tạo câu hỏi mới</h5>
+                    <button type="button" class="btn-close" @onclick="close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row pt-4">
+                        <!-- Cột bên trái -->
+                        <div class="col-lg-6 mb-3">
+                            <div class="mb-3">
+                                <label>Câu hỏi:</label>
+                                <input type="text" @bind="testQuestionDTO.QuestionName" class="form-control" placeholder="Nhập câu hỏi" />
+                            </div>
+                            <div class="mb-3">
+                                <label>Mức độ tư duy:</label>
+                                <select @bind="testQuestionDTO.Type" class="form-control">
+                                    <option value="0">Dễ</option>
+                                    <option value="1">Trung bình</option>
+                                    <option value="2">Khó</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label>Gói đề:</label>
+                                <select @bind="testQuestionDTO.TestId" class="form-control">
+                                    <option>--chọn gói đề--</option>
+                                    @foreach (var a in testcode)
+                                    {
+                                        <option value="@a.Id">@a.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" @onclick="CreateQuestionWithAnswers">Lưu</button>
+                            <button type="button" class="btn btn-secondary" @onclick="AddAnswer">Thêm câu trả lời</button>
+                        </div>
+
+                        <!-- Cột bên phải -->
+                        <div class="col-lg-6 mb-3" style="padding-left:50px">
+                            <label>Câu trả lời:</label>
+                            <div>
+                                @for (int i = 0; i < Math.Max(4, testQuestionDTO.Answers.Count); i++)
+                                {
+                                    var currentAnswer = (i < testQuestionDTO.Answers.Count) ? testQuestionDTO.Answers[i] : new AnswerDTO();
+
+                                    <div class="d-flex align-items-center mb-3">
+                                        <!-- Input trả lời -->
+                                        <input type="text" @bind="currentAnswer.Answer" class="form-control w-75 me-2" placeholder="Nhập câu trả lời" />
+                                        <!-- Nút chọn câu đúng -->
+                                        <input type="radio" name="RightAnswer" class="me-2" @onclick="() => SetRightAnswer(currentAnswer.Answer)" checked="@IsRightAnswer(currentAnswer.Answer)" />
+                                        <!-- Nút xóa -->
+                                        <span type="button" class="text-danger" @onclick="() => RemoveAnswer(currentAnswer)">
+                                            <i class="bi bi-trash3"></i>
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="close">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="table-responsive">
+            <table class="table table-bordered text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Mã câu hỏi</th>
+                        <th scope="col">Gói đề</th>
+                        <th scope="col">Môn</th>
+                        <th scope="col">Khối</th>
+                        <th scope="col">Số lượng câu hỏi</th>
+                        <th scope="col">Người tạo</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in listQuestionDTOs)
+                    {
+                        <tr>
+                            <th scope="row">@(listQuestionDTOs.IndexOf(a) + 1)</th>
+                            <td>@a.code</td>
+                            <td>@a.nametest</td>
+                            <td>@a.name</td>
+                            <td>khối @a.namegrade</td>
+                            <td class="d-flex justify-content-center">
+                                @a.totalquestion
+                                <button type="button" class="btn btn-link text-primary" @onclick="() => ShowQuestionDetails(a.id)">
+                                    <i class="bi bi-card-list"></i>
+                                </button>
+                            </td>
+                            <td>@a.usermane</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="modal fade @modalVisible" tabindex="-1" style="display:@(modalVisible == "show" ? "block" : "none")">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Chi tiết câu hỏi</h5>
+                            <button type="button" class="btn-close" @onclick="CloseModal"></button>
+                        </div>
+                        <div class="modal-body">
+                            @if (testQuestions != null && testQuestions.Any())
+                            {
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            
+                                            <th scope="col">Câu hỏi</th>
+                                            <th scope="col">Câu A</th>
+                                            <th scope="col">Câu B</th>
+                                            <th scope="col">Câu C</th>
+                                            <th scope="col">Câu D</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var detail in testQuestions)
+                                        {
+                                            <tr>
+                                                <td>@detail.Questionname</td>
+
+                                                @for (int i = 0; i < detail.answer.Count; i++)
+                                                {
+                                                    <td class="@((detail.answer[i].Answer == detail.RightAnswer ? "bg-success text-white" : "bg-danger text-white"))">
+                                                        @detail.answer[i].Answer
+                                                    </td>
+                                                }
+
+                                                @if (detail.answer.Count < 4)
+                                                {
+                                                    for (int i = detail.answer.Count; i < 4; i++)
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            }
+                            else
+                            {
+                                <p>Không có câu hỏi chi tiết để hiển thị.</p>
+                            }
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary"><i class="bi bi-file-earmark-excel"></i>Thêm file Excel</button>
+                            <button type="button" class="btn btn-secondary" @onclick="CloseModal">Đóng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@page "/course-tree-branch"
+
+<h3>Sinh viên - Khóa học</h3>
+
+<ul class="tree-view">
+    <li>
+        <input type="checkbox" @bind="isHigherEducationChecked" />
+        <label @onclick="ToggleHigherEducation">Cao đẳng</label>
+        @if (isHigherEducationChecked)
+        {
+            <ul>
+                <li>Cao đẳng - Học từ xa</li>
+                <li>Cao đẳng - Vừa làm, vừa học</li>
+            </ul>
+        }
+    </li>
+    <li>
+        <input type="checkbox" @bind="isUniversityChecked" />
+        <label @onclick="ToggleUniversity">Đại học chính quy</label>
+        @if (isUniversityChecked)
+        {
+            <ul>
+                <li>
+                    <input type="checkbox" @bind="isK2008Checked" />
+                    <label @onclick="ToggleK2008">K2008-2013</label>
+                    @if (isK2008Checked)
+                    {
+                        <ul>
+                            <li>Điện tử K2008 Linh Trung 01</li>
+                            <li>Điện tử 08 Linh Trung 03</li>
+                        </ul>
+                    }
+                </li>
+                <li>K2009-2014</li>
+            </ul>
+        }
+    </li>
+    <li>Đại học (Bằng 2)</li>
+</ul>
+
+@code {
+    private bool isHigherEducationChecked = false;
+    private bool isUniversityChecked = false;
+    private bool isK2008Checked = false;
+
+    private void ToggleHigherEducation()
+    {
+        isHigherEducationChecked = !isHigherEducationChecked;
+    }
+
+    private void ToggleUniversity()
+    {
+        isUniversityChecked = !isUniversityChecked;
+    }
+
+    private void ToggleK2008()
+    {
+        isK2008Checked = !isK2008Checked;
+    }
+}
+
+
+
+<style>
+    .tree-view ul {
+        list-style-type: none;
+        padding-left: 20px;
+        position: relative;
+    }
+
+        .tree-view ul::before {
+            content: '';
+            border-left: 1px dashed #ccc; /* Đường nối mờ */
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+    .tree-view li {
+        position: relative;
+        padding-left: 20px;
+    }
+
+        .tree-view li::before {
+            content: '';
+            border-top: 1px dashed #ccc; /* Đường ngang mờ */
+            position: absolute;
+            top: 12px;
+            left: 0;
+            width: 12px;
+            height: 0;
+        }
+
+        .tree-view li:last-child::before {
+            border-left: none; /* Xóa đường dọc cho mục cuối */
+        }
+
+    .tree-view input[type="checkbox"] {
+        margin-right: 5px;
+    }
+
+    .tree-view label {
+        cursor: pointer;
+    }
+
+    img {
+        margin-right: 5px;
+    }
+
+</style>
+
+
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-info mt-3">@Message</div>
+}
+@code {
+    private TestQuestionDTO testQuestionDTO = new TestQuestionDTO();
+    private List<listdetailquestion> testQuestions = new List<listdetailquestion>();
+    private string Message;
+    private AnswerDTO answerDTO = new AnswerDTO();
+    private List<TestDTO> testcode = new List<TestDTO>();//
+    private List<ListQuestionDTO> listQuestionDTOs = new List<ListQuestionDTO>();
+    private string username;
+    protected override async Task OnInitializedAsync()
+    {
+        testQuestionDTO.Answers = new List<AnswerDTO>();
+        for (int i = 0; i < 4; i++)
+        {
+            testQuestionDTO.Answers.Add(new AnswerDTO());
+        }
+        testcode = await Http.GetFromJsonAsync<List<TestDTO>>("api/TestQuestion/GetAll_TestQuestion");//
+        listQuestionDTOs = await Http.GetFromJsonAsync<List<ListQuestionDTO>>("https://localhost:7039/api/TestQuestion/GetAll_Question");
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var token = await jsruntime.InvokeAsync<string>("localStorage.getItem", "YourSuperSecretKeyHere");
+
+        if (firstRender)
+        {
+            try
+            {
+                var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(token) as System.IdentityModel.Tokens.Jwt.JwtSecurityToken;
+                var userName = jsonToken?.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    testQuestionDTO.CreatedByName = userName;
+                }
+                else
+                {
+                    Console.WriteLine("Không tìm thấy tên người dùng trong token.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khi đọc token: {ex.Message}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Không tìm thấy token trong local storage.");
+        }
+    }
+
+    private string modalVisible = ""; 
+
+    private async Task ShowQuestionDetails(Guid id)
+    {
+        testQuestions = await Http.GetFromJsonAsync<List<listdetailquestion>>($"https://localhost:7039/api/TestQuestion/get-question-details/{id}");
+        modalVisible = "show";
+    }
+    private bool modalVisibles= false;
+    private void show()
+    {
+        modalVisibles = true;
+    }
+    private void close()
+    {
+        modalVisibles = false;
+    }
+    private void CloseModal()
+    {
+        testQuestions.Clear(); 
+        modalVisible = ""; 
+    }
+    private void AddAnswer()
+    {
+        testQuestionDTO.Answers.Add(new AnswerDTO());
+    }
+
+    private void RemoveAnswer(AnswerDTO answer)
+    {
+        testQuestionDTO.Answers.Remove(answer);
+    }
+
+    private void SetRightAnswer(string answer)
+    {
+        testQuestionDTO.RightAnswer = answer;
+    }
+
+    private bool IsRightAnswer(string answer)
+    {
+        return testQuestionDTO.RightAnswer == answer;
+    }
+    private async Task delete(Guid Id)
+    {
+        var response = await Http.DeleteAsync($"https://localhost:7039/api/TestQuestion/Delete_TestQuestion?Id={Id}");
+        if (response.IsSuccessStatusCode)
+        {
+            await jsruntime.InvokeVoidAsync("Swal.fire", new
+            {
+                title = "Thành công!",
+                text = "Xóa đữ liệu thành công!",
+                icon = "success",
+                confirmButtonText = "OK"
+            });
+            navigate.NavigateTo(navigate.Uri, forceLoad: true);
+        }
+        else
+        {
+            await jsruntime.InvokeVoidAsync("Swal.fire", new
+            {
+                title = "Thất bại!",
+                text = "Xóa dữ liệu thất bại.",
+                icon = "error",
+                confirmButtonText = "OK"
+            });
+            navigate.NavigateTo(navigate.Uri, forceLoad: true);
+        }
+    }
+    private async Task CreateQuestionWithAnswers()
+    {
+        if (string.IsNullOrWhiteSpace(testQuestionDTO.QuestionName) ||
+            testQuestionDTO.Type == null ||
+            testQuestionDTO.Answers.Count == 0)
+        {
+            Message = "Vui lòng điền đầy đủ thông tin câu hỏi và ít nhất một câu trả lời.";
+            return;
+        }
+
+        var response = await Http.PostAsJsonAsync("https://localhost:7039/api/TestQuestion/CreateQuestionWithAnswers", testQuestionDTO);
+        if (response.IsSuccessStatusCode)
+        {
+            testQuestionDTO.CreatedByName = username;
+            await jsruntime.InvokeVoidAsync("Swal.fire", new
+            {
+                title = "Thành công!",
+                text = "Xóa đữ liệu thành công!",
+                icon = "success",
+                confirmButtonText = "OK"
+            });
+            navigate.NavigateTo(navigate.Uri, forceLoad: true);
+            testQuestionDTO = new TestQuestionDTO();
+            testQuestionDTO.Answers = new List<AnswerDTO>(); 
+            navigate.NavigateTo(navigate.Uri, forceLoad: true);
+        }
+        else
+        {
+            var errorMessage = await response.Content.ReadAsStringAsync();
+            Message = $"Error creating question and answers: {errorMessage}";
+        }
+    }
+}

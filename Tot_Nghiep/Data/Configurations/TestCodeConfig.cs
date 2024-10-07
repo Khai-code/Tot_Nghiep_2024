@@ -17,8 +17,8 @@ namespace Data.Configurations
             
             builder.HasKey(x => x.Id);
 
-            builder.HasOne(x => x.Test)
-                .WithMany(x => x.TestCodes)
+            builder.HasOne(x => x.Tests)
+                .WithMany(x => x.testCodes)
                 .HasForeignKey(x => x.Id)
                 .OnDelete(DeleteBehavior.NoAction);
         }

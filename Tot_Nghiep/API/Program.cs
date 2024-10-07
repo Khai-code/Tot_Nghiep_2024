@@ -1,4 +1,5 @@
-﻿using Data.Database;
+﻿
+using Data.Database;
 using Data.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,6 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var m = "m";
 var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere");
-
 // Add services to the container.
 builder.Services.AddAuthentication(options =>
 {

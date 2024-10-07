@@ -12,6 +12,9 @@ namespace API.Controllers
     public class TestController : ControllerBase
     {
         AppDbContext _DbContext;
+    
+       
+
         public TestController(AppDbContext appDbContext)
         {
             _DbContext = appDbContext;
@@ -39,20 +42,7 @@ namespace API.Controllers
         [HttpGet("GetALl_Test")]
         public ActionResult GetALL_Test()
         {
-            //var test = _DbContext.tests.ToList();
-            //var testcode = _DbContext.testCodes.ToList();
-            //var resutl = new
-            //{
-            //    test = test,
-            //    testcode = testcode
-            //};
             return Ok(_DbContext.tests.ToList());
-            //var results = _DbContext.tests
-            //.Include(t => t.TestCodes) // Eager loading bảng test_code liên quan
-            //.ToList();
-
-            //return Ok(results);
-
         }
 
         private int RandomCodeTest(int length)
@@ -70,59 +60,49 @@ namespace API.Controllers
 
             return int.Parse(code);
         }
-
-        [HttpGet("get-list-test")]
-        public async Task<List<TestGridDTO>> GetListTest([FromQuery] GetListTestQueryDTO input)
+        [HttpGet("GetAll_pointtype")]
+        public ActionResult GetAll()
         {
-
-
-            var query = _DbContext.testCodes
-                .Include(t => t.Test)
-                .Include(t => t.Test.Subject)
-                .AsQueryable();
-
-            if (!string.IsNullOrEmpty(input.Code))
-            {
-                query = query.Where(t => t.Code.ToLower().Contains(input.Code.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(input.Name))
-            {
-                query = query.Where(t => t.Test.Name.ToLower().Contains(input.Name.ToLower())); // Using Contains for partial matches
-            }
-
-            if (!string.IsNullOrEmpty(input.SubjectName))
-            {
-                query = query.Where(t => t.Test.Subject.Name.ToLower().Contains(input.SubjectName.ToLower()));
-            }
-
-            var testList = await query
-                .Select(t => new TestGridDTO
-                {
-                    Id = t.Test.Id,
-                    //Code = t.Test.Code,
-                    Name = t.Test.Name,
-                    Code = t.Code,
-                    NumberOfTestCode = t.Test.NumberOfTestCode,
-                    SubjectName = t.Test.Subject.Name,
-                    Status = t.Status,
-                    SubjectId = t.Test.SubjectId,
-                    Minute = t.Test.Minute,
-                })
-                .ToListAsync();
-
-            return testList;
+            return Ok(_DbContext.pointTypes.ToList());
         }
+        
         [HttpGet("get-detail-test/{id}")]
         public async Task<IActionResult> GetListTest([FromRoute] Guid id)
         {
             var test = await _DbContext.tests.FindAsync(id);
             return Ok(test);
         }
+        [HttpGet("get-list-test")]
+        public async Task<List<TestGridDTO>> GetListTest([FromQuery] GetListTestQueryDTO input)
+        {
+            var query = _DbContext.testCodes
+                .Include(t => t.Tests)
+                .Include(t => t.Tests.Subject)
+                .Include(t=>t.Tests.PointType)
+                .AsQueryable();
+            
+            var testList = await query
+                .Select(t => new TestGridDTO
+                {
+                    Id = t.Tests.Id,
+                    namepoint=t.Tests.PointType.Name,
+                    Name = t.Tests.Name,
+                    Code = t.Tests.Code.ToString(),
+                    //NumberOfTestCode = t.Tests.NumberOfTestCode,
+                    SubjectName = t.Tests.Subject.Name,
+                    Status = t.Status,
+                    SubjectId = t.Tests.SubjectId,
+                    Minute = t.Tests.Minute,
+                })
+                .ToListAsync();
+
+            return testList;
+        }
         [HttpPost("Post_Test")]
-        public async Task<ActionResult> Post_Test([FromBody] TestDTO testDTO)
+        public async Task<ActionResult> Post_Test(TestDTO testDTO)
         {
             var subject = await _DbContext.subjects.FirstOrDefaultAsync(temp => temp.Id == testDTO.SubjectId);
+            var point = await _DbContext.pointTypes.FirstOrDefaultAsync(temp => temp.Id == testDTO.PointTypeId);
 
             if (subject == null)
             {
@@ -134,31 +114,30 @@ namespace API.Controllers
             {
                 Test test = new Test
                 {
+                    Id = Guid.NewGuid(),
                     Name = testDTO.Name,
                     Code = RandomCodeTest(6),
                     Minute = testDTO.Minute,
-                    NumberOfTestCode = testDTO.NumberOfTestCode,
+                    //NumberOfTestCode = testDTO.NumberOfTestCode,
                     CreationTime = DateTime.Now,
                     Status = testDTO.Status,
                     SubjectId = subject.Id,
                     PointTypeId = testDTO.PointTypeId,
                 };
                 await _DbContext.tests.AddAsync(test);
-                await _DbContext.SaveChangesAsync();
-
-                TestCode testCode = new TestCode
-                {
-                    Id = Guid.NewGuid(),
-                    Code = RandomCode(8),
-                    Status = 1,
-                    TestId = test.Id,
-                };
-
-                await _DbContext.testCodes.AddAsync(testCode);
-                await _DbContext.SaveChangesAsync();
-
+                await _DbContext.SaveChangesAsync(); 
+               
+                    TestCode testCode = new TestCode
+                    {
+                        Id = Guid.NewGuid(),
+                        Code = RandomCode(8),
+                        Status = 1,
+                        TestId = test.Id,
+                    };
+                  
+                await _DbContext.testCodes.AddRangeAsync(testCode);
+                await _DbContext.SaveChangesAsync();  
                 await transaction.CommitAsync();
-
                 return Ok(testCode);
             }
             catch (Exception ex)
@@ -176,15 +155,34 @@ namespace API.Controllers
                 update.Name = testDTO.Name;
                 update.Code = testDTO.Code;
                 update.Minute = testDTO.Minute;
-                update.NumberOfTestCode = testDTO.NumberOfTestCode;
+                //update.NumberOfTestCode = testDTO.NumberOfTestCode;
                 update.CreationTime = testDTO.CreationTime;
                 update.Status = testDTO.Status;
                 update.SubjectId = testDTO.SubjectId;
+                update.PointTypeId = testDTO.PointTypeId;
                 _DbContext.tests.Update(update);
                 await _DbContext.SaveChangesAsync();
                 return Ok("update thành công");
             }
             return BadRequest("Update failed");
+        }
+        [HttpPost("post_pointype")]
+        public async Task<ActionResult> create_pointtype(PointTypeDTO pointType)
+        {
+            try
+            {
+                PointType point = new PointType
+                {
+                    Id = Guid.NewGuid(),
+                    Name = pointType.Name,
+                };
+                await _DbContext.pointTypes.AddAsync(point);
+                await _DbContext.SaveChangesAsync();
+                return Ok("thêm thành công");
+            }catch (Exception)
+            {
+                return BadRequest("thêm thất bại");
+            }
         }
         [HttpPut("Update_TestCode")]
         public async Task<ActionResult> Update_TestCode(TestCode testCode)
@@ -213,5 +211,80 @@ namespace API.Controllers
             }
             return BadRequest("xóa thất bại");
         }
+
+        private int GetMaxStudentForSpecificClass(string classCode)
+        {
+            var result = (from test in _DbContext.tests
+                          join subjectGrade in _DbContext.subjects_Grades on test.SubjectId equals subjectGrade.SubjectId
+                          join grade in _DbContext.grades on subjectGrade.GradeId equals grade.Id
+                          join classEntity in _DbContext.classes on grade.Id equals classEntity.GradeId
+                          where classEntity.Code == classCode // Điều kiện để chọn lớp cụ thể
+                          select classEntity.MaxStudent).FirstOrDefault();
+
+            return result;
+        }
+
+
+        [HttpPost("create-test-or-create-testcode")]
+        public async Task<IActionResult> CreateTest_Testcode(TestDTO testDTO)
+        {
+            try
+            {
+                // Kiểm tra nếu classCode có tồn tại
+                if (string.IsNullOrEmpty(testDTO.ClassCode))
+                {
+                    return BadRequest("ClassCode không được để trống.");
+                }
+
+                // Lấy số lượng MaxStudent dựa trên classCode
+                int maxStudents = GetMaxStudentForSpecificClass(testDTO.ClassCode);
+                if (maxStudents == 0)
+                {
+                    return BadRequest("Không tìm thấy số lượng sinh viên tối đa cho lớp học.");
+                }
+
+                // Tạo thực thể Test từ DTO
+                var newTest = new Test
+                {
+                    Id = Guid.NewGuid(),
+                    Name = testDTO.Name,
+                    Code = RandomCodeTest(6), // Tạo mã ngẫu nhiên
+                    CreationTime = DateTime.Now,
+                    Minute = testDTO.Minute,
+                    Status = testDTO.Status,
+                    SubjectId = testDTO.SubjectId,
+                    PointTypeId = testDTO.PointTypeId,
+                };
+
+                // Thêm thực thể Test vào DbContext
+                await _DbContext.tests.AddAsync(newTest);
+
+                // Tạo TestCode tương ứng với số lượng MaxStudent
+                for (int i = 0; i < maxStudents; i++)
+                {
+                    var newTestCode = new TestCode
+                    {
+                        Id = Guid.NewGuid(),
+                        Code = RandomCode(8), // Tạo mã ngẫu nhiên
+                        Status = 1,
+                        TestId = newTest.Id, // Gán TestId
+                    };
+
+                    // Thêm thực thể TestCode vào DbContext
+                    await _DbContext.testCodes.AddAsync(newTestCode);
+                }
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                await _DbContext.SaveChangesAsync();
+
+                return Ok("Tạo bài kiểm tra và mã bài kiểm tra thành công.");
+            }
+            catch (Exception ex)
+            {
+                // Bắt lỗi cụ thể và trả về phản hồi lỗi chi tiết
+                return BadRequest($"Lỗi khi tạo bài kiểm tra: {ex.Message}");
+            }
+        }
+
     }
 }
