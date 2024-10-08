@@ -12,13 +12,12 @@ namespace API.Controllers
     public class TestController : ControllerBase
     {
         AppDbContext _DbContext;
-    
-       
 
         public TestController(AppDbContext appDbContext)
         {
             _DbContext = appDbContext;
         }
+
         private string RandomCode(int length)
         {
             const string CodeNew = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -34,17 +33,19 @@ namespace API.Controllers
 
             return new string(code);
         }
+
         [HttpGet("Get_TetstCode")]
         public ActionResult Get()
         {
             return Ok(_DbContext.testCodes.ToList());
         }
+
         [HttpGet("GetALl_Test")]
         public ActionResult GetALL_Test()
         {
             return Ok(_DbContext.tests.ToList());
         }
-
+         
         private int RandomCodeTest(int length)
         {
             const string CodeNew = "0123456789";
@@ -59,11 +60,6 @@ namespace API.Controllers
             }
 
             return int.Parse(code);
-        }
-        [HttpGet("GetAll_pointtype")]
-        public ActionResult GetAll()
-        {
-            return Ok(_DbContext.pointTypes.ToList());
         }
         
         [HttpGet("get-detail-test/{id}")]
@@ -98,54 +94,7 @@ namespace API.Controllers
 
             return testList;
         }
-        [HttpPost("Post_Test")]
-        public async Task<ActionResult> Post_Test(TestDTO testDTO)
-        {
-            var subject = await _DbContext.subjects.FirstOrDefaultAsync(temp => temp.Id == testDTO.SubjectId);
-            var point = await _DbContext.pointTypes.FirstOrDefaultAsync(temp => temp.Id == testDTO.PointTypeId);
-
-            if (subject == null)
-            {
-                return NotFound("Subject not found.");
-            }
-
-            using var transaction = await _DbContext.Database.BeginTransactionAsync();
-            try
-            {
-                Test test = new Test
-                {
-                    Id = Guid.NewGuid(),
-                    Name = testDTO.Name,
-                    Code = RandomCodeTest(6),
-                    Minute = testDTO.Minute,
-                    //NumberOfTestCode = testDTO.NumberOfTestCode,
-                    CreationTime = DateTime.Now,
-                    Status = testDTO.Status,
-                    SubjectId = subject.Id,
-                    PointTypeId = testDTO.PointTypeId,
-                };
-                await _DbContext.tests.AddAsync(test);
-                await _DbContext.SaveChangesAsync(); 
-               
-                    TestCode testCode = new TestCode
-                    {
-                        Id = Guid.NewGuid(),
-                        Code = RandomCode(8),
-                        Status = 1,
-                        TestId = test.Id,
-                    };
-                  
-                await _DbContext.testCodes.AddRangeAsync(testCode);
-                await _DbContext.SaveChangesAsync();  
-                await transaction.CommitAsync();
-                return Ok(testCode);
-            }
-            catch (Exception ex)
-            {
-                await transaction.RollbackAsync();
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
+        
         [HttpPut("Update_Test")]
         public async Task<ActionResult> Update_Test([FromBody] TestDTO testDTO)
         {
@@ -166,24 +115,7 @@ namespace API.Controllers
             }
             return BadRequest("Update failed");
         }
-        [HttpPost("post_pointype")]
-        public async Task<ActionResult> create_pointtype(PointTypeDTO pointType)
-        {
-            try
-            {
-                PointType point = new PointType
-                {
-                    Id = Guid.NewGuid(),
-                    Name = pointType.Name,
-                };
-                await _DbContext.pointTypes.AddAsync(point);
-                await _DbContext.SaveChangesAsync();
-                return Ok("thêm thành công");
-            }catch (Exception)
-            {
-                return BadRequest("thêm thất bại");
-            }
-        }
+
         [HttpPut("Update_TestCode")]
         public async Task<ActionResult> Update_TestCode(TestCode testCode)
         {
@@ -212,17 +144,35 @@ namespace API.Controllers
             return BadRequest("xóa thất bại");
         }
 
-        private int GetMaxStudentForSpecificClass(string classCode)
-        {
-            var result = (from test in _DbContext.tests
-                          join subjectGrade in _DbContext.subjects_Grades on test.SubjectId equals subjectGrade.SubjectId
-                          join grade in _DbContext.grades on subjectGrade.GradeId equals grade.Id
-                          join classEntity in _DbContext.classes on grade.Id equals classEntity.GradeId
-                          where classEntity.Code == classCode // Điều kiện để chọn lớp cụ thể
-                          select classEntity.MaxStudent).FirstOrDefault();
 
-            return result;
+        private int GetMaxStudentForSpecificClass(string classCode, Guid subjectId)
+        {
+            // Lấy lớp học dựa trên mã lớp (classCode)
+            var classEntity = _DbContext.classes.FirstOrDefault(c => c.Code == classCode);
+
+            if (classEntity == null)
+            {
+                Console.WriteLine($"Không tìm thấy lớp với mã: {classCode}");
+                return 0;
+            }
+
+            // Lấy GradeId của lớp học
+            var gradeId = classEntity.GradeId;
+
+            // Kiểm tra xem SubjectId có tồn tại trong bảng subjects_Grades hay không
+            var subjectGrade = _DbContext.subjects_Grades.FirstOrDefault(sg => sg.GradeId == gradeId && sg.SubjectId == subjectId);
+
+            if (subjectGrade == null)
+            {
+                Console.WriteLine($"Không tìm thấy SubjectId {subjectId} cho GradeId {gradeId}");
+                return 0;
+            }
+
+            // Nếu tất cả khớp, trả về số lượng MaxStudent
+            Console.WriteLine($"MaxStudent for class {classCode}: {classEntity.MaxStudent}");
+            return classEntity.MaxStudent;
         }
+
 
 
         [HttpPost("create-test-or-create-testcode")]
@@ -236,8 +186,8 @@ namespace API.Controllers
                     return BadRequest("ClassCode không được để trống.");
                 }
 
-                // Lấy số lượng MaxStudent dựa trên classCode
-                int maxStudents = GetMaxStudentForSpecificClass(testDTO.ClassCode);
+                // Lấy số lượng MaxStudent dựa trên classCode và SubjectId
+                int maxStudents = GetMaxStudentForSpecificClass(testDTO.ClassCode, testDTO.SubjectId);
                 if (maxStudents == 0)
                 {
                     return BadRequest("Không tìm thấy số lượng sinh viên tối đa cho lớp học.");
@@ -254,10 +204,12 @@ namespace API.Controllers
                     Status = testDTO.Status,
                     SubjectId = testDTO.SubjectId,
                     PointTypeId = testDTO.PointTypeId,
+                    MaxStudent = maxStudents,
                 };
 
                 // Thêm thực thể Test vào DbContext
                 await _DbContext.tests.AddAsync(newTest);
+                await _DbContext.SaveChangesAsync();
 
                 // Tạo TestCode tương ứng với số lượng MaxStudent
                 for (int i = 0; i < maxStudents; i++)
@@ -281,10 +233,17 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
+
+                if (ex.InnerException != null)
+                {
+                    return BadRequest($"Lỗi khi tạo bài kiểm tra: {ex.InnerException.Message}");
+                }
+
                 // Bắt lỗi cụ thể và trả về phản hồi lỗi chi tiết
                 return BadRequest($"Lỗi khi tạo bài kiểm tra: {ex.Message}");
             }
         }
+
 
     }
 }

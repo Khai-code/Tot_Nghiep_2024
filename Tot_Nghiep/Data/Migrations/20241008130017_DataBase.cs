@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class data : Migration
+    public partial class DataBase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -236,6 +236,7 @@ namespace Data.Migrations
                     Minute = table.Column<int>(type: "int", nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
+                    MaxStudent = table.Column<int>(type: "int", nullable: false),
                     SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PointTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -312,6 +313,28 @@ namespace Data.Migrations
                         principalTable: "tests",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "testQuestions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    RightAnswer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedByName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_testQuestions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_testQuestions_tests_TestId",
+                        column: x => x.TestId,
+                        principalTable: "tests",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -489,30 +512,22 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "testQuestions",
+                name: "testQuestionAnswers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    RightAnswer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedByName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    TestCodeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TestQuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_testQuestions", x => x.Id);
+                    table.PrimaryKey("PK_testQuestionAnswers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_testQuestions_testCodes_TestCodeId",
-                        column: x => x.TestCodeId,
-                        principalTable: "testCodes",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_testQuestions_tests_TestId",
-                        column: x => x.TestId,
-                        principalTable: "tests",
-                        principalColumn: "Id");
+                        name: "FK_testQuestionAnswers_testQuestions_TestQuestionId",
+                        column: x => x.TestQuestionId,
+                        principalTable: "testQuestions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -591,25 +606,6 @@ namespace Data.Migrations
                         name: "FK_exam_Room_TestCodes_testCodes_TestCodeId",
                         column: x => x.TestCodeId,
                         principalTable: "testCodes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "testQuestionAnswers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TestQuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_testQuestionAnswers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_testQuestionAnswers_testQuestions_TestQuestionId",
-                        column: x => x.TestQuestionId,
-                        principalTable: "testQuestions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -862,11 +858,6 @@ namespace Data.Migrations
                 name: "IX_testQuestionAnswers_TestQuestionId",
                 table: "testQuestionAnswers",
                 column: "TestQuestionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_testQuestions_TestCodeId",
-                table: "testQuestions",
-                column: "TestCodeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_testQuestions_TestId",

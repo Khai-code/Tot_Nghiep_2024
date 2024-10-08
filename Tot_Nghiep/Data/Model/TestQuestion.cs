@@ -14,6 +14,7 @@ namespace Data.Model
         [MaxLength]
         public string QuestionName { get; set; }
         public int Type { get; set; }
+        public int Level { get; set; }
         [MaxLength]
         public string RightAnswer { get; set; }
         public string CreatedByName { get; set; }

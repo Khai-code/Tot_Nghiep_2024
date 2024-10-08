@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241005145000_data")]
-    partial class data
+    [Migration("20241008130017_DataBase")]
+    partial class DataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -688,6 +688,9 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MaxStudent")
+                        .HasColumnType("int");
+
                     b.Property<int?>("Minute")
                         .HasColumnType("int");
 
@@ -747,6 +750,9 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
                     b.Property<string>("QuestionName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -755,9 +761,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("TestCodeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("TestId")
                         .HasColumnType("uniqueidentifier");
 
@@ -765,8 +768,6 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TestCodeId");
 
                     b.HasIndex("TestId");
 
@@ -1184,10 +1185,6 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Model.TestQuestion", b =>
                 {
-                    b.HasOne("Data.Model.TestCode", null)
-                        .WithMany("TestQuestion")
-                        .HasForeignKey("TestCodeId");
-
                     b.HasOne("Data.Model.Test", "Tests")
                         .WithMany("testQuestions")
                         .HasForeignKey("TestId");
@@ -1333,8 +1330,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Model.TestCode", b =>
                 {
                     b.Navigation("Exam_Room_TestCodes");
-
-                    b.Navigation("TestQuestion");
                 });
 
             modelBuilder.Entity("Data.Model.TestQuestion", b =>
