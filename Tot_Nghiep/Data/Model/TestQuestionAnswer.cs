@@ -17,5 +17,6 @@ namespace Data.Model
         public Guid TestQuestionId { get; set; }
         public virtual TestQuestion? TestQuestion { get; set; }
         public virtual ICollection<Exam_Room_Student_AnswerHistory>? Exam_Room_Student_AnswerHistories { get; set; }
+     
     }
 }

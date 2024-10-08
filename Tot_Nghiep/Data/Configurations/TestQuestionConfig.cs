@@ -17,10 +17,12 @@ namespace Data.Configurations
             
             builder.HasKey(x => x.Id);
 
-            builder.HasOne(x => x.TestCode)
-                .WithMany(x => x.TestQuestion)
-                .HasForeignKey(x => x.TestCodeId)
-                .OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.Tests)
+                .WithMany(x => x.testQuestions)
+                .HasForeignKey(x => x.TestId)
+                .OnDelete(DeleteBehavior.NoAction).OnDelete(DeleteBehavior.Restrict);
+
+
         }
     }
 }
