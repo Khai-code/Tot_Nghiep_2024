@@ -10,6 +10,7 @@
         //public int? NumberOfTestCode { get; set; }
         public DateTime CreationTime { get; set; }
         public int Status { get; set; }
+        public int MaxStudent {  get; set; }
         public Guid SubjectId { get; set; }
         public Guid PointTypeId { get; set; }
         public virtual Subject? Subject { get; set; }
