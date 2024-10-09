@@ -1,0 +1,177 @@
+﻿@page "/exam-result"
+@using global::Data.Model
+@using global::Data.DTOs
+@using System.Net.Http.Json
+@layout Teacherlayout
+@inject HttpClient client
+@inject IHttpClientFactory clientFactory
+
+
+<h3>Danh sách kết quả bài thi</h3>
+
+<div class="container student-management">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã học sinh</th>
+                            <th>Tên học sinh</th>
+                            <th>Môn</th>
+                            <th>Mã bài thi</th>
+                            <th>Phòng thi</th>
+                            <th>Điểm</th>
+                            <th>Thời gian làm bài</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var result in examResults)
+                        {
+                            <tr>
+                                <td>@(examResults.IndexOf(result) + 1)</td>
+                                <td>@result.StudentCode</td>
+                                <td>@result.StudentName</td>
+                                <td>@result.SubjectName</td>
+                                <td>@result.TestCode</td>
+                                <td>@result.RoomName</td>
+                                <td>@result.Score</td>
+                                <td>@result.ExamTime.ToString("MM/dd/yyyy HH:mm")</td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Container styling */
+.container.student-management {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Styling */
+.table thead th {
+    background-color: #343a40;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table tbody tr {
+    transition: background-color 0.3s;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Pagination button styling */
+.btn-secondary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-secondary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary[disabled] {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Button styling for action buttons */
+.btn-primary, .btn-warning, .btn-danger {
+    margin-right: 5px;
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Search bar styling */
+input[type="text"] {
+    border-radius: 20px;
+    padding: 8px 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+input[type="text"]:focus {
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Table cell alignment */
+.table td, .table th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Center the title */
+h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Responsive design for smaller screens */
+    .container.student-management {
+        padding: 10px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .table th, .table td {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        font-size: 10px;
+        padding: 5px;
+    }
+
+
+</style>
+
+@code {
+    private List<StudentExamResultDTO> examResults = new List<StudentExamResultDTO>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var httpClinet = clientFactory.CreateClient("ExamResult");
+        examResults = await httpClinet.GetFromJsonAsync<List<StudentExamResultDTO>>("https://localhost:7039/api/ExamResult/get-student-result");
+        StateHasChanged();
+    }
+}
