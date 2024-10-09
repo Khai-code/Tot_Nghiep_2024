@@ -45,7 +45,13 @@ namespace API.Controllers
         {
             return Ok(_DbContext.tests.ToList());
         }
-         
+        [HttpGet("Coute-testcode")]
+        public async Task<IActionResult> Coute_TestCode()
+        {
+            var coute = await _DbContext.testCodes.CountAsync();
+            return Ok(coute);
+        }
+        
         private int RandomCodeTest(int length)
         {
             const string CodeNew = "0123456789";
@@ -94,56 +100,6 @@ namespace API.Controllers
 
             return testList;
         }
-        
-        [HttpPut("Update_Test")]
-        public async Task<ActionResult> Update_Test([FromBody] TestDTO testDTO)
-        {
-            var update = _DbContext.tests.FirstOrDefault(temp => temp.Id == testDTO.Id);
-            if (update != null)
-            {
-                update.Name = testDTO.Name;
-                update.Code = testDTO.Code;
-                update.Minute = testDTO.Minute;
-                //update.NumberOfTestCode = testDTO.NumberOfTestCode;
-                update.CreationTime = testDTO.CreationTime;
-                update.Status = testDTO.Status;
-                update.SubjectId = testDTO.SubjectId;
-                update.PointTypeId = testDTO.PointTypeId;
-                _DbContext.tests.Update(update);
-                await _DbContext.SaveChangesAsync();
-                return Ok("update thành công");
-            }
-            return BadRequest("Update failed");
-        }
-
-        [HttpPut("Update_TestCode")]
-        public async Task<ActionResult> Update_TestCode(TestCode testCode)
-        {
-            var code = _DbContext.testCodes.FirstOrDefault(temp => temp.Id == testCode.Id);
-            if (code != null)
-            {
-                code.Code = RandomCode(8);
-                code.Status = testCode.Status;
-                code.TestId = testCode.Id;
-                _DbContext.testCodes.Update(code);
-                await _DbContext.SaveChangesAsync();
-                return Ok("update thành công");
-            }
-            return BadRequest("update thất bại");
-        }
-        [HttpDelete("Delete_Test")]
-        public async Task<ActionResult> Delete_Test(Guid Id)
-        {
-            var delete = _DbContext.tests.FirstOrDefault(x => x.Id == Id);
-            if (delete != null)
-            {
-                _DbContext.tests.Remove(delete);
-                await _DbContext.SaveChangesAsync();
-                return Ok("xóa thành công");
-            }
-            return BadRequest("xóa thất bại");
-        }
-
 
         private int GetMaxStudentForSpecificClass(string classCode, Guid subjectId)
         {
@@ -172,7 +128,6 @@ namespace API.Controllers
             Console.WriteLine($"MaxStudent for class {classCode}: {classEntity.MaxStudent}");
             return classEntity.MaxStudent;
         }
-
 
 
         [HttpPost("create-test-or-create-testcode")]
@@ -244,6 +199,38 @@ namespace API.Controllers
             }
         }
 
+        [HttpPut("update-test")]
+        public async Task<IActionResult> Update_test(TestDTO testDTO)
+        {
+            var data = await _DbContext.tests.FirstOrDefaultAsync(x => x.Id == testDTO.Id);
 
+            if (data != null)
+            {
+                data.Name = testDTO.Name;
+                data.Minute = testDTO.Minute;
+                data.Status = testDTO.Status;
+
+                _DbContext.Update(data);
+                await _DbContext.SaveChangesAsync();
+            }
+
+            return Ok("update thành công");
+        }
+
+        [HttpDelete("delete-test")]
+        public async Task<IActionResult> Delete_test(Guid id)
+        {
+            var data = await _DbContext.tests.FirstOrDefaultAsync(x => x.Id == id);
+            var ListTestCode = _DbContext.testCodes.ToList().FirstOrDefault(x => x.TestId == data.Id);
+
+            if (ListTestCode != null)
+            {
+                _DbContext.Remove(ListTestCode);
+                _DbContext.Remove(data);
+                await _DbContext.SaveChangesAsync();
+            }
+
+            return Ok("đã xóa");
+        }
     }
 }
