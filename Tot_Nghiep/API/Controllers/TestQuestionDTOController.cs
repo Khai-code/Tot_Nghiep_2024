@@ -165,5 +165,50 @@ namespace API.Controllers
             return Ok("thêm câu hỏi thành công");
         }
 
+        [HttpPost("random-question-testcode")]
+        public async Task<IActionResult> TestCodeQuestion(TestCodeQuestionDTO dto)
+        {
+            var testcodes = await _db.testCodes.Where(x => x.TestId == dto.TestId).ToListAsync();
+
+            var easyQuestions = await _db.testQuestions.Where(x => x.TestId == dto.TestId && x.Level == 1).ToListAsync();
+            var mediumQuestions = await _db.testQuestions.Where(x => x.TestId == dto.TestId && x.Level == 2).ToListAsync();
+            var hardQuestions = await _db.testQuestions.Where(x => x.TestId == dto.TestId && x.Level == 3).ToListAsync();
+            var advancedQuestions = await _db.testQuestions.Where(x => x.TestId == dto.TestId && x.Level == 4).ToListAsync();
+
+            if (easyQuestions.Count < dto.EasyCount || mediumQuestions.Count < dto.MediumCount || 
+                hardQuestions.Count < dto.HardCount || advancedQuestions.Count < dto.AdvancedCount)
+            {
+                return NotFound("không đủ số câu hỏi cho1 hoặc nhiều mức độ");
+            }
+
+            Random random = new Random();
+
+            foreach (var testcode in testcodes)
+            {
+                var selectedEasyQuestions = easyQuestions.OrderBy(x => random.Next()).Take(dto.EasyCount).ToList();
+                var selectedMediumQuestions = mediumQuestions.OrderBy(x => random.Next()).Take(dto.MediumCount).ToList();
+                var selectedHardQuestions = hardQuestions.OrderBy(x => random.Next()).Take(dto.HardCount).ToList();
+                var selectedAdvancedQuestions = advancedQuestions.OrderBy(x => random.Next()).Take(dto.AdvancedCount).ToList();
+
+                var allSelectedQuestions = selectedEasyQuestions
+                    .Concat(selectedMediumQuestions)
+                    .Concat(selectedHardQuestions)
+                    .Concat(selectedAdvancedQuestions)
+                    .ToList();
+
+                foreach (var question in allSelectedQuestions)
+                {
+                    _db.TestCode_TestQuestions.Add(new TestCode_TestQuestion
+                    {
+                        TestCodeId = testcode.Id,
+                        TestQuestionId = question.Id
+                    });
+                }
+            }
+
+            await _db.SaveChangesAsync();
+
+            return Ok("Chia câu hỏi vào mã đề thành công");
+        }
     }
 }

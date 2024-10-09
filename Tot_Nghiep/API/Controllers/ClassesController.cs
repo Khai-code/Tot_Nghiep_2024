@@ -135,36 +135,6 @@ namespace API.Controllers
             }
         }
 
-        [HttpPut("update-class")]
-        public async Task<IActionResult> Update(ClassDTO classDTO)
-        {
-            var data = await _db.classes.FirstOrDefaultAsync(x => x.Id == classDTO.Id);
-
-            if (data == null)
-            {
-                return NotFound("Ko co lop nay");
-            }
-
-            var grade = await _db.classes.FirstOrDefaultAsync(x => x.GradeId == classDTO.GradeId);
-
-            if (grade == null)
-            {
-                return BadRequest("Ko co Khôi Nay");
-            }
-
-            string ClassesName = $"{grade.Name}{classDTO.Name}";
-
-            data.Name = ClassesName;
-            data.MaxStudent = classDTO.MaxStudent;
-            data.Status = classDTO.Status;
-            data.TeacherId = classDTO.TeacherId;
-            data.GradeId = classDTO.GradeId;
-
-            _db.classes.Update(data);
-            await _db.SaveChangesAsync();
-
-            return Ok("Update thành công");
-        }
         [HttpDelete("delete-class")]
         public async Task<IActionResult> Delete(Guid Id)
         {
