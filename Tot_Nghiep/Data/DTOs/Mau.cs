@@ -7,25 +7,14 @@ using System.Threading.Tasks;
 
 namespace Data.DTOs
 {
-    public class TestQuestionDTO
+    public class Mau
     {
-       
-
         public Guid Id { get; set; }
         [MaxLength]
         public string QuestionName { get; set; }
         public int Type { get; set; }
         [MaxLength]
         public string RightAnswer { get; set; }
-        public string CreatedByName { get; set; }
-        public Guid? TestId { get; set; }
-        public List<AnswerDTO> Answers { get; set; }
-       
-    }
-    public class AnswerDTO
-    {
-        public string Answer { get; set; }
-        public Guid Id { get; set; }
-       
+        public Guid? TestCodeId { get; set; }
     }
 }

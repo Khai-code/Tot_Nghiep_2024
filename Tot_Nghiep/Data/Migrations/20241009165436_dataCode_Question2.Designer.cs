@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241002111111_Them_Semester")]
-    partial class Them_Semester
+    [Migration("20241009165436_dataCode_Question2")]
+    partial class dataCode_Question2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -688,15 +688,15 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MaxStudent")
+                        .HasColumnType("int");
+
                     b.Property<int?>("Minute")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("NumberOfTestCode")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("PointTypeId")
                         .HasColumnType("uniqueidentifier");
@@ -740,11 +740,39 @@ namespace Data.Migrations
                     b.ToTable("testCodes");
                 });
 
+            modelBuilder.Entity("Data.Model.TestCode_TestQuestion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TestCodeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TestQuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestCodeId");
+
+                    b.HasIndex("TestQuestionId");
+
+                    b.ToTable("TestCode_TestQuestions");
+                });
+
             modelBuilder.Entity("Data.Model.TestQuestion", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedByName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
 
                     b.Property<string>("QuestionName")
                         .IsRequired()
@@ -754,7 +782,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("TestCodeId")
+                    b.Property<Guid?>("TestId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Type")
@@ -762,7 +790,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TestCodeId");
+                    b.HasIndex("TestId");
 
                     b.ToTable("testQuestions");
                 });
@@ -1167,24 +1195,41 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Model.TestCode", b =>
                 {
-                    b.HasOne("Data.Model.Test", "Test")
-                        .WithMany("TestCodes")
+                    b.HasOne("Data.Model.Test", "Tests")
+                        .WithMany("testCodes")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Test");
+                    b.Navigation("Tests");
                 });
 
-            modelBuilder.Entity("Data.Model.TestQuestion", b =>
+            modelBuilder.Entity("Data.Model.TestCode_TestQuestion", b =>
                 {
-                    b.HasOne("Data.Model.TestCode", "TestCode")
-                        .WithMany("TestQuestion")
+                    b.HasOne("Data.Model.TestCode", "TestCodes")
+                        .WithMany("TestCode_TestQuestions")
                         .HasForeignKey("TestCodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("TestCode");
+                    b.HasOne("Data.Model.TestQuestion", "TestQuestion")
+                        .WithMany("TestCode_TestQuestions")
+                        .HasForeignKey("TestQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestCodes");
+
+                    b.Navigation("TestQuestion");
+                });
+
+            modelBuilder.Entity("Data.Model.TestQuestion", b =>
+                {
+                    b.HasOne("Data.Model.Test", "Tests")
+                        .WithMany("testQuestions")
+                        .HasForeignKey("TestId");
+
+                    b.Navigation("Tests");
                 });
 
             modelBuilder.Entity("Data.Model.TestQuestionAnswer", b =>
@@ -1317,18 +1362,22 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Model.Test", b =>
                 {
-                    b.Navigation("TestCodes");
+                    b.Navigation("testCodes");
+
+                    b.Navigation("testQuestions");
                 });
 
             modelBuilder.Entity("Data.Model.TestCode", b =>
                 {
                     b.Navigation("Exam_Room_TestCodes");
 
-                    b.Navigation("TestQuestion");
+                    b.Navigation("TestCode_TestQuestions");
                 });
 
             modelBuilder.Entity("Data.Model.TestQuestion", b =>
                 {
+                    b.Navigation("TestCode_TestQuestions");
+
                     b.Navigation("TestQuestionAnswer");
                 });
 

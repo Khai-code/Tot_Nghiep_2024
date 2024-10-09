@@ -48,5 +48,6 @@ namespace Data.Database
         public DbSet<PointType_Subject> pointType_Subjects { get; set; }
         public DbSet<PointType> pointTypes { get; set; }
         public DbSet<Semester> Semesters { get; set; }
+        public DbSet<TestCode_TestQuestion> TestCode_TestQuestions { get; set; }
     }
 }

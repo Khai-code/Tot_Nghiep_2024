@@ -16,8 +16,8 @@ namespace Data.Model
         public string Code { get; set; }
         public int Status { get; set; }
         public Guid TestId { get; set; }
-        public virtual Test? Test { get; set; }
-        public virtual ICollection<TestQuestion>? TestQuestion { get; set; }
+        public virtual Test? Tests { get; set; }
         public virtual ICollection<Exam_Room_TestCode>? Exam_Room_TestCodes { get; set; }
+        public virtual ICollection<TestCode_TestQuestion>? TestCode_TestQuestions { get; set; }
     }
 }

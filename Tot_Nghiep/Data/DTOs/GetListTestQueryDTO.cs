@@ -2,6 +2,8 @@
 {
     public class GetListTestQueryDTO
     {
+      
+
         public string? Code { get; set; }
         public string? Name { get; set; }
         public string? SubjectName { get; set; }
