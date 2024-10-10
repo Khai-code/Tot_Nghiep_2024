@@ -16,5 +16,7 @@
         public Guid SubjectId { get; set; }
         public string SubjectName { get; set; }
         public string Creator { get; set; }
+      public string namepoint { get; set; }
+        
     }
 }

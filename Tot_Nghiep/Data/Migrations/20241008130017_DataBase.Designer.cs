@@ -4,6 +4,7 @@ using Data.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241008130017_DataBase")]
+    partial class DataBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -738,27 +740,6 @@ namespace Data.Migrations
                     b.ToTable("testCodes");
                 });
 
-            modelBuilder.Entity("Data.Model.TestCode_TestQuestion", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TestCodeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TestQuestionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TestCodeId");
-
-                    b.HasIndex("TestQuestionId");
-
-                    b.ToTable("TestCode_TestQuestions");
-                });
-
             modelBuilder.Entity("Data.Model.TestQuestion", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1202,25 +1183,6 @@ namespace Data.Migrations
                     b.Navigation("Tests");
                 });
 
-            modelBuilder.Entity("Data.Model.TestCode_TestQuestion", b =>
-                {
-                    b.HasOne("Data.Model.TestCode", "TestCodes")
-                        .WithMany("TestCode_TestQuestions")
-                        .HasForeignKey("TestCodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Model.TestQuestion", "TestQuestion")
-                        .WithMany("TestCode_TestQuestions")
-                        .HasForeignKey("TestQuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TestCodes");
-
-                    b.Navigation("TestQuestion");
-                });
-
             modelBuilder.Entity("Data.Model.TestQuestion", b =>
                 {
                     b.HasOne("Data.Model.Test", "Tests")
@@ -1368,14 +1330,10 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Model.TestCode", b =>
                 {
                     b.Navigation("Exam_Room_TestCodes");
-
-                    b.Navigation("TestCode_TestQuestions");
                 });
 
             modelBuilder.Entity("Data.Model.TestQuestion", b =>
                 {
-                    b.Navigation("TestCode_TestQuestions");
-
                     b.Navigation("TestQuestionAnswer");
                 });
 

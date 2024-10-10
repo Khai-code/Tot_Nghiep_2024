@@ -26,6 +26,11 @@ namespace Data.Configurations
                 .WithMany(x => x.Learning_Summaries)
                 .HasForeignKey(x => x.StudentId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(x => x.Semester)
+              .WithMany(x => x.Learning_Summarys)
+              .HasForeignKey(x => x.SemesterID)
+              .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
