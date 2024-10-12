@@ -187,7 +187,7 @@ namespace API.Controllers
             {
                 var selectedEasyQuestions = easyQuestions.OrderBy(x => random.Next()).Take(dto.EasyCount).ToList();
                 var selectedMediumQuestions = mediumQuestions.OrderBy(x => random.Next()).Take(dto.MediumCount).ToList();
-                var selectedHardQuestions = hardQuestions.OrderBy(x => random.Next()).Take(dto.HardCount).ToList();
+                var selectedHardQuestions = hardQuestions.OrderBy(x => random.Next()).Take(dto.HardCount).ToList(); 
                 var selectedAdvancedQuestions = advancedQuestions.OrderBy(x => random.Next()).Take(dto.AdvancedCount).ToList();
 
                 var allSelectedQuestions = selectedEasyQuestions
