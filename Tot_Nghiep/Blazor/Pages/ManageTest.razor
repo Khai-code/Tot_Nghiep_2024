@@ -3,6 +3,7 @@
 @layout Teacherlayout
 @inject IHttpClientFactory clientFactory;
 @inject NavigationManager NavigationManager
+@inject IJSRuntime Jsruntime
 <div class="container-fluid row p-3">
 
 
@@ -14,7 +15,7 @@
             <div class="col text-end">
                 
                 <button class="btn btn-primary" @onclick="SearchTests">Tìm kiếm</button>
-                <button class="btn btn-primary" @onclick="()=>RedirectToCreateOrUpadate(false,null)">Tạo đề thi</button>
+                <button class="btn btn-primary" @onclick="show">Tạo đề thi</button>
             </div>
         </div>
 
@@ -77,25 +78,133 @@
             </table>
         </div>
     </div>
-
+    <div class="modal fade @(modalVisibles ? "show" : "")" tabindex="-1" style="display:@(modalVisibles ? "block" : "none")" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Tạo Đề Thi</h5>
+                            <button type="button" class="btn-close" @onclick="close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <label>Tên Đề:</label>
+                                <input type="text"  class="form-control" @bind=testDTO.Name />
+                            </div>
+                            <div>
+                                <label>Thời Gian</label>
+                                <input type="text" class="form-control" @bind=testDTO.Minute />
+                            </div>
+                            <div>
+                                <label>Môn học</label>
+                                <select class="form-control"@bind="testDTO.SubjectId" >
+                                    <option value="value">--chọn--</option>
+                                @foreach(var item in subjectDTOs)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                                </select>
+                            </div>
+                            <div>
+                                <label>Lớp:</label>
+                                <select class="form-control" @bind="testDTO.ClassCode" >
+                                    <option value="value">--chọn--</option>
+                                    @foreach(var item in classDTOs)
+                                    {
+                                    <option value="@item.Code">@item.Name </option>
+                                    }
+                                </select>
+                            </div>
+                            <div>
+                                <label>Điểm:</label>
+                                <select class="form-control" @bind="testDTO.PointTypeId" >
+                                    <option value="value">--chọn--</option>
+                                    @foreach(var item in pointTypeDTOs)
+                                    {
+                                     <option value="@item.Id">@item.Name </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @onclick="Submit">Lưu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
    
 </div>
 @code {
-
+    [Parameter]
+    public Guid? id { get; set; }
     private TestResponseDTO testList= new  TestResponseDTO();
     private GetListTestQueryDTO queryDTO = new GetListTestQueryDTO();
+    private List<TestQuestionDTO> testQuestionDTOs = new List<TestQuestionDTO>();
+    private List<SubjectDTO> subjectDTOs = new List<SubjectDTO>();
+    private List<ClassDTO> classDTOs = new List<ClassDTO>();
+    private List<PointTypeDTO> pointTypeDTOs = new List<PointTypeDTO>();
+    private TestDTO testDTO = new TestDTO();
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             await SearchTests();
+            await detailclass();
+            await detailsubject();
+            await detailpoint();
         }
         catch (Exception ex)
         {
 
         }
     }
+    private async Task detailpoint()
+    {
+        var httpclient = clientFactory.CreateClient("Get");
+        var url = $"https://localhost:7039/api/PointType/GetAll_pointtype";
+        pointTypeDTOs = await httpclient.GetFromJsonAsync<List<PointTypeDTO>>(url);
+    }
+    private async Task detailsubject()
+    {
+        var httpclient = clientFactory.CreateClient("Get");
+        var url = $"https://localhost:7039/api/Subject/get-all-subject";
+        subjectDTOs = await httpclient.GetFromJsonAsync<List<SubjectDTO>>(url);
+    }
+    private async Task detailclass()
+    {
+        var httpclient = clientFactory.CreateClient("Get");
+        var url = $"https://localhost:7039/api/Classes/get-all-class";
+        classDTOs = await httpclient.GetFromJsonAsync<List<ClassDTO>>(url);
+    }
+    private async Task Submit()
+    {
+        var httpClient = clientFactory.CreateClient("Post");
+        var url = $"https://localhost:7039/api/Test/create-test-or-create-testcode";
+        var response = await httpClient.PostAsJsonAsync<TestDTO>(url, testDTO);
+        if (response.IsSuccessStatusCode)
+        {
+            await Jsruntime.InvokeVoidAsync("Swal.fire", new
+            {
+                title = "Thành công!",
+                text = "Thêm đữ liệu thành công!",
+                icon = "success",
+                confirmButtonText = "OK"
+            });
+            NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+        }
+            else
+            {
+                await Jsruntime.InvokeVoidAsync("Swal.fire", new
+                {
+                    title = "Thất bại!",
+                    text = "Thêm dữ liệu thất bại.",
+                    icon = "error",
+                    confirmButtonText = "OK"
+                });
+            }
+        }
+    
+    
     private void RedirectToCreateOrUpadate(bool isUpdate, Guid? id)
     {
         NavigationManager.NavigateTo(isUpdate ? $"create-or-update-test/{id}" : "create-or-update-test");
@@ -119,6 +228,21 @@
         var httpClient = clientFactory.CreateClient("Get");
         var url = $"https://localhost:7039/api/Test/get-list-test?{queryString}";
         testList.ListTest = await httpClient.GetFromJsonAsync<List<TestGridDTO>>(url);
+    }
+    private bool modalVisibles = false;
+    private string modalVisible = "";
+    private void show()
+    {
+        modalVisibles = true;
+    }
+    private void close()
+    {
+        modalVisibles = false;
+    }
+    private void CloseModal()
+    {
+        
+        modalVisible = "";
     }
 }
 <style>

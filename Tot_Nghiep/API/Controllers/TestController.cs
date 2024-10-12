@@ -90,7 +90,6 @@ namespace API.Controllers
                     namepoint=t.Tests.PointType.Name,
                     Name = t.Tests.Name,
                     Code = t.Tests.Code.ToString(),
-                    //NumberOfTestCode = t.Tests.NumberOfTestCode,
                     SubjectName = t.Tests.Subject.Name,
                     Status = t.Status,
                     SubjectId = t.Tests.SubjectId,
@@ -143,7 +142,7 @@ namespace API.Controllers
 
                 // Lấy số lượng MaxStudent dựa trên classCode và SubjectId
                 int maxStudents = GetMaxStudentForSpecificClass(testDTO.ClassCode, testDTO.SubjectId);
-                if (maxStudents == 0)
+                if (maxStudents == null)
                 {
                     return BadRequest("Không tìm thấy số lượng sinh viên tối đa cho lớp học.");
                 }
