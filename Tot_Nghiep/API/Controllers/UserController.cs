@@ -232,31 +232,35 @@ namespace API.Controllers
 				return Unauthorized(new { Message = "Student not assigned to this exam room or invalid test code." });
 			}
 
-			// Xác thực thành công
-			return Ok(new { Message = "Test code and student validated successfully." });
-		}
+            // Xác thực thành công
+            return Ok(new { Message = "Test code and student validated successfully." });
+        }
+        
+       [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginModel model)
+        {
+            var data = _db.users.FirstOrDefault(temp => temp.UserName == model.Username);
+            var student = _db.roles.FirstOrDefault(temp => temp.Id == data.RoleId);
+            var studentId = _db.students.FirstOrDefault(temp => temp.UserId == data.Id);
+            //var teacherId = _db.teachers.FirstOrDefault(temp => temp.UserId == data.Id);
+            if (model.Username == data.UserName && model.Password == data.PasswordHash)
+            {
+                // Nếu thông tin đăng nhập đúng, tạo token JWT
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere");
 
-		[HttpPost("login")]
-		public IActionResult Login([FromBody] LoginModel model)
-		{
-			var data = _db.users.FirstOrDefault(temp => temp.UserName == model.Username);
-			var student = _db.roles.FirstOrDefault(temp => temp.Id == data.RoleId);
-			if (model.Username == data.UserName && model.Password == data.PasswordHash)
-			{
-				// Nếu thông tin đăng nhập đúng, tạo token JWT
-				var tokenHandler = new JwtSecurityTokenHandler();
-				var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere");
-
-				var tokenDescriptor = new SecurityTokenDescriptor
-				{
-					Subject = new ClaimsIdentity(new Claim[]
-					{
-					new Claim(ClaimTypes.Name, data.FullName),
-					new Claim("Id",student.Name.ToString()),
-					new Claim("email",data.Email.ToString()),
-					new Claim("numberPhone",data.PhoneNumber.ToString())
-                    //new Claim("Id", student != null ? student.Name : "N/A"),
-                    //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                         new Claim(ClaimTypes.Name, data.FullName),
+                         new Claim("Id",student.Name.ToString()),
+                         new Claim("email",data.Email.ToString()),
+                         new Claim("numberPhone",data.PhoneNumber.ToString()),
+                         new Claim("CodeStudent", studentId.Code.ToString()),
+                         //new Claim("CodeTeacher", teacherId.Code.ToString())
+                        //new Claim("Id", student != null ? student.Name : "N/A"),
+                        //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
                     }),
 					Expires = DateTime.UtcNow.AddMinutes(15),
 					SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),

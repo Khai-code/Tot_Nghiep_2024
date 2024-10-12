@@ -6,14 +6,14 @@
 @inject HttpClient client
 @inject IHttpClientFactory clientFactory
 
-<h3 class="mb-4">Quản lý học sinh</h3>
+<h3 class="mb-4 text-center">Quản lý học sinh</h3> <!-- Căn giữa tiêu đề -->
 
 <div class="container student-management">
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered custom-table">
-                    <thead class="thead-dark">
+                    <thead class="thead-blue">
                         <tr>
                             <th scope="col">STT</th>
                             <th scope="col">Mã HS</th>
@@ -56,33 +56,44 @@
         margin-top: 20px;
     }
 
+    /* Bo tròn và đổ bóng cho bảng */
     .custom-table {
         background-color: #f8f9fa;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    thead.thead-dark th {
-        background-color: #343a40;
-        color: #fff;
+    /* Thanh tiêu đề màu xanh dương */
+    thead.thead-blue th {
+        background-color: #007bff; /* Xanh dương */
+        color: white;
+        text-align: center;
+        font-weight: bold;
     }
 
+    /* Hiệu ứng hover */
     .table-hover tbody tr:hover {
-        background-color: #f1f1f1;
+        background-color: #e2f0ff;
     }
 
+    /* Căn giữa nội dung bảng */
     .table td, .table th {
         text-align: center;
         vertical-align: middle;
     }
 
+    /* Căn chỉnh nút bấm và thu nhỏ */
     button.btn {
         margin: 5px;
+        padding: 6px 10px;
+        font-size: 12px;
+        border-radius: 5px;
     }
 
+    /* Nút với các màu tùy chỉnh */
     button.btn-warning {
-        background-color: #FFCC66;
-        border-color: #FFCC66;
+        background-color: #ffc107;
+        border-color: #ffc107;
     }
 
     button.btn-primary {
@@ -91,19 +102,19 @@
     }
 
     button.btn-success {
-        background-color: #33FF00;
-        border-color: #33FF00;
+        background-color: #28a745;
+        border-color: #28a745;
     }
 
-    button.btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-    }
-
+    /* Hiệu ứng hover cho nút bấm */
     button:hover {
         opacity: 0.9;
     }
 
+    /* Thêm đổ bóng cho thanh tiêu đề và bảng */
+    .table {
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
 </style>
 
 @code {

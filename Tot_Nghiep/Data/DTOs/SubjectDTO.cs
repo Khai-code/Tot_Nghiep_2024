@@ -9,6 +9,7 @@ namespace Data.DTOs
 {
     public class SubjectDTO
     {
+
         public Guid Id { get; set; }
 
         [StringLength(100, ErrorMessage = "Name ko quá 100 ký tự")]
@@ -19,5 +20,12 @@ namespace Data.DTOs
         public DateTime CreationTime { get; set; }
         public int Status { get; set; }
         public List<Guid> GradeIds { get; set; }
+        public List<PointTypeDto> PointTypeIds { get; set; } // Thêm danh sách PointTypeId
+    }
+
+    public class PointTypeDto
+    {
+        public Guid IdPointType { get; set; }
+        public int Quantity { get; set; } // Giá trị Quantity tuỳ thuộc vào từng PointType
     }
 }
