@@ -14,11 +14,13 @@ namespace Data.Model
         [MaxLength]
         public string QuestionName { get; set; }
         public int Type { get; set; }
+        public int Level { get; set; }
         [MaxLength]
         public string RightAnswer { get; set; }
         public string CreatedByName { get; set; }
         public Guid? TestId { get; set; }
         public virtual Test? Tests { get; set; }
         public virtual ICollection<TestQuestionAnswer>? TestQuestionAnswer { get; set; }
+        public virtual ICollection<TestCode_TestQuestion>? TestCode_TestQuestions { get; set; }
     }
 }

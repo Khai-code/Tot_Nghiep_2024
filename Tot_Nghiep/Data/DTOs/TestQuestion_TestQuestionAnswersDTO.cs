@@ -10,6 +10,7 @@ namespace Data.DTOs
     {
         public string QuestionName { get; set; }
         public int QuestionType { get; set; } // Xác định loại câu hỏi
+        public int Level { get; set; }
         public string CreatedByName { get; set; }
         public Guid TestId { get; set; }
         public List<string> Answers { get; set; } // Danh sách các đáp án (nếu có)

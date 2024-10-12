@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241005145000_data")]
-    partial class data
+    [Migration("20241009150650_dataCode_Question")]
+    partial class dataCode_Question
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -688,6 +688,9 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MaxStudent")
+                        .HasColumnType("int");
+
                     b.Property<int?>("Minute")
                         .HasColumnType("int");
 
@@ -737,6 +740,27 @@ namespace Data.Migrations
                     b.ToTable("testCodes");
                 });
 
+            modelBuilder.Entity("Data.Model.TestCode_TestQuestion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TestCodeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TestQuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestCodeId");
+
+                    b.HasIndex("TestQuestionId");
+
+                    b.ToTable("TestCode_TestQuestion");
+                });
+
             modelBuilder.Entity("Data.Model.TestQuestion", b =>
                 {
                     b.Property<Guid>("Id")
@@ -747,6 +771,9 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
                     b.Property<string>("QuestionName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -755,9 +782,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("TestCodeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("TestId")
                         .HasColumnType("uniqueidentifier");
 
@@ -765,8 +789,6 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TestCodeId");
 
                     b.HasIndex("TestId");
 
@@ -1182,12 +1204,27 @@ namespace Data.Migrations
                     b.Navigation("Tests");
                 });
 
+            modelBuilder.Entity("Data.Model.TestCode_TestQuestion", b =>
+                {
+                    b.HasOne("Data.Model.TestCode", "TestCodes")
+                        .WithMany("TestCode_TestQuestions")
+                        .HasForeignKey("TestCodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Model.TestQuestion", "TestQuestion")
+                        .WithMany("TestCode_TestQuestions")
+                        .HasForeignKey("TestQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestCodes");
+
+                    b.Navigation("TestQuestion");
+                });
+
             modelBuilder.Entity("Data.Model.TestQuestion", b =>
                 {
-                    b.HasOne("Data.Model.TestCode", null)
-                        .WithMany("TestQuestion")
-                        .HasForeignKey("TestCodeId");
-
                     b.HasOne("Data.Model.Test", "Tests")
                         .WithMany("testQuestions")
                         .HasForeignKey("TestId");
@@ -1334,11 +1371,13 @@ namespace Data.Migrations
                 {
                     b.Navigation("Exam_Room_TestCodes");
 
-                    b.Navigation("TestQuestion");
+                    b.Navigation("TestCode_TestQuestions");
                 });
 
             modelBuilder.Entity("Data.Model.TestQuestion", b =>
                 {
+                    b.Navigation("TestCode_TestQuestions");
+
                     b.Navigation("TestQuestionAnswer");
                 });
 

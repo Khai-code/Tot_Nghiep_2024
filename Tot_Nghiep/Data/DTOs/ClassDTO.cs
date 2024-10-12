@@ -20,6 +20,6 @@ namespace Data.DTOs
         public int MaxStudent { get; set; }
         public Guid TeacherId { get; set; }
         public Guid GradeId { get; set; }
-        //public List<Guid> NotificationIds { get; set; }
+        public Guid SubjectId { get; set; }
     }
 }
