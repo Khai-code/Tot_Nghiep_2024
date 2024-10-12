@@ -217,12 +217,14 @@ namespace API.Controllers
             // Xác thực thành công
             return Ok(new { Message = "Test code and student validated successfully." });
         }
-
-        [HttpPost("login")]
+        
+       [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel model)
         {
             var data = _db.users.FirstOrDefault(temp => temp.UserName == model.Username);
             var student = _db.roles.FirstOrDefault(temp => temp.Id == data.RoleId);
+            var studentId = _db.students.FirstOrDefault(temp => temp.UserId == data.Id);
+            //var teacherId = _db.teachers.FirstOrDefault(temp => temp.UserId == data.Id);
             if (model.Username == data.UserName && model.Password == data.PasswordHash)
             {
                 // Nếu thông tin đăng nhập đúng, tạo token JWT
@@ -233,12 +235,14 @@ namespace API.Controllers
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                    new Claim(ClaimTypes.Name, data.FullName),
-                    new Claim("Id",student.Name.ToString()),
-                    new Claim("email",data.Email.ToString()),
-                    new Claim("numberPhone",data.PhoneNumber.ToString())
-                    //new Claim("Id", student != null ? student.Name : "N/A"),
-                    //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
+                         new Claim(ClaimTypes.Name, data.FullName),
+                         new Claim("Id",student.Name.ToString()),
+                         new Claim("email",data.Email.ToString()),
+                         new Claim("numberPhone",data.PhoneNumber.ToString()),
+                         new Claim("CodeStudent", studentId.Code.ToString()),
+                         //new Claim("CodeTeacher", teacherId.Code.ToString())
+                        //new Claim("Id", student != null ? student.Name : "N/A"),
+                        //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(15),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),

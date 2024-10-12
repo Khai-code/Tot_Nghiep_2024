@@ -90,11 +90,13 @@ namespace API.Controllers
 
             return new string(code);
         }
+
         [HttpPost("create-subject")]
         public async Task<IActionResult> Create(SubjectDTO dto)
         {
             try
             {
+                // Bước 1: Tạo Subject mới
                 var subj = new Subject
                 {
                     Id = Guid.NewGuid(),
@@ -104,9 +106,11 @@ namespace API.Controllers
                     Status = dto.Status,
                 };
 
+                // Thêm Subject vào cơ sở dữ liệu
                 await _db.subjects.AddAsync(subj);
                 await _db.SaveChangesAsync();
 
+                // Bước 2: Thêm danh sách Subject_Grade dựa trên GradeIds
                 foreach (var gradeId in dto.GradeIds)
                 {
                     var subjectGrade = new Subject_Grade
@@ -121,13 +125,33 @@ namespace API.Controllers
                     await _db.SaveChangesAsync();
                 }
 
-                return Ok("Them thanh cong");
+                // Bước 3: Thêm danh sách PointType_Subject dựa trên PointTypeDtos
+                foreach (var pointTypeDto in dto.PointTypeIds)
+                {
+                    var pointTypeSubject = new PointType_Subject
+                    {
+                        Id = Guid.NewGuid(),
+                        SubjectId = subj.Id,
+                        PointTypeId = pointTypeDto.IdPointType,
+                        Quantity = pointTypeDto.Quantity // Giá trị Quantity nhập từ người dùng
+                    };
+
+                    await _db.pointType_Subjects.AddAsync(pointTypeSubject);
+                }
+
+                // Lưu các PointType_Subject
+                await _db.SaveChangesAsync();
+
+                return Ok("Thêm thành công");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Loi");
+                // Log lỗi nếu cần
+                return BadRequest("Lỗi: " + ex.Message);
             }
         }
+
+
 
         [HttpPut("update-subject")]
         public async Task<IActionResult> Update(SubjectDTO subjectDTO)
@@ -166,4 +190,6 @@ namespace API.Controllers
             return BadRequest("Loi");
         }
     }
+
+
 }
