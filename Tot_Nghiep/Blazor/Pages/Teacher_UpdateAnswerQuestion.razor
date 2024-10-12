@@ -1,0 +1,57 @@
+﻿@* <h3>Teacher_UpdateAnswerQuestion</h3>
+
+@code {
+
+    [Parameter] public Guid Id { get; set; }
+    private TestQuestion_TestQuestionAnswersDTO question = new TestQuestion_TestQuestionAnswersDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        question = await Http.GetFromJsonAsync<TestQuestion_TestQuestionAnswersDTO>($"api/TestQuestion/{Id}");
+    }
+
+    private async Task SaveChanges()
+    {
+        var response = await Http.PutAsJsonAsync($"api/TestQuestion/{Id}", question);
+
+        if (response.IsSuccessStatusCode)
+        {
+            // Cập nhật thành công, có thể điều hướng hoặc hiển thị thông báo
+        }
+        else
+        {
+            // Hiển thị thông báo lỗi
+        }
+    }
+}
+
+<div>
+    <h3>Edit Question</h3>
+    <EditForm Model="question" OnValidSubmit="SaveChanges">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div>
+            <label>Question Name:</label>
+            <InputText @bind-Value="question.QuestionName" />
+        </div>
+
+        <div>
+            <label>Answers:</label>
+            @for (int i = 0; i < question.Answers.Count; i++)
+            {
+                <InputText @bind-Value="question.Answers[i]" />
+            }
+        </div>
+
+        <div>
+            <label>Correct Answers:</label>
+            @for (int i = 0; i < question.CorrectAnswers.Count; i++)
+            {
+                <InputText @bind-Value="question.CorrectAnswers[i]" />
+            }
+        </div>
+
+        <button type="submit">Save</button>
+    </EditForm>
+</div> *@
