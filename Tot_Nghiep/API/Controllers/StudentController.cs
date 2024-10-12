@@ -58,5 +58,27 @@ namespace API.Controllers
 
             return Ok(listStudent);
         }
+
+        [HttpGet("get-by-studentId")]
+        public async Task<ActionResult<StudentDTO>> GetById2(Guid studentId)
+        {
+            // Tìm kiếm sinh viên theo studentId
+            var student = await (from s in _db.students
+                                 join u in _db.users on s.UserId equals u.Id
+                                 where s.Id == studentId
+                                 select new StudentDTO
+                                 {
+                                     Id = s.Id,
+                                     Name = u.FullName, // Lấy tên từ bảng Users
+                                     Code = s.Code      // Lấy mã từ bảng Students
+                                 }).FirstOrDefaultAsync();
+
+            if (student == null)
+            {
+                return NotFound("Student not found.");
+            }
+
+            return Ok(student);
+        }
     }
 }
