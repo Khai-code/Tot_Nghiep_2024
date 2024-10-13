@@ -75,25 +75,30 @@ namespace API.Controllers
             return Ok(test);
         }
         [HttpGet("get-list-test")]
-        public async Task<List<TestGridDTO>> GetListTest([FromQuery] GetListTestQueryDTO input)
+        public async Task<List<TestGridDTO>> GetListTest()
         {
-            var query = _DbContext.testCodes
-                .Include(t => t.Tests)
-                .Include(t => t.Tests.Subject)
-                .Include(t=>t.Tests.PointType)
+            var query = _DbContext.tests
+                .Include(t => t.Subject)
+                .Include(t => t.Subject.Subject_Grade)
+                .ThenInclude(t => t.Grade)
+                .ThenInclude(g => g.Class)
+                .Include(t => t.PointType)
                 .AsQueryable();
-            
+
             var testList = await query
                 .Select(t => new TestGridDTO
                 {
-                    Id = t.Tests.Id,
-                    namepoint=t.Tests.PointType.Name,
-                    Name = t.Tests.Name,
-                    Code = t.Tests.Code.ToString(),
-                    SubjectName = t.Tests.Subject.Name,
+                    Id = t.Id,
+                    namepoint = t.PointType.Name,
+                    nameclass = t.Subject.Subject_Grade
+                        .SelectMany(sg => sg.Grade.Class.Select(c => c.Name))
+                        .FirstOrDefault(),
+                    Name = t.Name,
+                    Code = t.Code.ToString(),
+                    SubjectName = t.Subject.Name,
                     Status = t.Status,
-                    SubjectId = t.Tests.SubjectId,
-                    Minute = t.Tests.Minute,
+                    SubjectId = t.SubjectId,
+                    Minute = t.Minute,
                 })
                 .ToListAsync();
 
