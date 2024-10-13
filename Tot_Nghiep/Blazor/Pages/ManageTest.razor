@@ -1,6 +1,7 @@
 ﻿@page "/manage-test"
 @using global::Data.DTOs
 @layout Teacherlayout
+@inject HttpClient client
 @inject IHttpClientFactory clientFactory;
 @inject NavigationManager NavigationManager
 @inject IJSRuntime Jsruntime
@@ -13,9 +14,9 @@
                 <h2>Danh sách đề</h2>
             </div>
             <div class="col text-end">
-                
+
                 <button class="btn btn-primary" @onclick="SearchTests">Tìm kiếm</button>
-                <button class="btn btn-primary" @onclick="show">Tạo đề thi</button>
+                <button class="btn btn-primary" @onclick="ShowCreateTestModal">Tạo đề thi</button>
             </div>
         </div>
 
@@ -23,35 +24,23 @@
             <table class="table table-bordered">
                 <thead class="table-light">
                     <tr>
+
                         <th scope="col">Mã đề</th>
                         <th scope="col">Tên đề</th>
                         <th scope="col">Loại đề</th>
                         <th scope="col">Môn</th>
-                        <th scope="col">Người tạo</th>
+                        <th scope="col">Lớp</th>
                         <th scope="col">Hành động</th>
-                    </tr><tr>
-                        <th scope="col"> <input @bind="queryDTO.Code" class="form-control" placeholder="Code" /></th>
-                        <th scope="col"><input @bind="queryDTO.Name" class="form-control" placeholder="Name" /></th>
-                        <th scope="col">
-                            <select @bind="queryDTO.Type" class="form-control">
-                                <option value=-1>Chọn...</option>
-                                <option value=0>15 phút</option>
-                                <option value=1>60 phút</option>
-                            </select>
-                        </th>
-                        <th scope="col"><input @bind="queryDTO.SubjectName" class="form-control" placeholder="Name" /></th>
-                        <th scope="col"><input @bind="queryDTO.Creator" class="form-control" placeholder="Name" /></th>
-                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if (testList.ListTest == null)
+                    @if (testList == null)
                     {
                         <tr>
                             <td colspan="6" class="text-center">Loading...</td>
                         </tr>
                     }
-                    else if (!testList.ListTest.Any())
+                    else if (!testList.Any())
                     {
                         <tr>
                             <td colspan="6" class="text-center">không tìm thấy đề thi</td>
@@ -59,17 +48,21 @@
                     }
                     else
                     {
-                        @foreach (var test in testList.ListTest)
+                        @foreach (var test in testList)
                         {
                             <tr>
-                                <td>@test.Code</td>
+
+                                <td>@test.Id.ToString("N")</td>
                                 <td>@test.Name</td>
-                                <td>@test.namepoint</td> 
+                                <td>@test.namepoint</td>
                                 <td>@test.SubjectName</td>
-                                <td>Admin</td>
+                                <td>@test.nameclass</td>
+                                <td>@test.nameclass</td>
                                 <td>
-                                    <button class="btn btn-info" @onclick="()=>RedirectToCreateOrUpadate(true,test.Id)">Sửa</button>
+                                    @* <button class="btn btn-info" @onclick="()=>Submit(true,test.Id)">Sửa</button> *@
                                     <button class="btn btn-danger" @onclick="()=>Delete(test.Id)">Xóa</button>
+                                    <button class="btn btn-primary " @onclick="ShowQuestionDetailModal">thêm câu hỏi</button>
+                                    <button class="btn btn-warning ">sinh đề</button>
                                 </td>
                             </tr>
                         }
@@ -78,72 +71,165 @@
             </table>
         </div>
     </div>
-    <div class="modal fade @(modalVisibles ? "show" : "")" tabindex="-1" style="display:@(modalVisibles ? "block" : "none")" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Tạo Đề Thi</h5>
-                            <button type="button" class="btn-close" @onclick="close"></button>
+    <div class="modal fade @(isCreateTestModalVisible  ? "show" : "")" tabindex="-1" style="display:@(isCreateTestModalVisible  ? "block" : "none")">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tạo Đề Thi</h5>
+                    <button type="button" class="btn-close" @onclick="HideCreateTestModal"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label>Tên Đề:</label>
+                        <input type="text" class="form-control" @bind=testDTO.Name />
+                    </div>
+                    <div>
+                        <label>Thời Gian</label>
+                        <input type="text" class="form-control" @bind=testDTO.Minute />
+                    </div>
+                    <div>
+                        <label>Môn học</label>
+                        <select class="form-control" @bind="testDTO.SubjectId">
+                            <option value="value">--chọn--</option>
+                            @foreach (var item in subjectDTOs)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <label>Lớp:</label>
+                        <select class="form-control" @bind="testDTO.ClassCode">
+                            <option value="value">--chọn--</option>
+                            @foreach (var item in classDTOs)
+                            {
+                                <option value="@item.Code">@item.Name </option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <label>Điểm:</label>
+                        <select class="form-control" @bind="testDTO.PointTypeId">
+                            <option value="value">--chọn--</option>
+                            @foreach (var item in pointTypeDTOs)
+                            {
+                                <option value="@item.Id">@item.Name </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="Submit">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade @(isQuestionDetailModalVisible ? "show" : "")" tabindex="-1" style="display:@(isQuestionDetailModalVisible ? "block" : "none")">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm câu hỏi</h5>
+                    <button type="button" class="btn-close" @onclick="HideQuestionDetailModal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <label>Gói đề;</label>
+                                <select @bind="testQuestion_TestQuestionAnswersDTO.TestId" class="form-select">
+                                    <option selected>--chọn--</option>
+                                    @foreach (var item in testList)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <div>
-                                <label>Tên Đề:</label>
-                                <input type="text"  class="form-control" @bind=testDTO.Name />
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <label>Loại câu hỏi:</label>
+                                <select class="form-select" @bind="testQuestion_TestQuestionAnswersDTO.QuestionType">
+                                    <option value="">--chọn--</option>
+                                    <option value="1">Một đáp án</option>
+                                    <option value="2">Nhiều đáp án</option>
+                                </select>
                             </div>
-                            <div>
-                                <label>Thời Gian</label>
-                                <input type="text" class="form-control" @bind=testDTO.Minute />
+                            <div class="col-6">
+                                <label>Độ khó:</label>
+                                <select class="form-select" @bind="testQuestion_TestQuestionAnswersDTO.Level">
+                                    <option value="">--chọn--</option>
+                                    <option value="1">Dễ</option>
+                                    <option value="2">Trung bình</option>
+                                    <option value="3">Khó</option>
+                                    <option value="4">Rất khó</option>
+                                </select>
                             </div>
-                            <div>
-                                <label>Môn học</label>
-                                <select class="form-control"@bind="testDTO.SubjectId" >
-                                    <option value="value">--chọn--</option>
-                                @foreach(var item in subjectDTOs)
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <label>Câu hỏi:</label>
+                                <input type="text" class="form-control" @bind="testQuestion.QuestionName" placeholder="Nhập câu hỏi" />
+                            </div>
+                        </div>
+
+
+
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <label>Các đáp án:</label>
+                                @for (int i = 0; i < numberOfAnswers; i++)
                                 {
-                                    <option value="@item.Id">@item.Name</option>
+                                    <div class="mb-2">
+                                        <input type="text" @oninput="(e) => UpdateAnswer(e, i)" class="form-control" placeholder="Nhập đáp án" />
+
+                                    </div>
                                 }
-                                </select>
-                            </div>
-                            <div>
-                                <label>Lớp:</label>
-                                <select class="form-control" @bind="testDTO.ClassCode" >
-                                    <option value="value">--chọn--</option>
-                                    @foreach(var item in classDTOs)
-                                    {
-                                    <option value="@item.Code">@item.Name </option>
-                                    }
-                                </select>
-                            </div>
-                            <div>
-                                <label>Điểm:</label>
-                                <select class="form-control" @bind="testDTO.PointTypeId" >
-                                    <option value="value">--chọn--</option>
-                                    @foreach(var item in pointTypeDTOs)
-                                    {
-                                     <option value="@item.Id">@item.Name </option>
-                                    }
-                                </select>
                             </div>
                         </div>
+
+
+
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" @onclick="Submit">Lưu</button>
+                            <button type="button" class="btn btn-primary"><i class="bi bi-file-earmark-excel"></i>Thêm file Excel</button>
+                            @*   <button class="btn btn-primary" @onclick="AddQuestion">Thêm câu hỏi</button> *@
                         </div>
                     </div>
                 </div>
             </div>
-   
+        </div>
+    </div>
 </div>
+
 @code {
-    [Parameter]
-    public Guid? id { get; set; }
-    private TestResponseDTO testList= new  TestResponseDTO();
+    private void UpdateAnswer(ChangeEventArgs e, int index)
+    {
+        // if (index >= 0 && index < testQuestion_TestQuestionAnswersDTO.Answers.Count)
+        // {
+        //      testQuestion_TestQuestionAnswersDTO.Answers[index] = e.Value?.ToString() ?? string.Empty;
+
+        // }
+
+    }
+
+    private int numberOfAnswers = 4;
+    private TestQuestion_TestQuestionAnswersDTO testQuestion_TestQuestionAnswersDTO = new TestQuestion_TestQuestionAnswersDTO
+    {
+        // Answers = new List<string> { "", "", "", "" },
+        // CorrectAnswers= new List<string>()
+    };
+    private List<TestGridDTO> testList = new List<TestGridDTO>();
+    private TestQuestionDTO testQuestion = new TestQuestionDTO();
     private GetListTestQueryDTO queryDTO = new GetListTestQueryDTO();
     private List<TestQuestionDTO> testQuestionDTOs = new List<TestQuestionDTO>();
     private List<SubjectDTO> subjectDTOs = new List<SubjectDTO>();
     private List<ClassDTO> classDTOs = new List<ClassDTO>();
     private List<PointTypeDTO> pointTypeDTOs = new List<PointTypeDTO>();
     private TestDTO testDTO = new TestDTO();
-
+    // private void AddAnswer()
+    // {
+    //     tempAnswers.Add(string.Empty); // Thêm một chuỗi rỗng cho đáp án mới
+    // }
     protected override async Task OnInitializedAsync()
     {
         try
@@ -158,6 +244,7 @@
 
         }
     }
+
     private async Task detailpoint()
     {
         var httpclient = clientFactory.CreateClient("Get");
@@ -192,61 +279,95 @@
             });
             NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
         }
-            else
+        else
+        {
+            await Jsruntime.InvokeVoidAsync("Swal.fire", new
             {
-                await Jsruntime.InvokeVoidAsync("Swal.fire", new
-                {
-                    title = "Thất bại!",
-                    text = "Thêm dữ liệu thất bại.",
-                    icon = "error",
-                    confirmButtonText = "OK"
-                });
-            }
+                title = "Thất bại!",
+                text = "Thêm dữ liệu thất bại.",
+                icon = "error",
+                confirmButtonText = "OK"
+            });
         }
-    
-    
-    private void RedirectToCreateOrUpadate(bool isUpdate, Guid? id)
-    {
-        NavigationManager.NavigateTo(isUpdate ? $"create-or-update-test/{id}" : "create-or-update-test");
     }
     private async Task Delete(Guid id)
     {
         var httpClient = clientFactory.CreateClient("Delete");
-        var url = $"https://localhost:7039/api/Test/Delete_Test?Id={id}";
+        var url = $"https://localhost:7039/api/Test/delete-test?id={id}";
         var res = await httpClient.DeleteAsync(url);
-        await SearchTests();
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
     }
     private async Task SearchTests()
     {
         var query = new List<string>();
-        if (!string.IsNullOrWhiteSpace(queryDTO.Code)) query.Add($"code={queryDTO.Code.Trim()}");
-        if (!string.IsNullOrWhiteSpace(queryDTO.SubjectName)) query.Add($"subjectName={queryDTO.SubjectName.Trim()}");
-        if (!string.IsNullOrWhiteSpace(queryDTO.Creator)) query.Add($"creator={queryDTO.Creator.Trim()}");
-        if (!string.IsNullOrWhiteSpace(queryDTO.Name)) query.Add($"subjectName={queryDTO.Name.Trim()}");
-        if (queryDTO.Type.HasValue) query.Add($"type={queryDTO.Type}");
         var queryString = string.Join("&", query);
         var httpClient = clientFactory.CreateClient("Get");
         var url = $"https://localhost:7039/api/Test/get-list-test?{queryString}";
-        testList.ListTest = await httpClient.GetFromJsonAsync<List<TestGridDTO>>(url);
+        testList = await httpClient.GetFromJsonAsync<List<TestGridDTO>>(url);
     }
-    private bool modalVisibles = false;
-    private string modalVisible = "";
-    private void show()
-    {
-        modalVisibles = true;
+    @code {
+        private bool isCreateTestModalVisible = false;
+        private bool isQuestionDetailModalVisible = false;
+
+        private void ShowCreateTestModal()
+        {
+            isCreateTestModalVisible = true;
+        }
+
+        private void HideCreateTestModal()
+        {
+            isCreateTestModalVisible = false;
+        }
+
+        private void ShowQuestionDetailModal()
+        {
+            isQuestionDetailModalVisible = true;
+        }
+
+        private void HideQuestionDetailModal()
+        {
+            isQuestionDetailModalVisible = false;
+        }
+
+
+
+        //     private void RemoveAnswer(int index)
+        //     {
+        //         if (index >= 0 && index < testQuestion_TestQuestionAnswersDTO.Answers.Count)
+        //         {
+        //             testQuestion_TestQuestionAnswersDTO.Answers.RemoveAt(index); // Xóa đáp án
+        //         }
+        //     }
+
+        // private async Task AddQuestion()
+        // {
+        //     testQuestion_TestQuestionAnswersDTO.Answers = testQuestion_TestQuestionAnswersDTO.Answers.ToList();
+        //     var response = await client.PostAsJsonAsync($"https://localhost:7039/api/TestQuestionDTO/create_question_answer", testQuestion);
+
+        //     if (response.IsSuccessStatusCode)
+        //     {
+        //         Console.WriteLine("Câu hỏi đã được thêm thành công.");
+        //     }
+        //     else
+        //     {
+        //         Console.WriteLine("Đã xảy ra lỗi khi thêm câu hỏi.");
+        //     }
+        // }
     }
-    private void close()
-    {
-        modalVisibles = false;
-    }
-    private void CloseModal()
-    {
-        
-        modalVisible = "";
-    }
+
 }
 <style>
     .row {
         --bs-gutter-x: 0;
+    }
+
+    .modal.fade.show {
+        display: block;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1050; /* Đảm bảo modal luôn nằm trên các phần tử khác */
+        overflow-y: auto; /* Đảm bảo modal cuộn khi nội dung nhiều */
     }
 </style>
