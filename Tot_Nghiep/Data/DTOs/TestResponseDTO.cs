@@ -14,9 +14,10 @@
         public int? NumberOfTestCode { get; set; }
         public int Status { get; set; }
         public Guid SubjectId { get; set; }
+        public string nameclass { get; set; }
         public string SubjectName { get; set; }
         public string Creator { get; set; }
-      public string namepoint { get; set; }
-        
+        public string namepoint { get; set; }
+
     }
 }

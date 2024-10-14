@@ -132,9 +132,9 @@ namespace API.Controllers
 				}
 
 				// Cập nhật thời gian thay đổi cuối cùng
-				user.LastMordificationTime = DateTime.Now;
+				var currentDateTime = DateTime.UtcNow;
 
-				// Tạo đối tượng User mới
+				// Tạo đối tượng User mới với các giá trị mặc định
 				var data = new User
 				{
 					Id = userId, // Sử dụng userId vừa tạo
@@ -143,12 +143,12 @@ namespace API.Controllers
 					Email = user.Email,
 					UserName = user.UserName,
 					PasswordHash = user.PasswordHash,
-					DateOfBirth = user.DateOfBirth,
+					DateOfBirth = user.DateOfBirth ?? DateTime.UtcNow, // Nếu không có, mặc định là hiện tại
 					PhoneNumber = user.PhoneNumber,
 					IsLocked = user.IsLocked,
-					LockedEndTime = user.LockedEndTime,
-					CreationTime = DateTime.UtcNow,
-					LastMordificationTime = user.LastMordificationTime,
+					LockedEndTime = user.IsLocked ? (user.LockedEndTime ?? currentDateTime.AddDays(30)) : (DateTime?)null, // Nếu bị khóa, mặc định sau 30 ngày, nếu không thì null
+					CreationTime = currentDateTime, // Mặc định là thời gian hiện tại
+					LastMordificationTime = currentDateTime, // Mặc định là thời gian hiện tại
 					Status = user.Status,
 					RoleId = user.RoleId,
 				};
@@ -241,37 +241,72 @@ namespace API.Controllers
         {
             var data = _db.users.FirstOrDefault(temp => temp.UserName == model.Username);
             var student = _db.roles.FirstOrDefault(temp => temp.Id == data.RoleId);
-            var studentId = _db.students.FirstOrDefault(temp => temp.UserId == data.Id);
-            //var teacherId = _db.teachers.FirstOrDefault(temp => temp.UserId == data.Id);
+           var studentId = _db.students.FirstOrDefault(temp => temp.UserId == data.Id);
+            var teacherId = _db.teachers.FirstOrDefault(temp => temp.UserId == data.Id);
             if (model.Username == data.UserName && model.Password == data.PasswordHash)
             {
-                // Nếu thông tin đăng nhập đúng, tạo token JWT
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere");
+				if (student.Name == "Student")
+				{
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere");
 
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
+                    var tokenDescriptor = new SecurityTokenDescriptor
                     {
+                        Subject = new ClaimsIdentity(new Claim[]
+                        {
                          new Claim(ClaimTypes.Name, data.FullName),
                          new Claim("Id",student.Name.ToString()),
                          new Claim("email",data.Email.ToString()),
                          new Claim("numberPhone",data.PhoneNumber.ToString()),
+
                          new Claim("CodeStudent", studentId.Code.ToString()),
                          //new Claim("CodeTeacher", teacherId.Code.ToString())
-                        //new Claim("Id", student != null ? student.Name : "N/A"),
-                        //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
-                    }),
-					Expires = DateTime.UtcNow.AddMinutes(15),
-					SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-					Issuer = "https://localhost:7039/",
-					Audience = "https://localhost:7257/"
-				};
-				var token = tokenHandler.CreateToken(tokenDescriptor);
-				var tokenString = tokenHandler.WriteToken(token);
+                            //new Claim("Id", student != null ? student.Name : "N/A"),
+                            //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
+                        }),
+                        Expires = DateTime.UtcNow.AddMinutes(15),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                        Issuer = "https://localhost:7039/",
+                        Audience = "https://localhost:7257/"
+                    };
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    var tokenString = tokenHandler.WriteToken(token);
 
-				// Trả về token cho client
-				return Ok(new { Token = tokenString });
+                    // Trả về token cho client
+                    return Ok(new { Token = tokenString });
+				}
+				else
+				{
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere");
+
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(new Claim[]
+                        {
+                         new Claim(ClaimTypes.Name, data.FullName),
+                         new Claim("Id",student.Name.ToString()),
+                         new Claim("email",data.Email.ToString()),
+                         new Claim("numberPhone",data.PhoneNumber.ToString()),
+
+                         //new Claim("CodeStudent", studentId.Code.ToString()),
+                         new Claim("CodeTeacher", teacherId.Code.ToString())
+                            //new Claim("Id", student != null ? student.Name : "N/A"),
+                            //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
+                        }),
+                        Expires = DateTime.UtcNow.AddMinutes(15),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                        Issuer = "https://localhost:7039/",
+                        Audience = "https://localhost:7257/"
+                    };
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    var tokenString = tokenHandler.WriteToken(token);
+
+                    // Trả về token cho client
+                    return Ok(new { Token = tokenString });
+                }
+                // Nếu thông tin đăng nhập đúng, tạo token JWT
+                
 			}
 			return Unauthorized("tên đăng nhập mật khẩu không đúng");
 		}

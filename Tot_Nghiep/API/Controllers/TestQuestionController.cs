@@ -47,9 +47,9 @@ namespace API.Controllers
         [HttpGet("GetAll_Question")]
         public async Task<ActionResult<List<ListQuestionDTO>>> Get_Question()
         {
-            var list = await _Dbcontext.testQuestions.Include(tc=>tc.TestQuestionAnswer)
-                .Include(tc => tc.Tests)
-
+            var list = await _Dbcontext.testQuestions
+                .Include(tc=>tc.TestQuestionAnswer)
+                    .Include(tc => tc.Tests)
                         .ThenInclude(t => t.Subject)
                             .ThenInclude(s => s.Subject_Grade)
                                 .ThenInclude(sg => sg.Grade)

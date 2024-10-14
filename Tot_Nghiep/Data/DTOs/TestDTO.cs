@@ -6,7 +6,7 @@
         public int Code { get; set; }
         public DateTime CreationTime { get; set; }
         public int Status { get; set; }
-        public int MaxStatush { get; set; }
+        public int Maxstudent { get; set; }
         public Guid SubjectId { get; set; }
         public Guid PointTypeId { get; set; }
         public string? Name { get; set; }

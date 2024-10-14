@@ -51,7 +51,7 @@ namespace API.Controllers
                     UserId = er.UserId,
                     Name = er.User.FullName,
                     Email = er.User.Email,
-                    DateOfBirth = er.User.DateOfBirth,
+                    DateOfBirth = (DateTime)er.User.DateOfBirth,
                     PhoneNumber = er.User.PhoneNumber
                 })
                 .ToListAsync();
