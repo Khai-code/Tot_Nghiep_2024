@@ -1,0 +1,4 @@
+﻿.correct-answer {
+    color: green; /* Tô màu chữ xanh cho đáp án đúng */
+    font-weight: bold; /* Tăng độ đậm của chữ */
+}
