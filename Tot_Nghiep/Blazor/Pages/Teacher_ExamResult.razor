@@ -1,0 +1,184 @@
+﻿@page "/exam-result"
+@using global::Data.Model
+@using global::Data.DTOs
+@using System.Net.Http.Json
+@layout Teacherlayout
+@inject HttpClient client
+@inject IHttpClientFactory clientFactory
+@inject NavigationManager nav
+
+<div class="navbar">
+    <h2>Kết quả bài thi của học sinh</h2> <!-- Tiêu đề đã sửa -->
+</div>
+
+<div class="search-container">
+    <input type="text" @bind="searchKeyword" placeholder="Nhập mã hoặc tên học sinh" />
+    <button class="btn btn-primary btn-sm" @onclick="SearchStudents">Tìm kiếm</button> <!-- Nút nhỏ hơn -->
+</div>
+
+@if (examResults != null && examResults.Count > 0)
+{
+    <div class="container student-management">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã học sinh</th>
+                                <th>Tên học sinh</th>
+                                <th>Khối</th>
+                                <th>Lớp</th>
+                                <th>Môn</th>
+                                <th>Mã bài thi</th>
+                                <th>Phòng thi</th>
+                                <th>Điểm</th>
+                                <th>Thời gian làm bài</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var result in examResults)
+                            {
+                                <tr>
+                                    <td>@(examResults.IndexOf(result) + 1)</td>
+                                    <td>@result.StudentCode</td>
+                                    <td>@result.StudentName</td>
+                                    <td>@result.GradeName</td>
+                                    <td>@result.ClassName</td>
+                                    <td>@result.SubjectName</td>
+                                    <td>@result.TestCode</td>
+                                    <td>@result.RoomName</td>
+                                    <td>
+                                        @result.CorrectAnswers / @(result.CorrectAnswers + result.WrongAnswers)
+                                    </td>
+                                    <td>@result.ExamTime.ToString("MM/dd/yyyy HH:mm")</td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm" @onclick="() => PhucKhao(result.StudentID,result.examRoomTestCodeId)">Chi tiết bài thi</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p>No results found.</p>
+}
+
+<style>
+    /* Navbar styling */
+    .navbar {
+        background-color: #007bff;
+        padding: 8px 20px; /* Thu gọn padding */
+        display: flex;
+        justify-content: center; /* Căn giữa nội dung */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        border-radius: 8px; /* Bo tròn góc */
+        color: white;
+        font-size: 20px; /* Giảm kích thước font chữ */
+        font-weight: bold;
+        margin-bottom: 20px;
+        width: 100%; /* Giãn ra theo chiều ngang */
+    }
+
+        .navbar h2 {
+            margin: 0; /* Loại bỏ margin mặc định */
+            font-size: 18px; /* Kích thước font chữ nhỏ gọn hơn */
+            font-weight: normal; /* Giảm độ dày font */
+        }
+
+
+    /* Search bar styling */
+    .search-container {
+        display: flex;
+        justify-content: flex-start; /* Căn bên trái */
+        margin-bottom: 20px;
+        padding-left: 10px; /* Thêm padding để không sát lề */
+    }
+
+    input[type="text"] {
+        border-radius: 10px; /* Giảm độ bo tròn */
+        padding: 5px 10px; /* Thu nhỏ thanh tìm kiếm */
+        width: 200px; /* Giới hạn kích thước chiều rộng */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease-in-out;
+        margin-right: 10px;
+    }
+
+        input[type="text"]:focus {
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+            outline: none;
+        }
+
+    /* Container styling */
+    .container.student-management {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Table Styling */
+    .table thead th {
+        background-color: #007bff;
+        color: #ffffff;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 16px;
+    }
+
+    .table tbody tr {
+        transition: background-color 0.3s;
+    }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    /* Button styling */
+    .btn {
+        padding: 6px 10px; /* Giảm kích thước nút */
+        font-size: 12px; /* Nút nhỏ hơn */
+        border-radius: 5px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: white;
+    }
+</style>
+
+@code {
+    private List<StudentExamResultDTO> examResults = new List<StudentExamResultDTO>();
+    private string searchKeyword;
+
+    private async Task SearchStudents()
+    {
+        if (!string.IsNullOrEmpty(searchKeyword))
+        {
+            var response = await client.GetFromJsonAsync<List<StudentExamResultDTO>>($"https://localhost:7039/api/ExamResult/search-student-result?keyword={searchKeyword}");
+            if (response != null)
+            {
+                examResults = response;
+            }
+        }
+    }
+
+    public void PhucKhao(Guid studentId, Guid examRoomTestCodeId)
+    {
+        nav.NavigateTo($"/exam-review/{studentId}/{examRoomTestCodeId}");
+    }
+}

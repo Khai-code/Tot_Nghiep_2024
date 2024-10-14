@@ -113,14 +113,14 @@
             var httpClient = clientFactory.CreateClient("Test-Update");
             var url = $"https://localhost:7039/api/Test/Update_Test";
             var response = await httpClient.PutAsJsonAsync<TestDTO>(url, testDTO);
-            NavigationManager.NavigateTo("/manage-test");
+            ;
         }
         else
         {
             var httpClient = clientFactory.CreateClient("Test-Create");
             var url = $"https://localhost:7039/api/Test/Post_Test";
             var response = await httpClient.PostAsJsonAsync<TestDTO>(url, testDTO);
-            NavigationManager.NavigateTo("/manage-test");
+           
         }
     }
 
