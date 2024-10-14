@@ -27,7 +27,7 @@ namespace Data.Model
 
         [StringLength(256, ErrorMessage = "Pass không được quá 256 ký tự")]
         public string PasswordHash { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [StringLength(12, ErrorMessage = "Tên không được quá 12 ký tự")]
         public string? PhoneNumber { get; set; }
