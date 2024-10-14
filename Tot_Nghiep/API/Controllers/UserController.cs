@@ -241,37 +241,72 @@ namespace API.Controllers
         {
             var data = _db.users.FirstOrDefault(temp => temp.UserName == model.Username);
             var student = _db.roles.FirstOrDefault(temp => temp.Id == data.RoleId);
-            var studentId = _db.students.FirstOrDefault(temp => temp.UserId == data.Id);
-            //var teacherId = _db.teachers.FirstOrDefault(temp => temp.UserId == data.Id);
+           var studentId = _db.students.FirstOrDefault(temp => temp.UserId == data.Id);
+            var teacherId = _db.teachers.FirstOrDefault(temp => temp.UserId == data.Id);
             if (model.Username == data.UserName && model.Password == data.PasswordHash)
             {
-                // Nếu thông tin đăng nhập đúng, tạo token JWT
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere");
+				if (student.Name == "Student")
+				{
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere");
 
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
+                    var tokenDescriptor = new SecurityTokenDescriptor
                     {
+                        Subject = new ClaimsIdentity(new Claim[]
+                        {
                          new Claim(ClaimTypes.Name, data.FullName),
                          new Claim("Id",student.Name.ToString()),
                          new Claim("email",data.Email.ToString()),
                          new Claim("numberPhone",data.PhoneNumber.ToString()),
+
                          new Claim("CodeStudent", studentId.Code.ToString()),
                          //new Claim("CodeTeacher", teacherId.Code.ToString())
-                        //new Claim("Id", student != null ? student.Name : "N/A"),
-                        //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
-                    }),
-					Expires = DateTime.UtcNow.AddMinutes(15),
-					SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-					Issuer = "https://localhost:7039/",
-					Audience = "https://localhost:7257/"
-				};
-				var token = tokenHandler.CreateToken(tokenDescriptor);
-				var tokenString = tokenHandler.WriteToken(token);
+                            //new Claim("Id", student != null ? student.Name : "N/A"),
+                            //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
+                        }),
+                        Expires = DateTime.UtcNow.AddMinutes(15),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                        Issuer = "https://localhost:7039/",
+                        Audience = "https://localhost:7257/"
+                    };
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    var tokenString = tokenHandler.WriteToken(token);
 
-				// Trả về token cho client
-				return Ok(new { Token = tokenString });
+                    // Trả về token cho client
+                    return Ok(new { Token = tokenString });
+				}
+				else
+				{
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var key = Encoding.ASCII.GetBytes("YourSuperSecretKeyHere");
+
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(new Claim[]
+                        {
+                         new Claim(ClaimTypes.Name, data.FullName),
+                         new Claim("Id",student.Name.ToString()),
+                         new Claim("email",data.Email.ToString()),
+                         new Claim("numberPhone",data.PhoneNumber.ToString()),
+
+                         //new Claim("CodeStudent", studentId.Code.ToString()),
+                         new Claim("CodeTeacher", teacherId.Code.ToString())
+                            //new Claim("Id", student != null ? student.Name : "N/A"),
+                            //new Claim("Idteacher",teacher != null? teacher.Code:"N/A")
+                        }),
+                        Expires = DateTime.UtcNow.AddMinutes(15),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                        Issuer = "https://localhost:7039/",
+                        Audience = "https://localhost:7257/"
+                    };
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    var tokenString = tokenHandler.WriteToken(token);
+
+                    // Trả về token cho client
+                    return Ok(new { Token = tokenString });
+                }
+                // Nếu thông tin đăng nhập đúng, tạo token JWT
+                
 			}
 			return Unauthorized("tên đăng nhập mật khẩu không đúng");
 		}
