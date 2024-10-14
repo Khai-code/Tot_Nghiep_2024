@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System;
+using OfficeOpenXml;
 
 namespace API.Controllers
 {
@@ -18,7 +19,7 @@ namespace API.Controllers
         {
             _db = db;
         }
-
+        
         [HttpPost("create_question_answwer")]
         public async Task<IActionResult> QuestionWithAnswers(TestQuestion_TestQuestionAnswersDTO dto)
         {
@@ -210,5 +211,121 @@ namespace API.Controllers
 
             return Ok("Chia câu hỏi vào mã đề thành công");
         }
+
+        [HttpPost("import_questions")]
+        public async Task<IActionResult> ImportQuestionsFromExcel(IFormFile file, Guid id)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Chọn một file Excel hợp lệ.");
+            }
+
+            var testCode = await _db.tests.FirstOrDefaultAsync(c => c.Id == id);
+            var questionsList = new List<TestQuestion_TestQuestionAnswersDTO>();
+            var errorMessages = new List<string>();
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                using (var package = new ExcelPackage(stream))
+                {
+                    var worksheet = package.Workbook.Worksheets[0];
+                    int rowCount = worksheet.Dimension.Rows;
+
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+                        string typeText = worksheet.Cells[row, 2].Text.Trim();
+                        string levelText = worksheet.Cells[row, 4].Text.Trim();
+
+                        int convertype(string typetext)
+                        {
+                            switch (typetext.ToLower())
+                            {
+                                case "trắc nghiệm 1 đáp án":
+                                    return 1;
+                                case "trắc nghiệm nhiều đáp án":
+                                    return 2;
+                                case "đúng/sai":
+                                    return 3;
+                                case "điền vào chỗ trống":
+                                    return 4;
+                                default:
+                                    errorMessages.Add($"Giá trị type không hợp lệ ở hàng {row}: {typetext}");
+                                    return -1; // Trả về -1 hoặc giá trị mặc định nào đó
+                            }
+                        }
+
+                        int ConvertLevel(string levelText)
+                        {
+                            switch (levelText.ToLower())
+                            {
+                                case "dễ":
+                                    return 1;
+                                case "trung bình":
+                                    return 2;
+                                case "khó":
+                                    return 3;
+                                case "rất khó":
+                                    return 4;
+                                default:
+                                    errorMessages.Add($"Giá trị Level không hợp lệ ở hàng {row}: {levelText}");
+                                    return -1;
+                            }
+                        }
+
+                        int questionType = convertype(typeText);
+                        int level = ConvertLevel(levelText);
+
+                        if (questionType == -1 || level == -1)
+                        {
+                            continue; 
+                        }
+
+                       //var username = User.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+                        var dto = new TestQuestion_TestQuestionAnswersDTO
+                        {
+                            QuestionType = questionType,
+                            QuestionName = worksheet.Cells[row, 3].Text,
+                            Level = level,
+                            CreatedByName= "",
+                            TestId = testCode.Id,
+
+                            CorrectAnswers = worksheet.Cells[row, 5].GetValue<string>()
+                            .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                            .Select(c => c.Trim())
+                            .Where(c => !string.IsNullOrWhiteSpace(c))
+                            .ToList(),
+
+                            // Đọc các đáp án từ các ô cột khác nhau
+                            Answers = new List<string>
+                    {
+                        worksheet.Cells[row, 6].Text,
+                        worksheet.Cells[row, 7].Text,
+                        worksheet.Cells[row, 8].Text,
+                        worksheet.Cells[row, 9].Text,
+                        worksheet.Cells[row, 10].Text,
+                        worksheet.Cells[row, 11].Text
+                    }.Where(x => !string.IsNullOrEmpty(x)).ToList()
+                        };
+
+                        questionsList.Add(dto);
+                    }
+                }
+            }
+
+            // Ghi chú nếu có lỗi
+            if (errorMessages.Count > 0)
+            {
+                return BadRequest(string.Join("\n", errorMessages));
+            }
+
+            // Xử lý từng câu hỏi và lưu vào cơ sở dữ liệu
+            foreach (var dto in questionsList)
+            {
+                await QuestionWithAnswers(dto);
+            }
+
+            return Ok("Nhập câu hỏi thành công từ file Excel.");
+        }
+
     }
 }
