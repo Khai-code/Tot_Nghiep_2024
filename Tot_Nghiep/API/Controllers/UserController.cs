@@ -132,9 +132,9 @@ namespace API.Controllers
 				}
 
 				// Cập nhật thời gian thay đổi cuối cùng
-				user.LastMordificationTime = DateTime.Now;
+				var currentDateTime = DateTime.UtcNow;
 
-				// Tạo đối tượng User mới
+				// Tạo đối tượng User mới với các giá trị mặc định
 				var data = new User
 				{
 					Id = userId, // Sử dụng userId vừa tạo
@@ -143,12 +143,12 @@ namespace API.Controllers
 					Email = user.Email,
 					UserName = user.UserName,
 					PasswordHash = user.PasswordHash,
-					DateOfBirth = user.DateOfBirth,
+					DateOfBirth = user.DateOfBirth ?? DateTime.UtcNow, // Nếu không có, mặc định là hiện tại
 					PhoneNumber = user.PhoneNumber,
 					IsLocked = user.IsLocked,
-					LockedEndTime = user.LockedEndTime,
-					CreationTime = DateTime.UtcNow,
-					LastMordificationTime = user.LastMordificationTime,
+					LockedEndTime = user.IsLocked ? (user.LockedEndTime ?? currentDateTime.AddDays(30)) : (DateTime?)null, // Nếu bị khóa, mặc định sau 30 ngày, nếu không thì null
+					CreationTime = currentDateTime, // Mặc định là thời gian hiện tại
+					LastMordificationTime = currentDateTime, // Mặc định là thời gian hiện tại
 					Status = user.Status,
 					RoleId = user.RoleId,
 				};
