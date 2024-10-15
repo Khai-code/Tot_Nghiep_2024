@@ -35,6 +35,7 @@ namespace API.Controllers
                     Id = q.Id,
                     Questionname = q.QuestionName,
                     RightAnswer = q.RightAnswer,
+                    Type = q.Type,
                     answer = q.TestQuestionAnswer.Select(a => new AnswerDTO
                     {
                         Answer = a.Answer,
@@ -261,7 +262,7 @@ namespace API.Controllers
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "TestQuestions.xlsx");
             }
         }
-      
+       
         [HttpPost("import")]
         public async Task<IActionResult> ImportFromExcel(IFormFile file)
         {
