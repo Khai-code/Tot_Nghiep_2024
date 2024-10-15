@@ -42,7 +42,7 @@ namespace API.Controllers
                                 join test in _db.tests on testCode.TestId equals test.Id // Thêm nối qua bảng Test
                                 join testQuestion in _db.testQuestions on test.Id equals testQuestion.TestId // Nối TestQuestion với Test
                                 join testQuestionAnswer in _db.testQuestionAnswers on testQuestion.Id equals testQuestionAnswer.TestQuestionId
-                                where student.Code.Contains(keyword) || student.User.FullName.Contains(keyword) || classEntity.Name.Contains(keyword) || testCode.Code.Contains(keyword) || subject.Name.Contains(keyword)
+                                where student.Code.Contains(keyword) || student.User.FullName.Contains(keyword) /*|| classEntity.Name.Contains(keyword) || testCode.Code.Contains(keyword) || subject.Name.Contains(keyword)*/
                                 select new StudentExamResultDTO
                                 {
                                     StudentID = student.Id,
