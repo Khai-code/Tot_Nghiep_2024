@@ -57,7 +57,7 @@ namespace API.Controllers
                                     Answer = testQuestionAnswer.Answer,
                                     RightAnswer = testQuestion.RightAnswer,
                                     ExamTime = examHistory.CreationTime
-                                }).ToListAsync();
+                                }).Distinct().ToListAsync();
 
             var studentResult = result.GroupBy(x => new {x.GradeName, x.ClassName, x.StudentID, x.examRoomTestCodeId, x.StudentCode, x.StudentName, x.SubjectName, x.TestCode, x.RoomName, x.ExamTime })
                 .Select(g => new StudentExamResultDTO
