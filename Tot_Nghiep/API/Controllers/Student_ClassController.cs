@@ -32,7 +32,7 @@ namespace API.Controllers
 
         //        // Lưu ảnh tạm thời
         //        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
-        //        Directory.CreateDirectory(uploadsFolder); // Tạo thư mục nếu không tồn tại
+        //        Directory.CreateDirectory(uploadsFolder); // Tạo thư mục nếu không tồn    tại
 
         //        var filePath = Path.Combine(uploadsFolder, dto.StudentProfilePhoto.FileName);
         //        using (var stream = new FileStream(filePath, FileMode.Create))
@@ -97,5 +97,5 @@ namespace API.Controllers
 
 
 
-    }
+        }
 }

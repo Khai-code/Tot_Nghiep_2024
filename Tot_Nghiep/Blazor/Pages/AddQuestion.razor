@@ -5,159 +5,119 @@
 @inject IHttpClientFactory ClientFactory
 @inject IJSRuntime jsruntime
 @inject NavigationManager navigate
-@* <div class="container">
+
+<div class="container ">
     <div class="row py-2">
-        <div class="fs-3 fw-bold text-info">
-            <span type="button">chọn loại câu hỏi</span>
+        <div class=" head d-flex justify-content-between rounded  bg-white">
+            <div>
+                <h4 class="fw-bold text-primary">Tạo câu hỏi</h4>
+            </div>
+            
+            <div>
+                <button class="btn btn-success " @onclick="CreateQuestionWithAnswers">Lưu câu hỏi</button>
+            </div>
+            
         </div>
     </div>
-    <div class="row py-3">
-        <div class="col-3">
-            <button type="button" class="btn" @onclick="() => SelectQuestionType(1)">
-                <div class="quiz-container">
-                    <div class="quiz-title">Trắc nghiệm chọn 1 đáp án</div>
-                    <div class="d-flex justify-content-center">
-                        <img src="/img/1.svg" alt="Alternate Text" />
-                    </div>
-                </div>
-            </button>
-        </div>
-        <div class="col-3">
-            <button type="button" class="btn" @onclick="() => SelectQuestionType(2)">
-                <div class="quiz-container">
-                    <div class="quiz-title">Trắc nghiệm chọn nhiều đáp án</div>
-                    <div class="d-flex justify-content-center">
-                        <img src="/img/2.svg" alt="Alternate Text" />
-                    </div>
-                </div>
-            </button>
-        </div>
-        <div class="col-3">
-            <button type="button" class="btn" @onclick="() => SelectQuestionType(3)">
-                <div class="quiz-container">
-                    <div class="quiz-title">Đúng sai</div>
-                    <div class="d-flex justify-content-center">
-                        <img src="/img/7.svg" alt="Alternate Text" />
-                    </div>
-                </div>
-            </button>
+    <div class="row">
+        <div class="col-8">
+            <div class="mb-3">
+                <label>Nội dung câu hỏi:</label>
+                <textarea class="form-control" @bind="testQuestion.QuestionName" placeholder="Nhập nội dung câu hỏi..."></textarea>
+            </div>
 
-        </div>
-
-    </div>
-
-</div>
-
-
-@code {
-    private int SelectQuestionType;
-    private TestQuestion_TestQuestionAnswersDTO testQuestion_TestQuestionAnswersDTO = new TestQuestion_TestQuestionAnswersDTO();
-
-    private void SelectQuestionType(int questionType)
-    {
-        SelectQuestionType = questionType;
-        testQuestion_TestQuestionAnswersDTO.QuestionType = questionType;
-    }
-
-} *@
-
-
-<div class="container mt-5">
-    <h3>Thêm Câu Hỏi</h3>
-    <div class="mb-3">
-        <label>Loại câu hỏi:</label>
-        <select class="form-select" @onchange="ChangeQuestionType" >
-            <option value="1">Trắc nghiệm chọn 1 đáp án</option>
-            <option value="2">Trắc nghiệm chọn nhiều đáp án</option>
-            <option value="3">Đúng sai</option>
-            <option value="4">Điền vào chỗ trống</option>
-        </select>
-    </div>
-    <div >
-        <label>Độ khó:</label>
-        <select class="form-select" @bind="testQuestion.Level">
-            <option value="">--chọn--</option>
-            <option value="1">Dễ</option>
-            <option value="2">Trung bình</option>
-            <option value="3">Khó</option>
-            <option value="4">Rất khó</option>
-        </select>
-    </div>
-    <div>
-        <label>testId:</label>
-        <select @bind="testQuestion.TestId" class="form-select">
-            <option selected>--chọn--</option>
-            @foreach (var item in testList)
+            @if (testQuestion.QuestionType == 1 || testQuestion.QuestionType == 2)
             {
-                <option value="@item.Id">@item.Name</option>
+                <div>
+                    <label>Nhập các đáp án:</label>
+                    @foreach (var answer in testQuestion.Answers.Select((value, index) => new { value, index }))
+                    {
+                        <div class="input-group mb-2">
+                            <input class="form-control" type="text"
+                                   value="@answer.value"
+                                   @oninput="(e) => UpdateAnswer(e, answer.index)"
+                                   placeholder="Nhập đáp án" />
+
+                            @if (testQuestion.QuestionType == 1)
+                            {
+                                <div class="input-group-text">
+                                    <input type="radio" name="singleAnswer"
+                                           @onchange="() => SetCorrectAnswer(answer.index)" />
+                                </div>
+                            }
+                            else if (testQuestion.QuestionType == 2)
+                            {
+                                <div class="input-group-text">
+                                    <input type="checkbox"
+                                           @onchange="(e) => ToggleCorrectAnswer(answer.index, (bool)((Microsoft.AspNetCore.Components.ChangeEventArgs)e).Value)"
+                                           checked="@testQuestion.CorrectAnswers.Contains(answer.value)" />
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    <button class="btn btn-outline-primary" @onclick="AddAnswerField">Thêm đáp án</button>
+                </div>
             }
-        </select>
-    </div>
-    <div class="mb-3">
-        <label>Nội dung câu hỏi:</label>
-        <textarea class="form-control" @bind="testQuestion.QuestionName" placeholder="Nhập nội dung câu hỏi..."></textarea>
-    </div>
+        </div>
+        <div class="col-4 p-3">
+            <div class="mb-3">
+                <label>Loại câu hỏi:</label>
+                <select class="form-select" @onchange="ChangeQuestionType">
+                    <option value="1">Trắc nghiệm chọn 1 đáp án</option>
+                    <option value="2">Trắc nghiệm chọn nhiều đáp án</option>
+                    <option value="3">Đúng sai</option>
+                    <option value="4">Điền vào chỗ trống</option>
+                </select>
+            </div>
+            <div>
+                <label>Độ khó:</label>
+                <select class="form-select" @bind="testQuestion.Level">
+                    <option value="">--chọn--</option>
+                    <option value="1">Dễ</option>
+                    <option value="2">Trung bình</option>
+                    <option value="3">Khó</option>
+                    <option value="4">Rất khó</option>
+                </select>
+            </div>
+            <div>
+                <label>Gói đề:</label>
+                <select @bind="testQuestion.TestId" class="form-select">
+                    <option selected>--chọn--</option>
+                    @foreach (var item in testList)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+            </div>
 
-    @if (testQuestion.QuestionType == 1 || testQuestion.QuestionType == 2)
-    {
-        <div>
-            <label>Nhập các đáp án:</label>
-            @foreach (var answer in testQuestion.Answers.Select((value, index) => new { value, index }))
+
+            @if (testQuestion.QuestionType == 3)
             {
-                <div class="input-group mb-2">
-                    <input type="text"
-                           value="@answer.value"
-                           @oninput="(e) => UpdateAnswer(e, answer.index)"
-                           placeholder="Nhập đáp án" />
-
-                    @if (testQuestion.QuestionType == 1)
-                    {
-                        <div class="input-group-text">
-                            <input type="radio" name="singleAnswer"
-                                   @onchange="() => SetCorrectAnswer(answer.index)" />
-                        </div>
-                    }
-                    else if (testQuestion.QuestionType == 2) // Kiểu câu hỏi nhiều lựa chọn
-                    {
-                        <div class="input-group-text">
-                            <input type="checkbox"
-                                   @onchange="(e) => ToggleCorrectAnswer(answer.index, (bool)((ChangeEventArgs)e).Value)"
-                                   checked="@testQuestion.CorrectAnswers.Contains(answer.value)" /> <!-- Đánh dấu checkbox nếu đáp án là đúng -->
-                        </div>
-                    }
+                <div class="mt-3">
+                    <label>Chọn đáp án đúng:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="trueFalse" @onchange="() => SetCorrectAnswer(0)" />
+                        <label class="form-check-label">Đúng</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="trueFalse" @onchange="() => SetCorrectAnswer(1)" />
+                        <label class="form-check-label">Sai</label>
+                    </div>
                 </div>
             }
 
-            <button class="btn btn-outline-primary" @onclick="AddAnswerField">Thêm đáp án</button>
+           
         </div>
-    }
-
-    @if (testQuestion.QuestionType == 3)
-    {
-        <div class="mt-3">
-            <label>Chọn đáp án đúng:</label>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="trueFalse" @onchange="() => SetCorrectAnswer(0)" />
-                <label class="form-check-label">Đúng</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="trueFalse" @onchange="() => SetCorrectAnswer(1)" />
-                <label class="form-check-label">Sai</label>
-            </div>
-        </div>
-    }
-
-    <button class="btn btn-success mt-4" @onclick="CreateQuestionWithAnswers">Lưu câu hỏi</button>
+    </div>
+    
 </div>
 <h4>@Message</h4>
 @code {
     private List<TestGridDTO> testList = new List<TestGridDTO>();
     protected override async Task OnInitializedAsync()
     {
-
         await SearchTests();
-      
-
     }
     private string username;
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -192,33 +152,29 @@
     }
     private async Task SearchTests()
     {
-        
+
         var httpClient = ClientFactory.CreateClient("Get");
         var url = $"https://localhost:7039/api/Test/get-list-test?";
         testList = await httpClient.GetFromJsonAsync<List<TestGridDTO>>(url);
     }
-   
-    private void UpdateAnswer(ChangeEventArgs e, int index)
-{
-    // Lấy giá trị mới từ ô nhập liệu
-    string newAnswer = e.Value?.ToString() ?? string.Empty;
 
-    // Nếu index hợp lệ, cập nhật đáp án
-    if (index >= 0 && index < testQuestion.Answers.Count)
+    private void UpdateAnswer(Microsoft.AspNetCore.Components.ChangeEventArgs e, int index)
     {
-        testQuestion.Answers[index] = newAnswer; // Cập nhật giá trị mới vào ô tương ứng
+        // Lấy giá trị mới từ ô nhập liệu
+        string newAnswer = e.Value?.ToString() ?? string.Empty;
+
+        // Nếu index hợp lệ, cập nhật đáp án
+        if (index >= 0 && index < testQuestion.Answers.Count)
+        {
+            testQuestion.Answers[index] = newAnswer; // Cập nhật giá trị mới vào ô tương ứng
+        }
+
+        // Cộng dồn tất cả các đáp án lại thành một chuỗi
+        string concatenatedAnswers = string.Join(", ", testQuestion.Answers.Where(ans => !string.IsNullOrWhiteSpace(ans)));
+
+        // Hiển thị hoặc lưu trữ chuỗi đã cộng dồn
+        Console.WriteLine(concatenatedAnswers); 
     }
-
-    // Cộng dồn tất cả các đáp án lại thành một chuỗi
-    string concatenatedAnswers = string.Join(", ", testQuestion.Answers.Where(ans => !string.IsNullOrWhiteSpace(ans)));
-
-    // Hiển thị hoặc lưu trữ chuỗi đã cộng dồn
-    Console.WriteLine(concatenatedAnswers); // Hoặc sử dụng cho mục đích khác
-}
-
-
-
-
     private TestQuestion_TestQuestionAnswersDTO testQuestion = new TestQuestion_TestQuestionAnswersDTO
         {
             QuestionType = 1,
@@ -226,7 +182,7 @@
             CorrectAnswers = new List<string>()
         };
 
-    private void ChangeQuestionType(ChangeEventArgs e)
+    private void ChangeQuestionType(Microsoft.AspNetCore.Components.ChangeEventArgs e)
     {
         int selectedType = int.Parse(e.Value.ToString());
         testQuestion.QuestionType = selectedType;
@@ -328,7 +284,7 @@
         {
             var errorMessage = await response.Content.ReadAsStringAsync();
             Message = $"Đã xảy ra lỗi khi tạo câu hỏi: {errorMessage}. Mã trạng thái: {response.StatusCode}";
-            Console.WriteLine(Message); // Ghi lại thông báo lỗi
+            Console.WriteLine(Message); 
         }
     }
 

@@ -26,6 +26,12 @@
 .quiz-container:hover {
     background-color: #0044cc; /* Màu nền khi hover */
 }
+.head{
+    height:60px;
+    align-items:center;
+    
+}
+
 
 
 

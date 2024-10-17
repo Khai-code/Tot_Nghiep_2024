@@ -6,14 +6,15 @@
 @inject HttpClient client
 @inject IHttpClientFactory clientFactory
 @inject NavigationManager nav
+@inject IJSRuntime jsRuntime
 
 <div class="navbar">
-    <h2>Kết quả bài thi của học sinh</h2> <!-- Tiêu đề đã sửa -->
+    <h2>Kết quả bài thi của học sinh</h2> 
 </div>
 
 <div class="search-container">
     <input type="text" @bind="searchKeyword" placeholder="Nhập mã hoặc tên học sinh" />
-    <button class="btn btn-primary btn-sm" @onclick="SearchStudents">Tìm kiếm</button> <!-- Nút nhỏ hơn -->
+    <button class="btn btn-primary btn-sm" @onclick="SearchStudents">Tìm kiếm</button> 
 </div>
 
 @if (examResults != null && examResults.Count > 0)
@@ -66,9 +67,22 @@
         </div>
     </div>
 }
-else
+@if (showMessageBox)
 {
-    <p>No results found.</p>
+    <div class="message-box-overlay">
+        <div class="message-box">
+            <div class="message-header">
+                <h2>Thông báo</h2>
+                <button class="close-btn" @onclick="CloseMessageBox">&times;</button>
+            </div>
+            <div class="message-body">
+                <p>Vui lòng nhập lại dữ liệu cần tìm.</p>
+            </div>
+            <div class="message-footer">
+                <button class="btn btn-warning btn-bold" @onclick="CloseMessageBox">Đóng</button>
+            </div>
+        </div>
+    </div>
 }
 
 <style>
@@ -159,14 +173,122 @@ else
         border-color: #ffc107;
         color: white;
     }
+
+    /* Overlay background */
+    .message-box-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6); /* Nền mờ */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .message-box {
+        background-color: white;
+        padding: 20px;
+        border-radius: 12px;
+        width: 350px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Tăng bóng */
+        transform: translateY(0);
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    /* Header của message box */
+    .message-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #f0f0f0;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+        .message-header h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+    /* Close button */
+    .close-btn {
+        background-color: transparent;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #aaa;
+        transition: color 0.2s;
+    }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+    /* Body của message box */
+    .message-body {
+        padding: 10px 0;
+        color: #555;
+        font-size: 16px;
+    }
+
+    /* Footer của message box */
+    .message-footer {
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 10px;
+    }
+
+    /* Button styling */
+    .btn-warning {
+        background-color: #ffc107;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold; /* In đậm */
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-warning:focus {
+            outline: none;
+        }
+
+        .btn-warning:active {
+            background-color: #c69500;
+        }
+
+    /* Transition cho box */
+    .message-box {
+        transform: translateY(-30px); /* Tạo hiệu ứng slide từ trên xuống */
+        opacity: 0;
+    }
+
+    .message-box-overlay .message-box {
+        transform: translateY(0); /* Box sẽ trở về vị trí bình thường */
+        opacity: 1;
+    }
 </style>
 
 @code {
     private List<StudentExamResultDTO> examResults = new List<StudentExamResultDTO>();
     private string searchKeyword;
+    private bool showMessageBox = false; // Biến kiểm tra trạng thái tìm kiếm
 
     private async Task SearchStudents()
     {
+        examResults.Clear(); // Xóa kết quả trước đó
         if (!string.IsNullOrEmpty(searchKeyword))
         {
             var response = await client.GetFromJsonAsync<List<StudentExamResultDTO>>($"https://localhost:7039/api/ExamResult/search-student-result?keyword={searchKeyword}");
@@ -175,6 +297,16 @@ else
                 examResults = response;
             }
         }
+
+        // Hiển thị message box khi không có kết quả
+        if (examResults.Count == 0)
+        {
+            showMessageBox = true;
+        }
+    }
+    private void CloseMessageBox()
+    {
+        showMessageBox = false; // Đóng message box
     }
 
     public void PhucKhao(Guid studentId, Guid examRoomTestCodeId)

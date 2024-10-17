@@ -24,18 +24,28 @@
                         <div class="nav-item p-1 ">
                             <NavLink class="nav-link p-1" href="manage-test" aria-hidden="true"><i class="bi bi-book text-primary fs-4 m-1"></i>Quản lý đề thi</NavLink>
                         </div>
-                        <div class="nav-item p-1 ">
-                            <NavLink class="nav-link p-1" href="create-question" aria-hidden="true">
+                        <div class="nav-item dropdown p-1">
+                            <NavLink class="nav-link dropdown-toggle p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-card-checklist text-primary fs-4 m-1"></i>Quản lý câu hỏi
-                                <ul>
-                                    <li>Danh sác câu hỏi</li>
-                                    <NavLink href="add-question">Tạo Câu hỏi</NavLink>
-                                    <li>Upload câu hỏi</li>
-                                </ul>
                             </NavLink>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <NavLink class="dropdown-item" href="create-question">Danh sách câu hỏi</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink class="dropdown-item" href="add-question">Tạo Câu hỏi</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink class="dropdown-item" href="upload-question">Upload câu hỏi</NavLink>
+                                </li>
+                            </ul>
                         </div>
+
                         <div class="nav-item p-1 ">
                             <NavLink class="nav-link p-1" href="exam-room" aria-hidden="true"><i class="bi bi-stopwatch text-primary fs-4 m-1"></i>Quản lý ca thi</NavLink>
+                        </div>
+                        <div class="nav-item p-1 ">
+                            <NavLink class="nav-link p-1" href="exam-room" aria-hidden="true"><i class="bi bi-stopwatch text-primary fs-4 m-1"></i>Điểm</NavLink>
                         </div>
                         <div class="nav-item p-1 ">
                             <NavLink class="nav-link p-1" href="exam-result" aria-hidden="true"><i class="bi bi-layout-text-window-reverse text-primary fs-4 m-1"></i>Quản lý phúc khảo bài thi</NavLink>

@@ -28,4 +28,18 @@ namespace Data.DTOs
         public Guid Id { get; set; }
        
     }
+    public class DetailDTO
+    {
+        public Guid IdTestcode { get; set; }
+        public string CodeTescode { get; set; }
+        public int? time { get; set; }
+        public int level { get; set; }
+        public int Type { get; set; }
+        public string NameQuestion { get; set; }
+        public List<AnswerDTO> Answers { get; set; }
+        public string NameSubject { get; set; }
+        public string Nameclass { get; set; }
+        public string codestudent {  get; set; }
+
+    }
 }
