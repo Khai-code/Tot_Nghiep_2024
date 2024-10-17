@@ -19,6 +19,8 @@ namespace Database.DTOs
         public DateTime CreationTime { get; set; }
         public int Status { get; set; }
         public int type { get; set; }
-        public List<Guid> ClassIds { get; set; }
+        public List<Guid>? ClassIds { get; set; }
+        // Danh sách tên các lớp liên quan (chỉ để hiển thị)
+        public List<string> ClassNames { get; set; } = new List<string>();
     }
 }
