@@ -126,5 +126,22 @@ namespace API.Controllers
 
             return BadRequest("Loi");
         }
+
+        [HttpGet("get-grade-data")]
+        public async Task<List<GradeDTO>> GetGradeData()
+        {
+            var totalClass = await _db.classes.CountAsync();
+            var totalTeachers = await _db.teachers.CountAsync();    
+            var gradeData =await _db.grades
+                .Select(g=> new GradeDTO
+                {
+                    Name = g.Name,
+                    TotalStudents = g.Class.SelectMany(c => c.Student_Classes).Count(),
+                    TotalClasses = totalClass,
+                    TotalTeachers = totalTeachers
+                }).ToListAsync();
+
+            return gradeData;
+        }
     }
 }
