@@ -24,6 +24,7 @@ namespace Data.DTOs
     {
         public Guid Id { get; set; }
         public string Questionname { get; set; }
+        public int Type { get; set; }
         public string RightAnswer { get; set; }
         public List<AnswerDTO> answer { get; set; }
     }
