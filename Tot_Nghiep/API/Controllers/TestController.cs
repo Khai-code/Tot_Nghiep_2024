@@ -74,10 +74,35 @@ namespace API.Controllers
             var test = await _DbContext.tests.FindAsync(id);
             return Ok(test);
         }
+        [HttpGet("{testId}/questions")]
+            public async Task<IActionResult> GetQuestions(Guid testId, [FromQuery] int level)
+            {
+                var questions = await _DbContext.testQuestions
+                    .Where(q => q.TestId == testId && q.Level == level)
+                    .Select(q => new TestQuestion_TestQuestionAnswersDTO
+                    {
+                        TestId = q.Id,
+                        QuestionName = q.QuestionName,
+                        Level = q.Level,
+                        CorrectAnswers= new List<string>(),
+                    })
+                    .ToListAsync();
+
+                if (questions == null || !questions.Any())
+                {
+                    return NotFound(new { message = "Không có câu hỏi nào cho test này." });
+                }
+
+                return Ok(questions);
+            }
+        
+
         [HttpGet("get-list-test")]
         public async Task<List<TestGridDTO>> GetListTest()
         {
             var query = _DbContext.tests
+                .Include(c=>c.testQuestions)
+                .Include(c=>c.testCodes)
                 .Include(t => t.Subject)
                 .Include(t => t.Subject.Subject_Grade)
                 .ThenInclude(t => t.Grade)
@@ -88,6 +113,7 @@ namespace API.Controllers
             var testList = await query
                 .Select(t => new TestGridDTO
                 {
+                    idquestion = t.testCodes.FirstOrDefault().Id,
                     Id = t.Id,
                     namepoint = t.PointType.Name,
                     nameclass = t.Subject.Subject_Grade
@@ -213,7 +239,9 @@ namespace API.Controllers
                 data.Name = testDTO.Name;
                 data.Minute = testDTO.Minute;
                 data.Status = testDTO.Status;
-
+                data.SubjectId=testDTO.SubjectId;
+                data.PointTypeId=testDTO.PointTypeId;
+                data.MaxStudent = testDTO.Maxstudent;
                 _DbContext.Update(data);
                 await _DbContext.SaveChangesAsync();
             }
@@ -226,14 +254,20 @@ namespace API.Controllers
         {
             var data = await _DbContext.tests.FirstOrDefaultAsync(x => x.Id == id);
             var ListTestCode = _DbContext.testCodes.ToList().FirstOrDefault(x => x.TestId == data.Id);
-
-            if (ListTestCode != null)
+            var testquestion = _DbContext.testQuestions.ToList().FirstOrDefault(x => x.TestId == data.Id);
+            if ( testquestion!=null)
+            {
+                _DbContext.Remove(testquestion);
+                _DbContext.Remove(ListTestCode);
+                _DbContext.Remove(data);
+              
+            }
+            else if (ListTestCode != null)
             {
                 _DbContext.Remove(ListTestCode);
                 _DbContext.Remove(data);
-                await _DbContext.SaveChangesAsync();
             }
-
+                await _DbContext.SaveChangesAsync();
             return Ok("đã xóa");
         }
     }

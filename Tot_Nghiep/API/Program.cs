@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var m = "m";
@@ -42,7 +43,7 @@ builder.Services.AddCors(option =>
                                               .AllowAnyMethod()
                                               .AllowAnyHeader());
 });
-
+ 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
