@@ -22,47 +22,38 @@ namespace API.Controllers
         {
             _db = db;
         }
+  
         [HttpGet("Get-testcodes-by-testid")]
         public async Task<ActionResult<List<DetailDTO>>> GetTestCodesByTestId(Guid testId)
         {
-            // Lấy danh sách ID của các TestCode gắn liền với TestId
-            var testCodes = await _db.testCodes
-                .Include(tc => tc.Tests)
-                    .ThenInclude(t => t.Subject)
-                        .ThenInclude(s => s.Subject_Grade)
-                            .ThenInclude(g => g.Grade.Class)
-                                .ThenInclude(c => c.Student_Classes)
-                                    .ThenInclude(sc => sc.Student)
-                .Include(tc => tc.TestCode_TestQuestions)
-                    .ThenInclude(tcq => tcq.TestQuestion)
-                        .ThenInclude(tq => tq.TestQuestionAnswer)
-                .Where(tc => tc.Tests.Id == testId) // Lọc theo TestId
-                .ToListAsync();
 
-            // Ánh xạ dữ liệu vào DetailDTO
-            var detailList = testCodes.SelectMany(tc => tc.TestCode_TestQuestions.Select(tcq => new DetailDTO
+            var testcodes = await _db.testCodes
+            .Where(tc => tc.TestId == testId)
+            .Select(tc => new DetailDTO
             {
                 IdTestcode = tc.Id,
-                CodeTescode = tc.Code ?? "Chưa có mã đề",
-                time = tc.Tests?.Minute ?? 0,
-                Type = tcq.TestQuestion.Type,
-                level = tcq.TestQuestion.Level,
-                NameQuestion = tcq.TestQuestion.QuestionName,
-                Answers = tcq.TestQuestion.TestQuestionAnswer.Select(a => new AnswerDTO
-                {
-                    Answer = a.Answer
-                }).ToList(),
-                NameSubject = tc.Tests?.Subject?.Name ?? "Chưa có môn học",
-                Nameclass = tc.Tests?.Subject?.Subject_Grade
-                    ?.Select(x => x.Grade.Class.FirstOrDefault()?.Name)
-                    ?.FirstOrDefault() ?? "Chưa có lớp",
-                codestudent = tc.Tests?.Subject?.Subject_Grade
-                    ?.SelectMany(x => x.Grade.Class.SelectMany(c => c.Student_Classes))
-                    ?.FirstOrDefault()?.Student?.Code ?? "Chưa có mã sinh viên"
-            }))
-            .ToList();
+                CodeTescode = tc.Code,
+                time = tc.Tests.Minute,
+                NameSubject = tc.Tests.Subject.Name,
+                NameQuestion = _db.TestCode_TestQuestions
+                    .Where(tcq => tcq.TestCodeId == tc.Id)
+                    .Select(tcq => new TestQuestionDTO
+                    {
+                        Id = tcq.TestQuestion.Id,
+                        QuestionName = tcq.TestQuestion.QuestionName,
+                        Level = tcq.TestQuestion.Level,
+                        Type = tcq.TestQuestion.Type,
+                        Answers = _db.testQuestionAnswers
+                            .Where(a => a.TestQuestionId == tcq.TestQuestionId)
+                            .Select(a => new AnswerDTO
+                            {
+                                Id = a.Id,
+                                Answer = a.Answer
+                            }).ToList()
+                    }).ToList()
+            }).ToListAsync();
 
-            return Ok(detailList);
+            return testcodes;
         }
         [HttpPost("create_question_answwer")]
         public async Task<IActionResult> QuestionWithAnswers(TestQuestion_TestQuestionAnswersDTO dto)

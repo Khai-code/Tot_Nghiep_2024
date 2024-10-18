@@ -10,8 +10,8 @@
 @inject NavigationManager navigate
 
 <div>
-    <div class="row py-2">
-        <div class="border d-flex">
+    <div class="row">
+        <div class=" d-flex">
             <div class="col-3 p-2">
                 <div class="border shadow-sm" style="background-color:cornflowerblue">
                     <h5 class="p-2 text-white d-flex justify-content-center align-items-center">Thư mục</h5>
@@ -48,7 +48,7 @@
             <div class="col-9 p-2">
                 <div class="border shadow-sm d-flex justify-content-between" style="background-color:cornflowerblue">
                     <div class="p-2">
-                        <h5 class="text-white">Cấu trúc câu hỏi</h5>
+                        <h5 class="text-white">Cấu trúc bài thi</h5>
                     </div>
                 </div>
                 <div class="border min-vh-50 p-2">
@@ -59,9 +59,9 @@
                             <h3 class="school-name">TRƯỜNG THPT NGUYỄN TRÃI</h3>
                             <h4 class="year">NĂM HỌC 2017 - 2018</h4>
 
-                            <h4 class="subject">MÔN: @item.NameSubject @item.Nameclass</h4>
+                            <h4 class="subject">MÔN: @item.NameSubject</h4>
                             <h5 class="time">Thời gian làm bài: @item.time phút</h5>
-                            <h6 class="code">Mã đề thi: 169</h6>
+                            <h6 class="code">Mã đề thi: @item.CodeTescode</h6>
 
                             <div class="student-info">
                                 <span>Họ, tên sinh viên: ............................................</span><br />
@@ -69,30 +69,36 @@
                             </div>
 
                             <div class="content">
-                                <h5>@item.NameQuestion</h5> <!-- Đưa h5 này ra ngoài vòng lặp -->
-                                <ol type="A">
-                                    @if (item.Type == 1 || item.Type == 2) // Trắc nghiệm 1 hoặc nhiều đáp án
-                                    {
-                                        foreach (var answer in item.Answers)
+                                @for (int i = 0; i < item.NameQuestion.Count; i++)
+                                {
+                                    var question = item.NameQuestion[i];
+
+                                    <h5>Câu @(i + 1): @question.QuestionName</h5>
+                                    <ol type="A" class="d-flex justify-content-md-evenly p-2">
+                                        @if (question.Type == 1 || question.Type == 2)
                                         {
-                                            <li>@answer.Answer</li>
+                                            foreach (var answer in question.Answers)
+                                            {
+                                                <li>@answer.Answer</li>
+                                            }
                                         }
-                                    }
-                                    else if (item.Type == 3) // Đúng/Sai
-                                    {
-                                        <li>Đúng</li>
-                                        <li>Sai</li>
-                                    }
-                                    else if (item.Type == 4) // Điền vào chỗ trống
-                                    {
-                                        @foreach (var answer in item.Answers)
+                                        else if (question.Type == 3)
                                         {
-                                            <p>Đáp án: @answer.Answer</p>
+                                            <li>Đúng</li>
+                                            <li>Sai</li>
                                         }
-                                    }
-                                </ol>
+                                        else if (question.Type == 4)
+                                        {
+                                            @foreach (var answer in question.Answers)
+                                            {
+                                                <p>Đáp án: @answer.Answer</p>
+                                            }
+                                        }
+                                    </ol>
+                                }
                             </div>
                         }
+
                     </div>
                 </div>
 
@@ -112,6 +118,7 @@
     private int mediumCount;
     private int hardCount;
     private int veryHardCount;
+    int questionNumber = 1;
     private async Task onlick(Guid id)
     {
         isLoading = true; // Bắt đầu tải
@@ -119,7 +126,7 @@
         {
             await LoadDetailTest(id);
             await LoadQuestions(id);
-           
+
         }
         finally
         {
@@ -137,7 +144,7 @@
         var url = "https://localhost:7039/api/Test/get-list-test";
         testList = await client.GetFromJsonAsync<List<TestGridDTO>>(url);
     }
-   
+
     private async Task LoadDetailTest(Guid id)
     {
         var client = clientFactory.CreateClient("Get");
