@@ -22,14 +22,14 @@
 </div>
 @code {
     private List<GradeDTO> gradeData = new List<GradeDTO>();
-    private bool isDataLoaded = false; 
+    private bool isDataLoaded = false;
     private int totalClasses = 0;
     private int totalTeachers = 0;
 
     protected override async Task OnInitializedAsync()
     {
         // Thay đổi URL cho phù hợp với API của bạn
-        gradeData = await client.GetFromJsonAsync<List<GradeDTO>>("api/Grade/get-grade-data");  
+        gradeData = await client.GetFromJsonAsync<List<GradeDTO>>("api/Grade/get-grade-data");
         // Lấy dữ liệu tổng số lượng lớp và giáo viên từ đối tượng đầu tiên
         if (gradeData.Any())
         {
@@ -72,12 +72,12 @@
     // }
 }
 <script>
-    window.drawPieChart = (canvasId,labels, data, title) => {
+    window.drawPieChart = (canvasId, labels, data, title) => {
         var ctx = document.getElementById(canvasId).getContext('2d');
         var myPieChart = new Chart(ctx, {
             type: 'pie',
             data: {
-              
+
                 datasets: [{
                     data: data,
                     backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
@@ -218,7 +218,7 @@
     </div>
 </div>
 
-    <style>
+<style>
     .modal-header {
         background-color: #007bff;
         color: white;
@@ -249,7 +249,7 @@
         font-size: 0.9rem;
         padding: 5px 10px;
     }
-    </style>
+</style>
 
 
 <!-- Modal chọn lớp -->
@@ -318,7 +318,7 @@
         var url = "https://localhost:7039/api/Notification/get-all-notification";
         notifications = await httpClient.GetFromJsonAsync<List<NotificationDTO>>(url);
     }
-    private void HandleNotificationTypeChange(ChangeEventArgs e)
+    private void HandleNotificationTypeChange(Microsoft.AspNetCore.Components.ChangeEventArgs e)
     {
         var selectedValue = e.Value?.ToString();
 
@@ -340,7 +340,7 @@
     }
 
     // Xử lý khi người dùng chọn lớp
-    private void HandleClassSelection(ChangeEventArgs e)
+    private void HandleClassSelection(Microsoft.AspNetCore.Components.ChangeEventArgs e)
     {
         var selectedOptions = e.Value as IEnumerable<string>;
         selectedClassIds = selectedOptions.Select(id => Guid.Parse(id)).ToList();
@@ -359,62 +359,62 @@
     }
 
     private async Task SubmitNotice()
-{
-    // Kiểm tra nếu người dùng chọn thông báo cho lớp nhưng chưa chọn lớp nào
-    if (notificationDTO.type == 1 && !selectedClassIds.Any())
     {
-        await jsRuntime.InvokeVoidAsync("Swal.fire", new
+        // Kiểm tra nếu người dùng chọn thông báo cho lớp nhưng chưa chọn lớp nào
+        if (notificationDTO.type == 1 && !selectedClassIds.Any())
         {
-            title = "Lỗi",
-            text = "Vui lòng chọn ít nhất một lớp để gửi thông báo!",
-            icon = "error",
-            confirmButtonText = "OK"
-        });
-        return;
-    }
+            await jsRuntime.InvokeVoidAsync("Swal.fire", new
+            {
+                title = "Lỗi",
+                text = "Vui lòng chọn ít nhất một lớp để gửi thông báo!",
+                icon = "error",
+                confirmButtonText = "OK"
+            });
+            return;
+        }
 
-    // Gán danh sách ClassIds vào DTO trước khi gửi API chỉ khi type == 1
-    if (notificationDTO.type == 1)
-    {
-        notificationDTO.ClassIds = selectedClassIds;
-    }
-    else
-    {
-        notificationDTO.ClassIds = null; // Xóa dữ liệu ClassIds khi gửi thông báo cho tất cả
-    }
-
-    // Gửi thông báo qua API
-    var httpClient = clientFactory.CreateClient();
-    var url = $"https://localhost:7039/api/Notification/create-notification";
-    var response = await httpClient.PostAsJsonAsync(url, notificationDTO);
-
-    if (response.IsSuccessStatusCode)
-    {
-        await jsRuntime.InvokeVoidAsync("Swal.fire", new
+        // Gán danh sách ClassIds vào DTO trước khi gửi API chỉ khi type == 1
+        if (notificationDTO.type == 1)
         {
-            title = "Thành công!",
-            text = "Thông báo đã được gửi thành công!",
-            icon = "success",
-            confirmButtonText = "OK"
-        });
-
-        HideCreateNoticeModal();
-
-        // Tải lại danh sách thông báo sau khi thêm
-        await LoadNotifications();
-    }
-    else
-    {
-        var errorMessage = await response.Content.ReadAsStringAsync();
-        await jsRuntime.InvokeVoidAsync("Swal.fire", new
+            notificationDTO.ClassIds = selectedClassIds;
+        }
+        else
         {
-            title = "Thất bại!",
-            text = $"Gửi thông báo thất bại: {errorMessage}",
-            icon = "error",
-            confirmButtonText = "OK"
-        });
+            notificationDTO.ClassIds = null; // Xóa dữ liệu ClassIds khi gửi thông báo cho tất cả
+        }
+
+        // Gửi thông báo qua API
+        var httpClient = clientFactory.CreateClient();
+        var url = $"https://localhost:7039/api/Notification/create-notification";
+        var response = await httpClient.PostAsJsonAsync(url, notificationDTO);
+
+        if (response.IsSuccessStatusCode)
+        {
+            await jsRuntime.InvokeVoidAsync("Swal.fire", new
+            {
+                title = "Thành công!",
+                text = "Thông báo đã được gửi thành công!",
+                icon = "success",
+                confirmButtonText = "OK"
+            });
+
+            HideCreateNoticeModal();
+
+            // Tải lại danh sách thông báo sau khi thêm
+            await LoadNotifications();
+        }
+        else
+        {
+            var errorMessage = await response.Content.ReadAsStringAsync();
+            await jsRuntime.InvokeVoidAsync("Swal.fire", new
+            {
+                title = "Thất bại!",
+                text = $"Gửi thông báo thất bại: {errorMessage}",
+                icon = "error",
+                confirmButtonText = "OK"
+            });
+        }
     }
-}
 
 
 
@@ -445,7 +445,7 @@
     }
 }
 
- <style>
+<style>
     .chart-container {
         display: flex;
         justify-content: space-around;
@@ -531,9 +531,9 @@
             background-color: #007bff;
             color: white;
         }
- </style>
+</style>
 
- <style>
+<style>
     .notification-title {
         text-decoration: none; /* Bỏ gạch chân mặc định */
         color: #007bff; /* Màu mặc định của liên kết */
