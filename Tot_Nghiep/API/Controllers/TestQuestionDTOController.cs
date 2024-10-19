@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System;
 using OfficeOpenXml;
+using System.Linq;
+using OfficeOpenXml.Style;
+using System.Reflection.PortableExecutable;
 
 namespace API.Controllers
 {
@@ -19,7 +22,39 @@ namespace API.Controllers
         {
             _db = db;
         }
-        
+  
+        [HttpGet("Get-testcodes-by-testid")]
+        public async Task<ActionResult<List<DetailDTO>>> GetTestCodesByTestId(Guid testId)
+        {
+
+            var testcodes = await _db.testCodes
+            .Where(tc => tc.TestId == testId)
+            .Select(tc => new DetailDTO
+            {
+                IdTestcode = tc.Id,
+                CodeTescode = tc.Code,
+                time = tc.Tests.Minute,
+                NameSubject = tc.Tests.Subject.Name,
+                NameQuestion = _db.TestCode_TestQuestions
+                    .Where(tcq => tcq.TestCodeId == tc.Id)
+                    .Select(tcq => new TestQuestionDTO
+                    {
+                        Id = tcq.TestQuestion.Id,
+                        QuestionName = tcq.TestQuestion.QuestionName,
+                        Level = tcq.TestQuestion.Level,
+                        Type = tcq.TestQuestion.Type,
+                        Answers = _db.testQuestionAnswers
+                            .Where(a => a.TestQuestionId == tcq.TestQuestionId)
+                            .Select(a => new AnswerDTO
+                            {
+                                Id = a.Id,
+                                Answer = a.Answer
+                            }).ToList()
+                    }).ToList()
+            }).ToListAsync();
+
+            return testcodes;
+        }
         [HttpPost("create_question_answwer")]
         public async Task<IActionResult> QuestionWithAnswers(TestQuestion_TestQuestionAnswersDTO dto)
         {
@@ -166,51 +201,137 @@ namespace API.Controllers
             return Ok("thêm câu hỏi thành công");
         }
 
-        [HttpPost("random-question-testcode")]
-        public async Task<IActionResult> TestCodeQuestion(TestCodeQuestionDTO dto)
+        [HttpPost("randomize-questions-for-test-codes")]
+        public async Task<IActionResult> RandomizeQuestionsForTestCodes(Guid testId, int easyCount, int mediumCount, int hardCount, int veryHardCount)
         {
-            var testcodes = await _db.testCodes.Where(x => x.TestId == dto.TestId).ToListAsync();
+            var allTestCodes = await _db.testCodes
+                .Include(tc => tc.Tests)
+                .Where(tc => tc.Tests.Id == testId)
+                .ToListAsync();
 
-            var easyQuestions = await _db.testQuestions.Where(x => x.TestId == dto.TestId && x.Level == 1).ToListAsync();
-            var mediumQuestions = await _db.testQuestions.Where(x => x.TestId == dto.TestId && x.Level == 2).ToListAsync();
-            var hardQuestions = await _db.testQuestions.Where(x => x.TestId == dto.TestId && x.Level == 3).ToListAsync();
-            var advancedQuestions = await _db.testQuestions.Where(x => x.TestId == dto.TestId && x.Level == 4).ToListAsync();
-
-            if (easyQuestions.Count < dto.EasyCount || mediumQuestions.Count < dto.MediumCount || 
-                hardQuestions.Count < dto.HardCount || advancedQuestions.Count < dto.AdvancedCount)
+            if (allTestCodes == null || allTestCodes.Count == 0)
             {
-                return NotFound("không đủ số câu hỏi cho1 hoặc nhiều mức độ");
+                return NotFound("Không tìm thấy mã kiểm tra liên quan đến bài thi.");
+            }
+            var questions = await _db.testQuestions.Where(x => x.TestId == testId).ToListAsync();
+            var easyQuestions = questions.Where(x => x.Level == 1).ToList();
+            var mediumQuestions = questions.Where(x => x.Level == 2).ToList();
+            var hardQuestions = questions.Where(x => x.Level == 3).ToList();
+            var veryHardQuestions = questions.Where(x => x.Level == 4).ToList();
+
+            if (easyQuestions.Count < easyCount || mediumQuestions.Count < mediumCount ||
+                hardQuestions.Count < hardCount || veryHardQuestions.Count < veryHardCount)
+            {
+                return BadRequest("Không đủ số câu hỏi cho một hoặc nhiều mức độ.");
             }
 
             Random random = new Random();
 
-            foreach (var testcode in testcodes)
+            var selectedEasyQuestions = easyQuestions.OrderBy(_ => random.Next()).Take(easyCount).ToList();
+            var selectedMediumQuestions = mediumQuestions.OrderBy(_ => random.Next()).Take(mediumCount).ToList();
+            var selectedHardQuestions = hardQuestions.OrderBy(_ => random.Next()).Take(hardCount).ToList();
+            var selectedVeryHardQuestions = veryHardQuestions.OrderBy(_ => random.Next()).Take(veryHardCount).ToList();
+
+       
+            var allSelectedQuestions = selectedEasyQuestions
+                .Concat(selectedMediumQuestions)
+                .Concat(selectedHardQuestions)
+                .Concat(selectedVeryHardQuestions)
+                .ToList();
+
+            foreach (var testCode in allTestCodes)
             {
-                var selectedEasyQuestions = easyQuestions.OrderBy(x => random.Next()).Take(dto.EasyCount).ToList();
-                var selectedMediumQuestions = mediumQuestions.OrderBy(x => random.Next()).Take(dto.MediumCount).ToList();
-                var selectedHardQuestions = hardQuestions.OrderBy(x => random.Next()).Take(dto.HardCount).ToList(); 
-                var selectedAdvancedQuestions = advancedQuestions.OrderBy(x => random.Next()).Take(dto.AdvancedCount).ToList();
-
-                var allSelectedQuestions = selectedEasyQuestions
-                    .Concat(selectedMediumQuestions)
-                    .Concat(selectedHardQuestions)
-                    .Concat(selectedAdvancedQuestions)
-                    .ToList();
-
                 foreach (var question in allSelectedQuestions)
                 {
-                    _db.TestCode_TestQuestions.Add(new TestCode_TestQuestion
+                    var testCodeQuestion = new TestCode_TestQuestion
                     {
-                        TestCodeId = testcode.Id,
+                        TestCodeId = testCode.Id,  
                         TestQuestionId = question.Id
-                    });
+                    };
+
+                    _db.TestCode_TestQuestions.Add(testCodeQuestion);
                 }
             }
 
             await _db.SaveChangesAsync();
 
-            return Ok("Chia câu hỏi vào mã đề thành công");
+            return Ok("THÀNH CÔNG");
         }
+
+
+        [HttpGet("export-template")]
+        public IActionResult ExportExcelTemplate()
+        {
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Câu hỏi");
+
+                var headers = new List<string>
+                {
+                    "STT", "Kiểu câu hỏi", "Nội dung câu hỏi", "Mức độ tư duy",
+                    "Đáp án đúng", "Câu A", "Câu B", "Câu C", "Câu D", "Câu E", "Câu F"
+                };
+
+                // Ghi tiêu đề vào hàng đầu tiên
+                for (int i = 0; i < headers.Count; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = headers[i];
+                }
+
+                // Thiết lập độ rộng cho các cột
+                worksheet.Column(1).Width = 5;   // STT
+                worksheet.Column(2).Width = 20;  // Kiểu câu hỏi
+                worksheet.Column(3).Width = 30;  // Nội dung câu hỏi
+                worksheet.Column(4).Width = 15;  // Mức độ tư duy
+                worksheet.Column(5).Width = 15;  // Đáp án đúng
+                worksheet.Column(6).Width = 10;  // Câu A
+                worksheet.Column(7).Width = 10;  // Câu B
+                worksheet.Column(8).Width = 10;  // Câu C
+                worksheet.Column(9).Width = 10;  // Câu D
+                worksheet.Column(10).Width = 10; // Câu E
+                worksheet.Column(11).Width = 10; // Câu F
+                using (var headerRange = worksheet.Cells[1, 1, 1, headers.Count])
+                {
+                    headerRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.RoyalBlue);
+                    headerRange.Style.Font.Color.SetColor(System.Drawing.Color.White);
+                    headerRange.Style.Font.Bold = true; 
+                }
+
+             
+                var questionTypeList = new List<string> { "Trắc nghiệm 1 Đáp án", "Trắc nghiệm nhiều đáp án", "Đúng/sai", "Điền vào chỗ trống" };
+                CreateDropdownList(worksheet, questionTypeList, 2, 2, 100, 2); // Áp dụng cho cột 2 (Kiểu câu hỏi)
+
+                // Tạo dropdown list cho "Mức độ tư duy"
+                var thinkingLevelList = new List<string> { "Dễ", "Trung bình", "Khó", "Rất khó" };
+                CreateDropdownList(worksheet, thinkingLevelList, 2, 4, 100, 4); // Áp dụng cho cột 4 (Mức độ tư duy)
+
+                // Lưu file vào MemoryStream
+                var stream = new MemoryStream();
+                package.SaveAs(stream);
+                stream.Position = 0;
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "MauCauHoi.xlsx");
+            }
+        }
+
+        private void CreateDropdownList(ExcelWorksheet worksheet, List<string> options, int fromRow, int fromCol, int toRow, int toCol)
+        {
+            // Tạo một List Validation trong khoảng ô được chỉ định
+            var validation = worksheet.DataValidations.AddListValidation(worksheet.Cells[fromRow, fromCol, toRow, toCol].Address);
+
+            // Thêm các giá trị từ danh sách 'options' vào dropdown list
+            foreach (var option in options)
+            {
+                validation.Formula.Values.Add(option);
+            }
+
+            // Cấu hình thêm cho dropdown list
+            validation.ShowErrorMessage = true; // Hiển thị thông báo lỗi nếu nhập sai giá trị
+            validation.ErrorTitle = "Giá trị không hợp lệ"; // Tiêu đề thông báo lỗi
+            validation.Error = "Vui lòng chọn một giá trị từ danh sách."; // Nội dung thông báo lỗi
+        }
+
+
 
         [HttpPost("import_questions")]
         public async Task<IActionResult> ImportQuestionsFromExcel(IFormFile file, Guid id)
@@ -250,7 +371,7 @@ namespace API.Controllers
                                     return 4;
                                 default:
                                     errorMessages.Add($"Giá trị type không hợp lệ ở hàng {row}: {typetext}");
-                                    return -1; // Trả về -1 hoặc giá trị mặc định nào đó
+                                    return -1; 
                             }
                         }
 
@@ -288,7 +409,6 @@ namespace API.Controllers
                             Level = level,
                             CreatedByName= "",
                             TestId = testCode.Id,
-
                             CorrectAnswers = worksheet.Cells[row, 5].GetValue<string>()
                             .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                             .Select(c => c.Trim())

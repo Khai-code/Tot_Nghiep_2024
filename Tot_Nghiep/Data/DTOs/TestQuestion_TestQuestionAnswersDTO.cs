@@ -9,6 +9,7 @@ namespace Data.DTOs
 {
     public class TestQuestion_TestQuestionAnswersDTO
     {
+        public Guid id { get;set; }
         public string QuestionName { get; set; }
         public int QuestionType { get; set; } // Xác định loại câu hỏi
         public int Level { get; set; }

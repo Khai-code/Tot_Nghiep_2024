@@ -25,6 +25,7 @@ namespace API.Controllers
         {
             return Ok(_Dbcontext.testQuestionAnswers.ToList());
         }
+        
         [HttpGet("get-question-details/{id}")]
         public async Task<List<listdetailquestion>> GetQuestionDetails(Guid id)
         {
@@ -58,6 +59,7 @@ namespace API.Controllers
             var groupedData = list.GroupBy(tc => new
             {
                idnew= tc.Tests,
+               type= tc.Type,
                 id=tc.Tests.Id,
                 name=tc.CreatedByName,
                  tc.Tests.Id,
@@ -76,7 +78,7 @@ namespace API.Controllers
                      name = group.Key.SubjectName,
                      usermane=group.Key.name,
                      totalquestion = group.Count() ,
-                    
+                     type=group.Key.type
                  })
                  .ToList();
 
