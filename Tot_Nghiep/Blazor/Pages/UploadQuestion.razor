@@ -4,7 +4,7 @@
 @inject IHttpClientFactory ClientFactory
 @inject HttpClient httpclient
 @inject IJSRuntime jsruntime
-
+@inject NavigationManager navigate
 <div class="container">
     <div class="row py-4">
         <div class="form-control">
@@ -109,14 +109,13 @@
                                                 <div>
                                                     <span style="color: green;">(Đáp án đúng: @item.RightAnswer.FirstOrDefault())</span> <!-- Hiển thị đáp án đúng -->
                                                 </div>
-                                       
                                         }
 
                                     </div>
                                 </div>
                             </td>
                             <td>
-                                <!-- Thêm các hành động khác nếu cần -->
+                                <span type="button" @onclick="()=>delete(item.Id)"><i class="bi bi-trash3 text-danger"></i></span>
                             </td>
                         </tr>
                     }
@@ -148,7 +147,13 @@
         var url = $"https://localhost:7039/api/Test/get-list-test?";
         testList = await httpClient.GetFromJsonAsync<List<TestGridDTO>>(url);
     }
-
+    private async Task delete(Guid id)
+    {
+        var httpclient = ClientFactory.CreateClient("Delete");
+        var url = $"https://localhost:7039/api/TestQuestion/Delete_TestQuestion?Id={id}";
+        var responseMessage = await httpclient.DeleteAsync(url);
+        navigate.NavigateTo(navigate.Uri, forceLoad: true);
+    }
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
         var file = e.GetMultipleFiles(1); // Lấy tệp đầu tiên
@@ -199,7 +204,7 @@
             {
                 message = "Tải lên thành công!";
                 await question(testQuestion.TestId);
-                // Gọi hàm kiểm tra trùng lặp
+               
                 await CheckForDuplicates();
             }
             else
@@ -215,7 +220,7 @@
 
     private async Task question(Guid id)
     {
-        // Gọi API để lấy câu hỏi mới dựa trên id của gói đề
+       
         testQuestions = await httpclient.GetFromJsonAsync<List<listdetailquestion>>($"https://localhost:7039/api/TestQuestion/get-question-details/{id}");
     }
 
@@ -246,9 +251,8 @@
                     var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
                     var jsonToken = handler.ReadToken(token) as System.IdentityModel.Tokens.Jwt.JwtSecurityToken;
 
-                    // Lấy thông tin username từ token
                     username = jsonToken?.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
-                    testQuestion.CreatedByName = username; // Gán vào testQuestion.CreatedByName
+                    testQuestion.CreatedByName = username;
 
                     if (string.IsNullOrEmpty(username))
                     {

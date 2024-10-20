@@ -6,11 +6,17 @@
 @inject IJSRuntime jsruntime
 @inject NavigationManager navigate
 
-<div class="container mt-5">
-    <h3>Thêm Câu Hỏi</h3>
-    <div class="row">
-        <div class="d-flex justify-content-end">
-            <button class="btn btn-success mt-4" @onclick="CreateQuestionWithAnswers">Lưu câu hỏi</button>
+<div class="container ">
+    <div class="row py-2">
+        <div class=" head d-flex justify-content-between rounded  bg-white">
+            <div>
+                <h4 class="fw-bold text-primary">Tạo câu hỏi</h4>
+            </div>
+            
+            <div>
+                <button class="btn btn-success " @onclick="CreateQuestionWithAnswers">Lưu câu hỏi</button>
+            </div>
+            
         </div>
     </div>
     <div class="row">
@@ -43,7 +49,7 @@
                             {
                                 <div class="input-group-text">
                                     <input type="checkbox"
-                                           @onchange="(e) => ToggleCorrectAnswer(answer.index, (bool)((ChangeEventArgs)e).Value)"
+                                           @onchange="(e) => ToggleCorrectAnswer(answer.index, (bool)((Microsoft.AspNetCore.Components.ChangeEventArgs)e).Value)"
                                            checked="@testQuestion.CorrectAnswers.Contains(answer.value)" />
                                 </div>
                             }
@@ -146,29 +152,29 @@
     }
     private async Task SearchTests()
     {
-        
+
         var httpClient = ClientFactory.CreateClient("Get");
         var url = $"https://localhost:7039/api/Test/get-list-test?";
         testList = await httpClient.GetFromJsonAsync<List<TestGridDTO>>(url);
     }
-   
-    private void UpdateAnswer(ChangeEventArgs e, int index)
-{
-    // Lấy giá trị mới từ ô nhập liệu
-    string newAnswer = e.Value?.ToString() ?? string.Empty;
 
-    // Nếu index hợp lệ, cập nhật đáp án
-    if (index >= 0 && index < testQuestion.Answers.Count)
+    private void UpdateAnswer(Microsoft.AspNetCore.Components.ChangeEventArgs e, int index)
     {
-        testQuestion.Answers[index] = newAnswer; // Cập nhật giá trị mới vào ô tương ứng
+        // Lấy giá trị mới từ ô nhập liệu
+        string newAnswer = e.Value?.ToString() ?? string.Empty;
+
+        // Nếu index hợp lệ, cập nhật đáp án
+        if (index >= 0 && index < testQuestion.Answers.Count)
+        {
+            testQuestion.Answers[index] = newAnswer; // Cập nhật giá trị mới vào ô tương ứng
+        }
+
+        // Cộng dồn tất cả các đáp án lại thành một chuỗi
+        string concatenatedAnswers = string.Join(", ", testQuestion.Answers.Where(ans => !string.IsNullOrWhiteSpace(ans)));
+
+        // Hiển thị hoặc lưu trữ chuỗi đã cộng dồn
+        Console.WriteLine(concatenatedAnswers); 
     }
-
-    // Cộng dồn tất cả các đáp án lại thành một chuỗi
-    string concatenatedAnswers = string.Join(", ", testQuestion.Answers.Where(ans => !string.IsNullOrWhiteSpace(ans)));
-
-    // Hiển thị hoặc lưu trữ chuỗi đã cộng dồn
-    Console.WriteLine(concatenatedAnswers); 
-}
     private TestQuestion_TestQuestionAnswersDTO testQuestion = new TestQuestion_TestQuestionAnswersDTO
         {
             QuestionType = 1,
@@ -176,7 +182,7 @@
             CorrectAnswers = new List<string>()
         };
 
-    private void ChangeQuestionType(ChangeEventArgs e)
+    private void ChangeQuestionType(Microsoft.AspNetCore.Components.ChangeEventArgs e)
     {
         int selectedType = int.Parse(e.Value.ToString());
         testQuestion.QuestionType = selectedType;
@@ -278,7 +284,7 @@
         {
             var errorMessage = await response.Content.ReadAsStringAsync();
             Message = $"Đã xảy ra lỗi khi tạo câu hỏi: {errorMessage}. Mã trạng thái: {response.StatusCode}";
-            Console.WriteLine(Message); // Ghi lại thông báo lỗi
+            Console.WriteLine(Message); 
         }
     }
 
