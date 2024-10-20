@@ -1,12 +1,16 @@
 ﻿@page "/quanlystudent"
+@using Database.DTOs
 @using global::Data.Model
 @using global::Data.DTOs
 @using System.Net.Http.Json
 @layout Teacherlayout
 @inject HttpClient client
 @inject IHttpClientFactory clientFactory
+@inject NavigationManager navigation
 
 <h3 class="mb-4 text-center">Quản lý học sinh</h3> <!-- Căn giữa tiêu đề -->
+
+<button class="btn btn-primary" @onclick="CreateStudent">Tạo học sinh mới</button>
 
 <div class="container student-management">
     <div class="row">
@@ -36,16 +40,61 @@
                                 <td>@n.DateOfBirth.ToShortDateString()</td>
                                 <td>@n.PhoneNumber</td>
                                 <td>
-                                    <button class="btn btn-warning btn-sm">Xem điểm số</button>
+                                    <button class="btn btn-outline-primary btn-sm">Xem điểm số</button>
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm">Viết đánh giá</button>
+                                    <button class="btn btn-warning btn-sm" @onclick="()=>ShowUpdateStudent(n.UserId)">Sửa thông tin</button>
+                                    <button class="btn btn-primary btn-sm" @onclick="ShowCreateNoticeModal">Viết đánh giá</button>
                                     <button class="btn btn-success btn-sm">Tổng kết học tập</button>
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade @(isCreateNoticeModalVisible ? "show" : "")" tabindex="-1" style="display:@(isCreateNoticeModalVisible ? "block" : "none")">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title">Sửa thông tin học sinh</h5>
+                <button type="button" class="btn-close" @onclick="HideCreateNoticeModal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Họ và tên:</label>
+                    <input type="text" id="fullname" class="form-control" @bind="userDTO.FullName" placeholder="Nhập họ và tên" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" class="form-control" @bind="userDTO.Email" placeholder="Nhập email" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="userName" class="form-label">Tên đăng nhập:</label>
+                    <input type="text" id="userName" class="form-control" @bind="userDTO.UserName" placeholder="Nhập tên đăng nhập" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật khẩu:</label>
+                    <input type="password" id="password" class="form-control" @bind="userDTO.PasswordHash" placeholder="Nhập mật khẩu" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="phoneNumber" class="form-label">Số điện thoại:</label>
+                    <input type="tel" id="phoneNumber" class="form-control" @bind="userDTO.PhoneNumber" placeholder="Nhập số điện thoại" />
+                </div>
+
+                <div class="form-group">
+                    <label for="avatarFile">Ảnh đại diện:</label>
+                    <InputFile id="avatarFile" class="form-control-file" OnChange="@HandleFileSelected" />
+                </div>
+
+                <button type="but" class="btn btn-primary" @onclick="Submit">Lưu</button>
+                <button type="button" class="btn btn-secondary" @onclick="HideCreateNoticeModal">Đóng</button>
             </div>
         </div>
     </div>
@@ -118,12 +167,96 @@
 </style>
 
 @code {
+    private bool isCreateNoticeModalVisible = false;
+
+    // private List<NotificationDTO>? notifications = new List<NotificationDTO>();
+    // private NotificationDTO notificationDTO = new NotificationDTO();
+
+    private List<UserDTO>? userDTOs = new List<UserDTO>();
+    private UserDTO userDTO = new UserDTO();
+    private Guid selectedUserId;
     private List<StudentDTO> listStudents = new List<StudentDTO>();
+    private IBrowserFile avatarFile;
 
     protected override async Task OnInitializedAsync()
     {
         var httpClient = clientFactory.CreateClient("student");
         listStudents = await httpClient.GetFromJsonAsync<List<StudentDTO>>("https://localhost:7039/api/Student/get-all-student2");
+        StateHasChanged();
+    }
+
+    private void HideCreateNoticeModal()
+    {
+        isCreateNoticeModalVisible = false;
+    }
+
+    private void ShowCreateNoticeModal()
+    {
+
+    }
+
+    private void CreateStudent()
+    {
+        navigation.NavigateTo("/createStudent");
+    }
+
+    // private void UpdateStudent(Guid id)
+    // {
+    //     navigation.NavigateTo($"/updateStudent/{id}");
+    // }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        avatarFile = e.File; // Lưu avatar file
+    }
+
+    private async Task ShowUpdateStudent(Guid userId)
+    {
+        selectedUserId = userId;
+
+        var httpClient = clientFactory.CreateClient("student");
+        userDTO = await httpClient.GetFromJsonAsync<UserDTO>($"https://localhost:7039/api/User/get-by-id-user?id={userId}");
+        isCreateNoticeModalVisible = true;
+
+    }
+
+    private async Task Submit()
+    {
+        // Tạo HttpClient
+        var httpClient = clientFactory.CreateClient("student");
+
+        if (avatarFile != null)
+        {
+            var content = new MultipartFormDataContent();
+            var fileContent = new StreamContent(avatarFile.OpenReadStream(1024 * 1024 * 10));
+            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(avatarFile.ContentType);
+            content.Add(fileContent, "avatarFile", avatarFile.Name);
+            content.Add(new StringContent(userDTO.FullName), "FullName");
+            content.Add(new StringContent(userDTO.Email), "Email");
+            content.Add(new StringContent(userDTO.UserName), "UserName");
+            content.Add(new StringContent(userDTO.PasswordHash), "PasswordHash");
+            content.Add(new StringContent(userDTO.PhoneNumber), "PhoneNumber");
+            var response = await httpClient.PutAsync("https://localhost:7039/api/User/update-user", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Thành công
+                isCreateNoticeModalVisible = false;
+                await OnInitializedAsync(); // Tải lại danh sách học sinh
+            }
+        }
+        else
+        {
+            var response = await httpClient.PutAsJsonAsync("https://localhost:7039/api/User/update-user", userDTO);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Thành công
+                isCreateNoticeModalVisible = false;
+                await OnInitializedAsync(); // Tải lại danh sách học sinh
+            }
+        }
+
         StateHasChanged();
     }
 }
