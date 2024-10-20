@@ -1,0 +1,130 @@
+﻿@* @page "/updateStudent/{id:guid}"
+@using global::Data.Model
+@using global::Data.DTOs
+@using System.Net.Http.Json
+@layout Teacherlayout
+@inject HttpClient client
+@inject NavigationManager navigation
+@inject IHttpContextAccessor HttpContextAccessor // Tiêm IHttpContextAccessor
+
+<h3>Cập nhật thông tin học sinh</h3>
+
+@if (user != null)
+{
+    <EditForm Model="@user" OnValidSubmit="@HandleValidSubmit" class="form-container">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="validation-summary" />
+
+        <div class="form-group">
+            <label for="fullName">Họ và tên:</label>
+            <InputText id="fullName" class="form-control" @bind-Value="@user.FullName" />
+            <ValidationMessage For="@(() => user.FullName)" class="validation-message" />
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <InputText id="email" class="form-control" @bind-Value="@user.Email" />
+            <ValidationMessage For="@(() => user.Email)" class="validation-message" />
+        </div>
+
+        <div class="form-group">
+            <label for="phoneNumber">Số điện thoại:</label>
+            <InputText id="phoneNumber" class="form-control" @bind-Value="@user.PhoneNumber" />
+            <ValidationMessage For="@(() => user.PhoneNumber)" class="validation-message" />
+        </div>
+
+        <div class="form-group">
+            <label for="avatarFile">Ảnh đại diện mới (tùy chọn):</label>
+            <InputFile id="avatarFile" class="form-control-file" OnChange="@HandleFileSelected" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cập nhật thông tin</button>
+    </EditForm>
+}
+
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@if (successMessage != null)
+{
+    <div class="alert alert-success">@successMessage</div>
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+    private User user;
+    private string errorMessage;
+    private string successMessage;
+    private IBrowserFile avatarFile;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var currentUser = HttpContextAccessor.HttpContext?.User; // Lấy thông tin người dùng từ HttpContext
+
+        if (currentUser?.Identity.IsAuthenticated == true)
+        {
+            var userRole = currentUser.FindFirst("role")?.Value;
+
+            if (userRole == "student")
+            {
+                user = await client.GetFromJsonAsync<User>($"api/User/get-by-id-user/{Id}");
+
+                if (user == null)
+                {
+                    errorMessage = "Không tìm thấy thông tin học sinh.";
+                }
+            }
+            else
+            {
+                navigation.NavigateTo("/unauthorized");
+            }
+        }
+        else
+        {
+            navigation.NavigateTo("/login");
+        }
+    }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        avatarFile = e.File;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        var content = new MultipartFormDataContent();
+
+        content.Add(new StringContent(user.FullName), "FullName");
+        content.Add(new StringContent(user.Email), "Email");
+
+        if (!string.IsNullOrEmpty(user.PasswordHash))
+        {
+            content.Add(new StringContent(user.PasswordHash), "PasswordHash");
+        }
+
+        content.Add(new StringContent(user.PhoneNumber), "PhoneNumber");
+
+        if (avatarFile != null)
+        {
+            var stream = avatarFile.OpenReadStream();
+            var fileContent = new StreamContent(stream);
+            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(avatarFile.ContentType);
+            content.Add(fileContent, "avatarFile", avatarFile.Name);
+        }
+
+        var response = await client.PutAsync($"api/User/update-user/{Id}", content);
+        if (response.IsSuccessStatusCode)
+        {
+            successMessage = "Thông tin học sinh đã được cập nhật thành công!";
+            errorMessage = null;
+        }
+        else
+        {
+            errorMessage = await response.Content.ReadAsStringAsync();
+            successMessage = null;
+        }
+    }
+}
+ *@
