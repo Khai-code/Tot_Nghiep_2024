@@ -12,6 +12,7 @@ namespace Data.DTOs
         public Guid Id { get; set; }
         [MaxLength]
         public string QuestionName { get; set; }
+        public int code { get; set; }
         public int Type { get; set; }
         [MaxLength]
         public string RightAnswer { get; set; }
