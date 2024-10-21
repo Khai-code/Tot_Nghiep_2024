@@ -41,6 +41,7 @@ namespace API.Controllers
                     {
                         Id = tcq.TestQuestion.Id,
                         QuestionName = tcq.TestQuestion.QuestionName,
+                        code=tc.Tests.Code,
                         Level = tcq.TestQuestion.Level,
                         Type = tcq.TestQuestion.Type,
                         Answers = _db.testQuestionAnswers

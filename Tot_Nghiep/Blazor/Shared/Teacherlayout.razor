@@ -5,8 +5,8 @@
 @inject NavigationManager navigate
 <main>
     <div class=" row">
-        <div class="col-2 ">
-            <div class="container-fluid shadow min-vh-100 bg-light">
+        <div class="col-2 fixed-sidebar ">
+            <div class="container-fluid min-vh-100 bg-light">
                 <div class="d-flex justify-content-center">
                     <img src="img/Rectangle89.png" style="height:150px" alt="Alternate Text" />
                 </div>
@@ -45,7 +45,7 @@
             </div>
 
         </div>
-        <div class="col-10 ">
+        <div class="col-10 fixed-navbar">
             <div class="row ">
                 <nav>
                     <div class=" bg-light  ">
@@ -62,7 +62,7 @@
                 </nav>
             </div>
             <div class="row">
-                <article class="container">
+                <article>
                     @Body
                 </article>
 
@@ -137,7 +137,7 @@
     }
 
     .fixed-sidebar {
-        position: fixed;
+        position: ;
         top: 0;
         left: 0;
         height: 100vh;

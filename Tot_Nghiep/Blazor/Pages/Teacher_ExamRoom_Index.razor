@@ -11,7 +11,7 @@
 
 <div>
     <div class="row">
-        <div class=" d-flex">
+        <div class=" border d-flex">
             <div class="col-3 p-2">
                 <div class="border shadow-sm" style="background-color:cornflowerblue">
                     <h5 class="p-2 text-white d-flex justify-content-center align-items-center">Thư mục</h5>
@@ -53,50 +53,55 @@
                 </div>
                 <div class="border min-vh-50 p-2">
                     <div class="exam-container">
-                        @foreach (var item in detailDTOs)
+                        @if (detailDTOs != null && detailDTOs.Count>0)
                         {
-                            <h2 class="title">SỞ GD & ĐT THANH HÓA</h2>
-                            <h3 class="school-name">TRƯỜNG THPT NGUYỄN TRÃI</h3>
-                            <h4 class="year">NĂM HỌC 2017 - 2018</h4>
+                            @foreach (var item in detailDTOs)
+                            {
+                                <h2 class="title">SỞ GD & ĐT THANH HÓA</h2>
+                                <h3 class="school-name">TRƯỜNG THPT NGUYỄN TRÃI</h3>
+                                <h4 class="year">NĂM HỌC 2017 - 2018</h4>
 
-                            <h4 class="subject">MÔN: @item.NameSubject</h4>
-                            <h5 class="time">Thời gian làm bài: @item.time phút</h5>
-                            <h6 class="code">Mã đề thi: @item.CodeTescode</h6>
+                                <h4 class="subject">MÔN: @item.NameSubject</h4>
+                                <h5 class="time">Thời gian làm bài: @item.time phút</h5>
+                                <h6 class="code">Mã đề thi: @item.CodeTescode</h6>
 
-                            <div class="student-info">
-                                <span>Họ, tên sinh viên: ............................................</span><br />
-                                <span>Số báo danh: .................................................</span>
-                            </div>
-
-                            <div class="content">
-                                @for (int i = 0; i < item.NameQuestion.Count; i++)
-                                {
-                                    var question = item.NameQuestion[i];
-
-                                    <h5>Câu @(i + 1): @question.QuestionName</h5>
-                                    <ol type="A" class="d-flex justify-content-md-evenly p-2">
-                                        @if (question.Type == 1 || question.Type == 2)
-                                        {
-                                            foreach (var answer in question.Answers)
+                                <div class="student-info">
+                                    <span>Họ, tên sinh viên: ............................................</span><br />
+                                    <span>Số báo danh: .................................................</span>
+                                </div>
+                                <div class="content">
+                                    @foreach (var question in item.NameQuestion)
+                                    {
+                                        <h5>Câu @(item.NameQuestion.IndexOf(question)+1): @question.QuestionName</h5>
+                                        <ol type="A" class="d-flex justify-content-md-evenly p-2">
+                                            @if (question.Type == 1 || question.Type == 2)
                                             {
-                                                <li>@answer.Answer</li>
+                                                foreach (var answer in question.Answers)
+                                                {
+                                                    <li>@answer.Answer</li>
+                                                }
                                             }
-                                        }
-                                        else if (question.Type == 3)
-                                        {
-                                            <li>Đúng</li>
-                                            <li>Sai</li>
-                                        }
-                                        else if (question.Type == 4)
-                                        {
-                                            @foreach (var answer in question.Answers)
+                                            else if (question.Type == 3)
                                             {
-                                                <p>Đáp án: @answer.Answer</p>
+                                                <li>Đúng</li>
+                                                <li>Sai</li>
                                             }
-                                        }
-                                    </ol>
-                                }
-                            </div>
+                                            else if (question.Type == 4)
+                                            {
+                                                @foreach (var answer in question.Answers)
+                                                {
+                                                    <p><strong>Đáp án:</strong> @answer.Answer</p>
+                                                }
+                                            }
+                                        </ol>
+                                    }
+
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>Không có dữ liệu để hiển thị.</p>
                         }
 
                     </div>
@@ -106,10 +111,9 @@
         </div>
     </div>
 </div>
-
 @code {
+    // Các biến và danh sách cần thiết
     private List<DetailDTO> detailDTOs = new List<DetailDTO>();
-    private List<DetailDTO> detail = new List<DetailDTO>();
     private List<TestQuestion_TestQuestionAnswersDTO> selectedQuestions = new List<TestQuestion_TestQuestionAnswersDTO>();
     private List<TestGridDTO> testList = new List<TestGridDTO>();
     private Guid? selectedTestId = null;
@@ -118,21 +122,40 @@
     private int mediumCount;
     private int hardCount;
     private int veryHardCount;
-    int questionNumber = 1;
+
+    // Phương thức xử lý sự kiện nhấn nút "Tạo ca thi"
     private async Task onlick(Guid id)
     {
         isLoading = true; // Bắt đầu tải
         try
         {
-            await LoadDetailTest(id);
-            await LoadQuestions(id);
+            // Gửi yêu cầu tạo câu hỏi ngẫu nhiên
+            var response = await client.PostAsJsonAsync($"https://localhost:7039/api/TestQuestionDTO/randomize-questions-for-test-codes?testId={id}&easyCount={easyCount}&mediumCount={mediumCount}&hardCount={hardCount}&veryHardCount={veryHardCount}", selectedQuestions);
 
+            if (response.IsSuccessStatusCode)
+            {
+                await ShowSuccessMessage("Thêm dữ liệu thành công!");
+
+                // Tải lại chi tiết bài thi sau khi thêm thành công
+                await LoadDetailTest(id);
+               
+            }
+            else
+            {
+                await ShowErrorMessage($"Có lỗi xảy ra. Mã lỗi: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            await ShowErrorMessage($"Có lỗi xảy ra: {ex.Message}");
         }
         finally
         {
             isLoading = false; // Kết thúc tải
         }
     }
+
+    // Các phương thức khác vẫn giữ nguyên như bạn đã viết
     protected override async Task OnInitializedAsync()
     {
         await LoadTestList();
@@ -157,31 +180,7 @@
         selectedTestId = selectedTestId == id ? null : id;
     }
 
-    private async Task LoadQuestions(Guid id)
-    {
-        var response = await client.PostAsJsonAsync($"https://localhost:7039/api/TestQuestionDTO/randomize-questions-for-test-codes?testId={id}&easyCount={easyCount}&mediumCount={mediumCount}&hardCount={hardCount}&veryHardCount={veryHardCount}", selectedQuestions);
-
-        if (response.IsSuccessStatusCode)
-        {
-            var jsonString = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(jsonString); // Kiểm tra nội dung JSON
-
-            try
-            {
-                await ShowSuccessMessage("Thêm dữ liệu thành công!");
-                selectedQuestions.Clear();
-            }
-            catch (Exception ex)
-            {
-                await ShowErrorMessage($"Có lỗi xảy ra khi phân tích dữ liệu: {ex.Message}");
-            }
-        }
-        else
-        {
-            await ShowErrorMessage($"Có lỗi xảy ra. Mã lỗi: {response.StatusCode}");
-        }
-    }
-
+   
 
     private async Task ShowSuccessMessage(string message)
     {
@@ -205,3 +204,4 @@
         });
     }
 }
+

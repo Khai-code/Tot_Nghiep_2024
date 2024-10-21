@@ -13,6 +13,8 @@
                     <h5 class="p-2 text-white d-flex justify-content-center align-items-center">Thư mục</h5>
                 </div>
                 <div class="border min-vh-100">
+                    @if(testList !=null & testList.Any())
+                    {
                     @foreach (var item in testList)
                     {
                         <div>
@@ -49,7 +51,14 @@
                                     </li>
                                 </ul>
                             }
-                        </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <span class="target" type="button" @onclick="ShowCreateTestModal">
+                            <i class="bi bi-folder-fill text-warning p-1"></i> 
+                        </span>
                     }
                 </div>
             </div>
