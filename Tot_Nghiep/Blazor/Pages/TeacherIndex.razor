@@ -28,15 +28,25 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Thay đổi URL cho phù hợp với API của bạn
-        gradeData = await client.GetFromJsonAsync<List<GradeDTO>>("api/Grade/get-grade-data");
-        // Lấy dữ liệu tổng số lượng lớp và giáo viên từ đối tượng đầu tiên
-        if (gradeData.Any())
+        try
         {
-            totalClasses = gradeData.First().TotalClasses;
-            totalTeachers = gradeData.First().TotalTeachers;
+            var httpClinet = clientFactory.CreateClient("DefaultClient");
+            var url = "https://localhost:7039/api/Grade/get-grade-data";
+            gradeData = await httpClinet.GetFromJsonAsync<List<GradeDTO>>(url);
+            // Lấy dữ liệu tổng số lượng lớp và giáo viên từ đối tượng đầu tiên
+            if (gradeData.Any())
+            {
+                totalClasses = gradeData.First().TotalClasses;
+                totalTeachers = gradeData.First().TotalTeachers;
+            }
+            isDataLoaded = true; // Đánh dấu dữ liệu đã được tải
         }
-        isDataLoaded = true; // Đánh dấu dữ liệu đã được tải
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading data: {ex.Message}");
+            throw;
+        }
+
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -128,14 +138,15 @@
             <span class="quote-source">— Nguyễn Đức Công</span>
         </blockquote>
     </div>
-    <div class="col-md-1"></div>
+@*     <div class="col-md-1"></div> *@
     <div class="col-md-4 border p-4">
         <h2 class="text-center mb-4">Bảng thông báo</h2>
         <button class="btn btn-primary mb-3 w-100" @onclick="ShowCreateNoticeModal">Tạo Thông Báo</button>
         <div class="notification-list-container">
             @if (notifications != null && notifications.Count > 0)
             {
-                @foreach (var notification in notifications)
+                var paginatedNotifications = notifications.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+                @foreach (var notification in paginatedNotifications)
                 {
                     <div class="card notification-card mb-2">
                         <div class="card-body">
@@ -151,6 +162,11 @@
                         </div>
                     </div>
                 }
+
+                <div class="pagination-buttons text-center mt-3">
+                    <button class="btn btn-primary mx-2" @onclick="PreviousPage" disabled="@IsPreviousButtonDisabled">Trang trước</button>
+                    <button class="btn btn-primary mx-2" @onclick="NextPage" disabled="@IsNextButtonDisabled">Trang sau</button>
+                </div>
             }
             else
             {
@@ -290,7 +306,30 @@
     private List<Guid> selectedClassIds = new List<Guid>(); // Danh sách ID lớp được chọn (nếu Type == 1)
     private List<string> selectedClassNames = new List<string>(); // Danh sách tên các lớp đã chọn
     private string currentDateTime = DateTime.Now.ToString("yyyy-MM-ddTHH:mm"); // Định dạng cho <input type="datetime-local">
+    private int pageSize = 3; // Số thông báo mỗi trang
+    private int currentPage = 1; // Trang hiện tại
 
+    // Tính toán xem có nên disable nút "Trang trước" hay không
+    private bool IsPreviousButtonDisabled => currentPage == 1;
+
+    // Tính toán xem có nên disable nút "Trang sau" hay không
+    private bool IsNextButtonDisabled => currentPage * pageSize >= notifications.Count;
+
+    private void PreviousPage()
+    {
+        if (currentPage > 1)
+        {
+            currentPage--;
+        }
+    }
+
+    private void NextPage()
+    {
+        if (currentPage * pageSize < notifications.Count)
+        {
+            currentPage++;
+        }
+    }
 
     protected override async void OnInitialized()
     {
