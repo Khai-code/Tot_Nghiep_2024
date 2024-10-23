@@ -1,140 +1,207 @@
 ﻿@page "/exam-room"
+@using System.Text.Json
 @using global::Data.Model
 @using global::Data.DTOs
 @using System.Net.Http.Json
 @layout Teacherlayout
 @inject HttpClient client
 @inject IHttpClientFactory clientFactory
-<h3>Danh sách ca thi</h3>
-<div style="display: flex;">
-    <div style="flex: 2; padding-right: 20px;">
-        <table class="table-fixed">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Thời gian bắt đầu</th>
-                    <th>Thời gian kết thúc</th>
-                    <th>Trạng thái</th>
-                    <th>Phòng thi</th>
-                    <th>Mã Giáo Viên 1</th>
-                    <th>Mã Giáo Viên 2</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var n in lstExamRoom)
-                {
-                    <tr>
-                        <td>@(lstExamRoom.IndexOf(n) + 1)</td>
-                        <td>@n.StartTime</td>
-                        <td>@n.EndTime</td>
-                        <td>
-                            @if (n.Status == 0)
+@inject IJSRuntime Jsruntime
+@inject NavigationManager navigate
+
+<div>
+    <div class="row">
+        <div class=" border d-flex">
+            <div class="col-3 p-2">
+                <div class="border shadow-sm" style="background-color:cornflowerblue">
+                    <h5 class="p-2 text-white d-flex justify-content-center align-items-center">Thư mục</h5>
+                </div>
+                <div class="border min-vh-100">
+                    @foreach (var item in testList)
+                    {
+                        <div>
+                            <span class="target" value="@item.Id" type="button" @onclick="() => ToggleTest(item.Id)">
+                                <i class="bi bi-folder-fill text-warning p-1"></i> @item.Name
+                            </span>
+                            @if (selectedTestId == item.Id)
                             {
-                                <span>Chưa thi</span>
+                                <div class="mt-2">
+                                    <label for="easyCount">Số câu dễ:</label>
+                                    <input type="number" id="easyCount" @bind="easyCount" min="0" class="form-control mb-2" />
+
+                                    <label for="mediumCount">Số câu trung bình:</label>
+                                    <input type="number" id="mediumCount" @bind="mediumCount" min="0" class="form-control mb-2" />
+
+                                    <label for="hardCount">Số câu khó:</label>
+                                    <input type="number" id="hardCount" @bind="hardCount" min="0" class="form-control mb-2" />
+
+                                    <label for="veryHardCount">Số câu nâng cao:</label>
+                                    <input type="number" id="veryHardCount" @bind="veryHardCount" min="0" class="form-control mb-2" />
+
+                                    <button class="btn btn-primary mt-2" @onclick="() => onlick(item.Id)"> Tạo ca thi</button>
+                                </div>
                             }
-                            else if (n.Status == 1)
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-9 p-2">
+                <div class="border shadow-sm d-flex justify-content-between" style="background-color:cornflowerblue">
+                    <div class="p-2">
+                        <h5 class="text-white">Cấu trúc bài thi</h5>
+                    </div>
+                </div>
+                <div class="border min-vh-50 p-2">
+                    <div class="exam-container">
+                        @if (detailDTOs != null && detailDTOs.Count>0)
+                        {
+                            @foreach (var item in detailDTOs)
                             {
-                                <span>Đang thi</span>
+                                <h2 class="title">SỞ GD & ĐT THANH HÓA</h2>
+                                <h3 class="school-name">TRƯỜNG THPT NGUYỄN TRÃI</h3>
+                                <h4 class="year">NĂM HỌC 2017 - 2018</h4>
+
+                                <h4 class="subject">MÔN: @item.NameSubject</h4>
+                                <h5 class="time">Thời gian làm bài: @item.time phút</h5>
+                                <h6 class="code">Mã đề thi: @item.CodeTescode</h6>
+
+                                <div class="student-info">
+                                    <span>Họ, tên sinh viên: ............................................</span><br />
+                                    <span>Số báo danh: .................................................</span>
+                                </div>
+                                <div class="content">
+                                    @foreach (var question in item.NameQuestion)
+                                    {
+                                        <h5>Câu @(item.NameQuestion.IndexOf(question)+1): @question.QuestionName</h5>
+                                        <ol type="A" class="d-flex justify-content-md-evenly p-2">
+                                            @if (question.Type == 1 || question.Type == 2)
+                                            {
+                                                foreach (var answer in question.Answers)
+                                                {
+                                                    <li>@answer.Answer</li>
+                                                }
+                                            }
+                                            else if (question.Type == 3)
+                                            {
+                                                <li>Đúng</li>
+                                                <li>Sai</li>
+                                            }
+                                            else if (question.Type == 4)
+                                            {
+                                                @foreach (var answer in question.Answers)
+                                                {
+                                                    <p><strong>Đáp án:</strong> @answer.Answer</p>
+                                                }
+                                            }
+                                        </ol>
+                                    }
+
+                                </div>
                             }
-                            else
-                            {
-                                <span>Trạng thái không xác định</span>
-                            }
-                        </td>
-                        <td>@n.RoomName</td>
-                        <td>@n.Teacher1Code</td>
-                        <td>@n.Teacher2Code</td>
-                        <td>
-                            <button class="btn-view">Xem chi tiết</button>
-                            <button class="btn-delete">Xóa</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                        }
+                        else
+                        {
+                            <p>Không có dữ liệu để hiển thị.</p>
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
-
-<style>
-    .table-fixed {
-        width: 100%;
-        border-collapse: collapse;
-        overflow-y: scroll;
-    }
-
-        .table-fixed thead {
-            background-color: #343a40;
-            color: #ffffff;
-        }
-
-        .table-fixed th, .table-fixed td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .table-fixed tr:hover {
-            background-color: #f2f2f2;
-        }
-
-    .status {
-        font-weight: bold;
-    }
-
-        .status.viewed {
-            color: green;
-        }
-
-        .status.not-viewed {
-            color: orange;
-        }
-
-    .btn-view, .btn-delete {
-        padding: 8px 12px;
-        margin: 0 5px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .btn-view {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .btn-delete {
-        background-color: #dc3545;
-        color: white;
-    }
-
-    .btn-view:hover {
-        background-color: #0056b3;
-    }
-
-    .btn-delete:hover {
-        background-color: #c82333;
-    }
-
-    .details {
-        background-color: #ffffff;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-        .details p {
-            margin: 5px 0;
-        }
-</style>
-
 @code {
-    private List<ExamRoomDTO2> lstExamRoom = new List<ExamRoomDTO2>();
+    // Các biến và danh sách cần thiết
+    private List<DetailDTO> detailDTOs = new List<DetailDTO>();
+    private List<TestQuestion_TestQuestionAnswersDTO> selectedQuestions = new List<TestQuestion_TestQuestionAnswersDTO>();
+    private List<TestGridDTO> testList = new List<TestGridDTO>();
+    private Guid? selectedTestId = null;
+    private bool isLoading = false;
+    private int easyCount;
+    private int mediumCount;
+    private int hardCount;
+    private int veryHardCount;
 
+    // Phương thức xử lý sự kiện nhấn nút "Tạo ca thi"
+    private async Task onlick(Guid id)
+    {
+        isLoading = true; // Bắt đầu tải
+        try
+        {
+            // Gửi yêu cầu tạo câu hỏi ngẫu nhiên
+            var response = await client.PostAsJsonAsync($"https://localhost:7039/api/TestQuestionDTO/randomize-questions-for-test-codes?testId={id}&easyCount={easyCount}&mediumCount={mediumCount}&hardCount={hardCount}&veryHardCount={veryHardCount}", selectedQuestions);
+
+            if (response.IsSuccessStatusCode)
+            {
+                await ShowSuccessMessage("Thêm dữ liệu thành công!");
+
+                // Tải lại chi tiết bài thi sau khi thêm thành công
+                await LoadDetailTest(id);
+               
+            }
+            else
+            {
+                await ShowErrorMessage($"Có lỗi xảy ra. Mã lỗi: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            await ShowErrorMessage($"Có lỗi xảy ra: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false; // Kết thúc tải
+        }
+    }
+
+    // Các phương thức khác vẫn giữ nguyên như bạn đã viết
     protected override async Task OnInitializedAsync()
     {
-        var httpClient = clientFactory.CreateClient("ExamRoom");
-        lstExamRoom = await httpClient.GetFromJsonAsync<List<ExamRoomDTO2>>("https://localhost:7039/api/ExamRooms/get-all-ExamRoomName");
-        StateHasChanged();
+        await LoadTestList();
+    }
+
+    private async Task LoadTestList()
+    {
+        var client = clientFactory.CreateClient("Get");
+        var url = "https://localhost:7039/api/Test/get-list-test";
+        testList = await client.GetFromJsonAsync<List<TestGridDTO>>(url);
+    }
+
+    private async Task LoadDetailTest(Guid id)
+    {
+        var client = clientFactory.CreateClient("Get");
+        var url = $"https://localhost:7039/api/TestQuestionDTO/Get-testcodes-by-testid?testId={id}";
+        detailDTOs = await client.GetFromJsonAsync<List<DetailDTO>>(url);
+    }
+
+    private void ToggleTest(Guid id)
+    {
+        selectedTestId = selectedTestId == id ? null : id;
+    }
+
+   
+
+    private async Task ShowSuccessMessage(string message)
+    {
+        await Jsruntime.InvokeVoidAsync("Swal.fire", new
+        {
+            title = "Thành công!",
+            text = message,
+            icon = "success",
+            confirmButtonText = "OK"
+        });
+    }
+
+    private async Task ShowErrorMessage(string message)
+    {
+        await Jsruntime.InvokeVoidAsync("Swal.fire", new
+        {
+            title = "Thất bại!",
+            text = message,
+            icon = "error",
+            confirmButtonText = "OK"
+        });
     }
 }
+

@@ -1,0 +1,273 @@
+﻿@page "/upload-question"
+@layout Teacherlayout
+@using global::Data.DTOs
+@inject IHttpClientFactory ClientFactory
+@inject HttpClient httpclient
+@inject IJSRuntime jsruntime
+@inject NavigationManager navigate
+<div class="container">
+    <div class="row py-4">
+        <div class="form-control">
+            <div>
+                <div class="row">
+                    <div class="col-5 m-1">
+                        <label>Chọn File Excel</label>
+                        <InputFile OnChange="HandleFileSelected" class="form-control" />
+                    </div>
+                    <div class="col-5 m-1">
+                        <label>Gói đề:</label>
+                        <select @bind="testQuestion.TestId" class="form-select">
+                            <option value="">--chọn--</option>
+                            @foreach (var item in testList)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-1 py-4 justify-content-end">
+                        <button class="btn btn-primary" @onclick="UploadFile">
+                            <i class="bi bi-file-earmark-excel"></i>Tải lên
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                @if (!string.IsNullOrEmpty(message))
+                {
+                    <div class="alert alert-info">@message</div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Nội dung câu hỏi</th>
+                        <th scope="col">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    @foreach (var item in testQuestions)
+                    {
+                        <tr>
+                            <td>@(testQuestions.IndexOf(item) + 1)</td>
+                            <td>
+                                <div>
+                                    <span>@item.Questionname</span>
+                                    <div>
+                                        @if (item.Type == 1) // Trắc nghiệm 1 đáp án
+                                        {
+                                            @for (int i = 0; i < item.answer.Count; i++)
+                                            {
+                                                char answerLabel = (char)('A' + i);
+                                                bool isCorrect = item.RightAnswer.Contains(item.answer[i].Answer);
+                                                <span style="@(isCorrect ? "color: green;" : "")">@answerLabel: @item.answer[i].Answer</span>
+
+                                                <br />
+                                            }
+                                        }
+                                        else if (item.Type == 2) // Trắc nghiệm nhiều đáp án
+                                        {
+                                            @for (int i = 0; i < item.answer.Count; i++)
+                                            {
+                                                char answerLabel = (char)('A' + i);
+                                                bool isCorrect = item.RightAnswer.Contains(item.answer[i].Answer);
+                                                <span style="@(isCorrect ? "color: green;" : "")">@answerLabel: @item.answer[i].Answer</span>
+
+                                                <br />
+                                            }
+                                        }
+                                        else if (item.Type == 3) // Đúng/Sai
+                                        {
+                                            bool isTrueCorrect = item.RightAnswer.Contains("True");
+                                            <span style="@(isTrueCorrect ? "color: green;" : "")">A: Đúng</span>
+
+                                            <br />
+                                            <span style="@(isTrueCorrect ? "" : "color: green;")">B: Sai</span>
+                                        }
+                                        else if (item.Type == 4) // Điền vào chỗ trống
+                                        {
+                                                
+                                                <div>
+                                                   
+                                                        @for (int i = 0; i < item.answer.Count; i++)
+                                                        {
+                                                            char answerLabel = (char)('A' + i);
+                                                            bool isCorrect = item.RightAnswer.Contains(item.answer[i].Answer);
+                                                            <span style="@(isCorrect ? "color: green;" : "")">@answerLabel: @item.answer[i].Answer</span>
+
+                                                            <br />
+                                                        }
+                                                    
+                                                </div>
+                                                <div>
+                                                    <span style="color: green;">(Đáp án đúng: @item.RightAnswer.FirstOrDefault())</span> <!-- Hiển thị đáp án đúng -->
+                                                </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span type="button" @onclick="()=>delete(item.Id)"><i class="bi bi-trash3 text-danger"></i></span>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<TestGridDTO> testList = new List<TestGridDTO>();
+    private TestQuestion_TestQuestionAnswersDTO testQuestion = new TestQuestion_TestQuestionAnswersDTO();
+    private List<listdetailquestion> testQuestions = new List<listdetailquestion>();
+
+    private IBrowserFile selectedFile;
+    private string message;
+    private string username;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await detailtestGrid();
+    }
+
+    private async Task detailtestGrid()
+    {
+        var httpClient = ClientFactory.CreateClient("Get");
+        var url = $"https://localhost:7039/api/Test/get-list-test?";
+        testList = await httpClient.GetFromJsonAsync<List<TestGridDTO>>(url);
+    }
+    private async Task delete(Guid id)
+    {
+        var httpclient = ClientFactory.CreateClient("Delete");
+        var url = $"https://localhost:7039/api/TestQuestion/Delete_TestQuestion?Id={id}";
+        var responseMessage = await httpclient.DeleteAsync(url);
+        navigate.NavigateTo(navigate.Uri, forceLoad: true);
+    }
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.GetMultipleFiles(1); // Lấy tệp đầu tiên
+        if (file.Count > 0)
+        {
+            selectedFile = file[0]; // Chọn tệp đầu tiên
+        }
+    }
+
+    private async Task UploadFile()
+    {
+        if (selectedFile != null)
+        {
+            var stream = selectedFile.OpenReadStream(100 * 1024 * 1024); // Giới hạn 100MB
+            var content = new MultipartFormDataContent();
+
+            using (var memoryStream = new MemoryStream())
+            {
+                await stream.CopyToAsync(memoryStream);
+                var fileBytes = memoryStream.ToArray();
+
+                // Thêm tệp vào nội dung gửi
+                content.Add(new ByteArrayContent(fileBytes), "file", selectedFile.Name);
+            }
+
+            if (testQuestion.TestId != Guid.Empty)
+            {
+                content.Add(new StringContent(testQuestion.TestId.ToString()), "id");
+            }
+            else
+            {
+                message = "Vui lòng chọn gói đề.";
+                return;
+            }
+
+            if (username != null)
+            {
+                content.Add(new StringContent(username.ToString()), "Createbyname");
+            }
+            else
+            {
+                message = "Tên rỗng";
+                return;
+            }
+
+            var response = await httpclient.PostAsync($"https://localhost:7039/api/TestQuestionDTO/import_questions?id={testQuestion.TestId}", content);
+            if (response.IsSuccessStatusCode)
+            {
+                message = "Tải lên thành công!";
+                await question(testQuestion.TestId);
+               
+                await CheckForDuplicates();
+            }
+            else
+            {
+                message = $"Đã xảy ra lỗi khi tải lên: {response.ReasonPhrase}";
+            }
+        }
+        else
+        {
+            message = "Vui lòng chọn một file.";
+        }
+    }
+
+    private async Task question(Guid id)
+    {
+       
+        testQuestions = await httpclient.GetFromJsonAsync<List<listdetailquestion>>($"https://localhost:7039/api/TestQuestion/get-question-details/{id}");
+    }
+
+    private async Task CheckForDuplicates()
+    {
+        var duplicates = testQuestions.GroupBy(q => q.Questionname)
+            .Where(g => g.Count() > 1)
+            .SelectMany(g => g)
+            .ToList();
+
+        if (duplicates.Any())
+        {
+            message = "Đã tìm thấy câu hỏi trùng lặp: " + string.Join(", ", duplicates.Select(q => q.Questionname));
+            // Có thể muốn xóa những câu hỏi trùng lặp khỏi danh sách
+            testQuestions = testQuestions.Where(q => !duplicates.Contains(q)).ToList();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var token = await jsruntime.InvokeAsync<string>("localStorage.getItem", "YourSuperSecretKeyHere");
+            if (!string.IsNullOrEmpty(token))
+            {
+                try
+                {
+                    var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+                    var jsonToken = handler.ReadToken(token) as System.IdentityModel.Tokens.Jwt.JwtSecurityToken;
+
+                    username = jsonToken?.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+                    testQuestion.CreatedByName = username;
+
+                    if (string.IsNullOrEmpty(username))
+                    {
+                        Console.WriteLine("Không tìm thấy tên người dùng trong token.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi đọc token: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Không tìm thấy token trong local storage.");
+            }
+        }
+    }
+}

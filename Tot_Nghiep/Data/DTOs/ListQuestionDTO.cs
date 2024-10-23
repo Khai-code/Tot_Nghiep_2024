@@ -11,6 +11,8 @@ namespace Data.DTOs
     {
         public Guid id { get; set; }
         public string code { get; set; }
+        public int type { get; set; }
+
         public string name { get; set; }
         public string nametest { get; set; }
         public int namegrade { get; set; }
@@ -24,6 +26,8 @@ namespace Data.DTOs
     {
         public Guid Id { get; set; }
         public string Questionname { get; set; }
+        public int level {  get; set; }
+        public int Type { get; set; }
         public string RightAnswer { get; set; }
         public List<AnswerDTO> answer { get; set; }
     }
