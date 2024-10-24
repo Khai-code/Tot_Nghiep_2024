@@ -1,5 +1,5 @@
 using Blazor.Data;
-using Syncfusion.Blazor;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,11 +8,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddHttpClient();
-builder.Services.AddSyncfusionBlazor();
 builder.Services.AddScoped(sp =>
 new HttpClient { BaseAddress = new Uri("https://localhost:7039") });
 var app = builder.Build();
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("ninhminquang");
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

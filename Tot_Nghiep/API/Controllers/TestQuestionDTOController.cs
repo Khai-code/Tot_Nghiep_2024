@@ -10,6 +10,7 @@ using OfficeOpenXml;
 using System.Linq;
 using OfficeOpenXml.Style;
 using System.Reflection.PortableExecutable;
+using System.Security.Cryptography.Pkcs;
 
 namespace API.Controllers
 {
@@ -22,47 +23,39 @@ namespace API.Controllers
         {
             _db = db;
         }
+  
         [HttpGet("Get-testcodes-by-testid")]
         public async Task<ActionResult<List<DetailDTO>>> GetTestCodesByTestId(Guid testId)
         {
-            // Lấy danh sách ID của các TestCode gắn liền với TestId
-            var testCodes = await _db.testCodes
-                .Include(tc => tc.Tests)
-                    .ThenInclude(t => t.Subject)
-                        .ThenInclude(s => s.Subject_Grade)
-                            .ThenInclude(g => g.Grade.Class)
-                                .ThenInclude(c => c.Student_Classes)
-                                    .ThenInclude(sc => sc.Student)
-                .Include(tc => tc.TestCode_TestQuestions)
-                    .ThenInclude(tcq => tcq.TestQuestion)
-                        .ThenInclude(tq => tq.TestQuestionAnswer)
-                .Where(tc => tc.Tests.Id == testId) // Lọc theo TestId
-                .ToListAsync();
 
-            // Ánh xạ dữ liệu vào DetailDTO
-            var detailList = testCodes.SelectMany(tc => tc.TestCode_TestQuestions.Select(tcq => new DetailDTO
+            var testcodes = await _db.testCodes
+            .Where(tc => tc.TestId == testId)
+            .Select(tc => new DetailDTO
             {
                 IdTestcode = tc.Id,
-                CodeTescode = tc.Code ?? "Chưa có mã đề",
-                time = tc.Tests?.Minute ?? 0,
-                Type = tcq.TestQuestion.Type,
-                level = tcq.TestQuestion.Level,
-                NameQuestion = tcq.TestQuestion.QuestionName,
-                Answers = tcq.TestQuestion.TestQuestionAnswer.Select(a => new AnswerDTO
-                {
-                    Answer = a.Answer
-                }).ToList(),
-                NameSubject = tc.Tests?.Subject?.Name ?? "Chưa có môn học",
-                Nameclass = tc.Tests?.Subject?.Subject_Grade
-                    ?.Select(x => x.Grade.Class.FirstOrDefault()?.Name)
-                    ?.FirstOrDefault() ?? "Chưa có lớp",
-                codestudent = tc.Tests?.Subject?.Subject_Grade
-                    ?.SelectMany(x => x.Grade.Class.SelectMany(c => c.Student_Classes))
-                    ?.FirstOrDefault()?.Student?.Code ?? "Chưa có mã sinh viên"
-            }))
-            .ToList();
+                CodeTescode = tc.Code,
+                time = tc.Tests.Minute,
+                NameSubject = tc.Tests.Subject.Name,
+                NameQuestion = _db.TestCode_TestQuestions
+                    .Where(tcq => tcq.TestCodeId == tc.Id)
+                    .Select(tcq => new TestQuestionDTO
+                    {
+                        Id = tcq.TestQuestion.Id,
+                        QuestionName = tcq.TestQuestion.QuestionName,
+                        code=tc.Tests.Code,
+                        Level = tcq.TestQuestion.Level,
+                        Type = tcq.TestQuestion.Type,
+                        Answers = _db.testQuestionAnswers
+                            .Where(a => a.TestQuestionId == tcq.TestQuestionId)
+                            .Select(a => new AnswerDTO
+                            {
+                                Id = a.Id,
+                                Answer = a.Answer
+                            }).ToList()
+                    }).ToList()
+            }).ToListAsync();
 
-            return Ok(detailList);
+            return testcodes;
         }
         [HttpPost("create_question_answwer")]
         public async Task<IActionResult> QuestionWithAnswers(TestQuestion_TestQuestionAnswersDTO dto)
@@ -456,5 +449,108 @@ namespace API.Controllers
             return Ok("Nhập câu hỏi thành công từ file Excel.");
         }
 
+        [HttpGet("get-all-question")]
+        public async Task<ActionResult<List<TestQuestion>>> GetAll()
+        {
+            var data = await _db.testQuestions.ToListAsync();
+            return Ok(data);
+
+        }
+
+        [HttpPut("update_question_answer")]
+        public async Task<IActionResult> UpdateQuestion(TestQuestion_TestQuestionAnswersDTO dto)
+        {
+            // Tìm câu hỏi theo ID
+            var existingQuestion = await _db.testQuestions.FindAsync(dto.id);
+            if (existingQuestion == null)
+            {
+                return NotFound("Câu hỏi không tồn tại.");
+            }
+
+            // Cập nhật thông tin câu hỏi
+            existingQuestion.QuestionName = dto.QuestionName;
+            existingQuestion.Level = dto.Level;
+            existingQuestion.CreatedByName = dto.CreatedByName;
+
+            // Xử lý theo loại câu hỏi
+            switch (dto.QuestionType)
+            {
+                case 1: // Multiple Choice (Một đáp án đúng)
+                    if (!dto.Answers.Contains(dto.CorrectAnswers.FirstOrDefault()))
+                    {
+                        throw new ArgumentException("Đáp án đúng phải nằm trong danh sách đáp án.");
+                    }
+                    existingQuestion.RightAnswer = dto.CorrectAnswers.FirstOrDefault();
+
+                    // Cập nhật đáp án
+                    var existingAnswersType1 = await _db.testQuestionAnswers
+                        .Where(a => a.TestQuestionId == existingQuestion.Id).ToListAsync();
+                    _db.testQuestionAnswers.RemoveRange(existingAnswersType1);
+
+                    var answersType1 = dto.Answers.Select(answer => new TestQuestionAnswer
+                    {
+                        Id = Guid.NewGuid(),
+                        Answer = answer,
+                        TestQuestionId = existingQuestion.Id
+                    }).ToList();
+                    _db.testQuestionAnswers.AddRange(answersType1);
+                    break;
+
+                case 2: // Multiple Answers (Nhiều đáp án đúng)
+                    if (!dto.CorrectAnswers.All(ca => dto.Answers.Contains(ca)))
+                    {
+                        throw new ArgumentException("Tất cả đáp án đúng phải nằm trong danh sách đáp án.");
+                    }
+                    existingQuestion.RightAnswer = string.Join(", ", dto.CorrectAnswers);
+
+                    // Cập nhật đáp án
+                    var existingAnswersType2 = await _db.testQuestionAnswers
+                        .Where(a => a.TestQuestionId == existingQuestion.Id).ToListAsync();
+                    _db.testQuestionAnswers.RemoveRange(existingAnswersType2);
+
+                    var answersType2 = dto.Answers.Select(answer => new TestQuestionAnswer
+                    {
+                        Id = Guid.NewGuid(),
+                        Answer = answer,
+                        TestQuestionId = existingQuestion.Id
+                    }).ToList();
+                    _db.testQuestionAnswers.AddRange(answersType2);
+                    break;
+
+                case 3: // True/False
+                    dto.Answers = new List<string> { "True", "False" };
+                    if (!dto.CorrectAnswers.Contains("True") && !dto.CorrectAnswers.Contains("False"))
+                    {
+                        throw new ArgumentException("Đáp án đúng phải là True hoặc False.");
+                    }
+                    existingQuestion.RightAnswer = dto.CorrectAnswers.FirstOrDefault();
+
+                    // Cập nhật đáp án
+                    var existingAnswersType3 = await _db.testQuestionAnswers
+                        .Where(a => a.TestQuestionId == existingQuestion.Id).ToListAsync();
+                    _db.testQuestionAnswers.RemoveRange(existingAnswersType3);
+
+                    var answersType3 = dto.Answers.Select(answer => new TestQuestionAnswer
+                    {
+                        Id = Guid.NewGuid(),
+                        Answer = answer,
+                        TestQuestionId = existingQuestion.Id
+                    }).ToList();
+                    _db.testQuestionAnswers.AddRange(answersType3);
+                    break;
+
+                case 4: // Fill in the Blank
+                    existingQuestion.RightAnswer = string.Join(", ", dto.CorrectAnswers); // Cập nhật đáp án đúng (nếu có)
+                    break;
+
+                default:
+                    throw new ArgumentException("Loại câu hỏi không hợp lệ.");
+            }
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            await _db.SaveChangesAsync();
+
+            return Ok("Cập nhật câu hỏi thành công");
+        }
     }
 }
