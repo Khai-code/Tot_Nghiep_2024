@@ -20,12 +20,35 @@ namespace API.Controllers
         {
             _Dbcontext = appDbContext;
         }
-        [HttpGet("GetAll_TestQuestionAnswers")]
-        public IActionResult Get_Questions()
+        [HttpGet("GetAll_TestQuestionAnswers/{id}")]
+        public async Task<List<TestQuestion_TestQuestionAnswersDTO>> Get_Questions(Guid id)
         {
-            return Ok(_Dbcontext.testQuestionAnswers.ToList());
+            var result = await _Dbcontext.testQuestions
+                .Where(a => a.Id == id)
+                .Select(a => new
+                {
+                    a.Id,
+                    a.QuestionName,
+                    a.Level,
+                    a.TestId,
+                    a.Type,
+                    a.RightAnswer, 
+                    Answers = a.TestQuestionAnswer.Select(c => c.Answer).ToList()
+                })
+                .ToListAsync();
+            var dtoResult = result.Select(a => new TestQuestion_TestQuestionAnswersDTO
+            {
+                id = a.Id,
+                QuestionName = a.QuestionName,
+                Level = a.Level,
+                TestId = a.TestId ?? Guid.Empty,
+                QuestionType = a.Type,
+                CorrectAnswers = string.IsNullOrEmpty(a.RightAnswer) ? new List<string>() : a.RightAnswer.Split(',').ToList(),
+                Answers = a.Answers
+            }).ToList();
+
+            return dtoResult;
         }
-        
         [HttpGet("get-question-details/{id}")]
         public async Task<List<listdetailquestion>> GetQuestionDetails(Guid id)
         {
@@ -107,49 +130,6 @@ namespace API.Controllers
             }
 
         }
-
-
-        [HttpPost("CreateQuestionWithAnswers")]
-        public async Task<ActionResult> CreateQuestionWithAnswers(TestQuestionDTO testQuestionDTO)
-        {
-            try
-            {
-                var username =  User.Claims.FirstOrDefault(c => c.Type == "name");
-                
-                var testQuestion = new TestQuestion
-                {
-                    Id = Guid.NewGuid(),
-                    QuestionName = testQuestionDTO.QuestionName,
-                    Type = testQuestionDTO.Type,
-                    RightAnswer = testQuestionDTO.RightAnswer,
-                    TestId = testQuestionDTO.TestId ,
-                    CreatedByName=testQuestionDTO.CreatedByName,
-                };
-
-                await _Dbcontext.testQuestions.AddAsync(testQuestion);
-
-                if (testQuestionDTO.Answers != null && testQuestionDTO.Answers.Count > 0)
-                {
-                    foreach (var answerDTO in testQuestionDTO.Answers)
-                    {
-                        var testAnswer = new TestQuestionAnswer
-                        {
-                            Id = Guid.NewGuid(),
-                            Answer = answerDTO.Answer, 
-                            TestQuestionId = testQuestion.Id 
-                        };
-
-                        await _Dbcontext.testQuestionAnswers.AddAsync(testAnswer);
-                    }
-                }
-                await _Dbcontext.SaveChangesAsync();
-                return Ok("Tạo câu hỏi và câu trả lời thành công");
-            }
-            catch (Exception)
-            {
-                return BadRequest("Tạo câu hỏi và câu trả lời lỗi");
-            }
-        }
         [HttpPut("Update_TestQuestion")]
         public async Task<ActionResult> UpdateTestQuestion(TestQuestionDTO testQuestionDTO)
         {
@@ -214,149 +194,6 @@ namespace API.Controllers
             }
             return BadRequest("Xóa thất bại");
         }
-        [HttpGet("export")]
-        public IActionResult ExportToExcel()
-        {
-            // Lấy dữ liệu từ bảng Questions và Answers
-            var testQuestions = _Dbcontext.testQuestions.ToList();
-            var testAnswers = _Dbcontext.testQuestionAnswers.ToList();
-
-            using (var package = new ExcelPackage())
-            {
-                var worksheet = package.Workbook.Worksheets.Add("TestQuestions");
-
-                // Thêm tiêu đề cột
-                worksheet.Cells[1, 1].Value = "ID";
-                worksheet.Cells[1, 2].Value = "Câu hỏi";
-                worksheet.Cells[1, 3].Value = "Câu A";
-                worksheet.Cells[1, 4].Value = "Câu B";
-                worksheet.Cells[1, 5].Value = "Câu C";
-                worksheet.Cells[1, 6].Value = "Câu D";
-                worksheet.Cells[1, 7].Value = "Câu đúng";
-
-                // Điền dữ liệu vào các ô
-                int row = 2;
-                foreach (var question in testQuestions)
-                {
-                    worksheet.Cells[row, 1].Value = question.Id;
-                    worksheet.Cells[row, 2].Value = question.QuestionName;
-
-                    // Lấy danh sách câu trả lời cho từng câu hỏi
-                    var answers = testAnswers.Where(a => a.TestQuestionId == question.Id).ToList();
-
-                    // Đặt câu trả lời vào các cột tương ứng
-                    for (int i = 0; i < answers.Count && i < 4; i++)
-                    {
-                        worksheet.Cells[row, 3 + i].Value = answers[i].Answer;
-                    }
-
-                    // Thêm câu trả lời đúng vào cột cuối
-                    worksheet.Cells[row, 7].Value = question.RightAnswer;
-
-                    row++;
-                }
-
-                // Định dạng file Excel
-                worksheet.Cells["A1:G1"].Style.Font.Bold = true;
-                worksheet.Cells.AutoFitColumns();
-
-                var stream = new MemoryStream(package.GetAsByteArray());
-                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "TestQuestions.xlsx");
-            }
-        }
-       
-        [HttpPost("import")]
-        public async Task<IActionResult> ImportFromExcel(IFormFile file)
-        {
-            if (file == null || file.Length <= 0)
-            {
-                return BadRequest("File không hợp lệ.");
-            }
-
-            using (var stream = new MemoryStream())
-            {
-                await file.CopyToAsync(stream);
-
-                using (var package = new ExcelPackage(stream))
-                {
-                    var worksheet = package.Workbook.Worksheets[0]; // Lấy worksheet đầu tiên
-                    var rowCount = worksheet.Dimension.Rows;
-
-                    using (var transaction = await _Dbcontext.Database.BeginTransactionAsync())
-                    {
-                        try
-                        {
-                            for (int row = 2; row <= rowCount; row++)
-                            {
-                                // Khởi tạo dữ liệu từ file Excel
-                                //var Id= worksheet.Cells[row, 1].Value?.ToString();
-                                var questionName = worksheet.Cells[row, 2].Value?.ToString();
-                                var rightAnswer = worksheet.Cells[row, 7].Value?.ToString();
-                                var type = worksheet.Cells[row, 8].Value?.ToString();
-                                var answers = new List<string>();
-
-                                if (string.IsNullOrWhiteSpace(questionName) || string.IsNullOrWhiteSpace(rightAnswer) || string.IsNullOrWhiteSpace(type))
-                                {
-                                    return BadRequest($"Dữ liệu không hợp lệ tại dòng {row}. Vui lòng kiểm tra file Excel.");
-                                }
-
-                                if (!int.TryParse(type, out int parsedType))
-                                {
-                                    return BadRequest($"Giá trị không hợp lệ cho trường Type tại dòng {row}.");
-                                }
-
-                                for (int col = 3; col <= 6; col++)
-                                {
-                                    var answer = worksheet.Cells[row, col].Value?.ToString();
-                                    if (!string.IsNullOrEmpty(answer))
-                                    {
-                                        answers.Add(answer);
-                                    }
-                                }
-                                var testCodeId = Guid.Parse(""); 
-                                var testCode = await _Dbcontext.testCodes
-                                    .FirstOrDefaultAsync(tc => tc.Id == testCodeId);
-
-                                var question = new TestQuestion
-                                {
-                                    Id = Guid.NewGuid(),
-                                    QuestionName = questionName,
-                                    Type = int.Parse(type),
-                                    RightAnswer = rightAnswer,
-                                    CreatedByName = "ninh minh quang",
-                                    TestId = testCode.Id
-                                };
-
-                                await _Dbcontext.testQuestions.AddAsync(question);
-                             
-                                foreach (var answer in answers)
-                                {
-                                    var answerEntity = new TestQuestionAnswer
-                                    {
-                                        TestQuestionId = question.Id,
-                                        Answer = answer
-                                    };
-                                    await _Dbcontext.testQuestionAnswers.AddAsync(answerEntity);
-                                }
-                            }
-
-                            // Lưu và commit transaction
-                            await _Dbcontext.SaveChangesAsync();
-                            await transaction.CommitAsync();
-                        }
-                        catch (Exception ex)
-                        {
-                            await transaction.RollbackAsync();
-                            var innerExceptionMessage = ex.InnerException?.Message ?? ex.Message;
-                            return StatusCode(500, $"Lỗi khi nhập dữ liệu: {innerExceptionMessage}");
-                        }
-                    }
-                }
-            }
-
-            return Ok("Dữ liệu đã được nhập thành công.");
-        }
-
-
+        
     }
 }

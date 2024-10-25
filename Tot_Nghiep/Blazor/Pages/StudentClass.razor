@@ -1,0 +1,132 @@
+﻿ @page "/student_class"
+ @using global::Data.DTOs
+ @inject IJSRuntime JSRuntime
+ @layout Teacherlayout
+ <EditForm Model="@studentClass" OnValidSubmit="@HandleValidSubmit" >
+     <DataAnnotationsValidator />
+     <ValidationSummary />
+
+     <div class="mb-3">
+         <label>Ảnh Đại Diện</label>
+         <InputFile OnChange="@HandleFileSelected" />
+     </div>
+
+     <div class="mb-3">
+         <label>Trạng Thái</label>
+         <InputNumber @bind-Value="@studentClass.Status" />
+     </div>
+
+     <div class="mb-3">
+         <label>ID Lớp</label>
+         <InputNumber @bind-Value="@studentClass.ClassId" />
+     </div>
+
+     <div class="mb-3">
+         <label>ID Sinh Viên</label>
+     <InputNumber @bind-Value="@studentClass.StudentId" />
+     </div>
+
+     <div class="mb-3">
+         <label>Dữ Liệu Khuôn Mặt</label>
+     <InputNumber @bind-Value="@studentClass.FaceEncoding" readonly />
+     </div>
+
+     <div class="mb-3">
+         <label>Quét Khuôn Mặt</label>
+         <video id="video" width="640" height="480" autoplay></video>
+         <button type="button" @onclick="CaptureImage" class="btn btn-secondary">Chụp Ảnh</button>
+     </div>
+
+     <button type="submit" class="btn btn-primary">Lưu</button>
+ </EditForm>
+
+ @if (isSuccess)
+ {
+     <p class="text-success">Lưu thành công!</p>
+ }
+ else if (!string.IsNullOrEmpty(errorMessage))
+ {
+     <p class="text-danger">@errorMessage</p>
+ }
+
+ @code {
+     private Student_ClassDTO studentClass = new Student_ClassDTO();
+     private bool isSuccess = false;
+     private string? errorMessage;
+
+     protected override async Task OnAfterRenderAsync(bool firstRender)
+     {
+         if (firstRender)
+         {
+             await StartCamera();
+         }
+     }
+
+     private async Task StartCamera()
+     {
+         await JSRuntime.InvokeVoidAsync("startCamera");
+     }
+
+     private async Task CaptureImage()
+     {
+         // Gọi JavaScript để chụp ảnh từ video
+         var imageBase64 = await JSRuntime.InvokeAsync<string>("captureImage");
+         studentClass.FaceEncoding = imageBase64; // Lưu dữ liệu khuôn mặt vào FaceEncoding
+     }
+
+     private async Task HandleFileSelected(InputFileChangeEventArgs e)
+     {
+         var file = e.File;
+         // Đọc tệp và lấy dữ liệu base64 hoặc lưu tệp nếu cần
+         using var stream = new MemoryStream();
+         await file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024).CopyToAsync(stream);
+         var base64 = Convert.ToBase64String(stream.ToArray());
+         studentClass.StudentProfilePhoto = base64; // Cập nhật nếu cần
+     }
+
+     private async Task HandleValidSubmit()
+     {
+         var content = new MultipartFormDataContent();
+         content.Add(new StringContent(studentClass.StudentProfilePhoto ?? ""), "StudentProfilePhoto");
+         content.Add(new StringContent(studentClass.Status.ToString()), "Status");
+         content.Add(new StringContent(studentClass.ClassId.ToString()), "ClassId");
+         content.Add(new StringContent(studentClass.StudentId.ToString()), "StudentId");
+         content.Add(new StringContent(studentClass.FaceEncoding ?? ""), "FaceEncoding");
+
+         var httpClient = new HttpClient();
+         var response = await httpClient.PostAsync("YOUR_API_ENDPOINT", content);
+
+         if (response.IsSuccessStatusCode)
+         {
+             isSuccess = true;
+             errorMessage = null;
+         }
+         else
+         {
+             isSuccess = false;
+             errorMessage = "Lưu không thành công. Vui lòng thử lại!";
+         }
+     }
+ }
+
+ <script>
+     async function startCamera() {
+         const video = document.getElementById('video');
+         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+             video.srcObject = stream;
+         }
+     }
+
+     async function captureImage() {
+         const video = document.getElementById('video');
+         const canvas = document.createElement('canvas');
+         canvas.width = video.videoWidth;
+         canvas.height = video.videoHeight;
+         const context = canvas.getContext('2d');
+         context.drawImage(video, 0, 0, canvas.width, canvas.height);
+         const dataURL = canvas.toDataURL('image/png');
+         return dataURL.split(',')[1]; // Trả về dữ liệu base64 mà không có phần header
+     }
+
+ </script>

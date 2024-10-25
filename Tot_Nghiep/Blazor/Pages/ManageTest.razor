@@ -92,8 +92,8 @@
                                         <td>@(selectedQuestions.IndexOf(question) + 1)</td>
                                         <td >@question.QuestionName</td>
                                         <td >
-                                            <span type="button" class="text-warning"><i class="bi bi-pencil"></i></span>
-                                            <span type="button" class="text-danger"><i class="bi bi-trash3"></i></span>
+                                            <span type="button" class="text-warning" @onclick="()=>ShowQuestionDetailModalss(question.TestId)">@question.TestId<i class="bi bi-pencil"></i></span>
+                                            <span type="button" class="text-danger" @onclick="()=>deletequestion(question.TestId,question.Level)"><i class="bi bi-trash3"></i></span>
                                         </td>
                                     </tr>
                                 }
@@ -315,6 +315,117 @@
             </div>
         </div>
     </div>
+    <div class="modal fade @(isQuestionDetailModalVisibless ? "show" : "")" tabindex="-1" style="display:@(isQuestionDetailModalVisibless ? "block" : "none")">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="fw-bold text-primary">Chỉnh sửa câu hỏi</h4>
+                <button type="button" class="btn-close" @onclick="HideQuestionDetailModalss"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-7 p-2">
+                            <div class="mb-3">
+                                <label for="questionContent" class="form-label">Nội dung câu hỏi:</label>
+                                <textarea id="questionContent" class="form-control" @bind="testQuestion.QuestionName" placeholder="Nhập nội dung câu hỏi..." rows="3">@testQuestion.QuestionName</textarea>
+                            </div>
+                            @if (testQuestion.QuestionType == 1 || testQuestion.QuestionType == 2)
+                            {
+                                <div class="mb-3">
+                                    <label for="answers" class="form-label">Nhập các đáp án:</label>
+                                    @foreach (var answer in testQuestion.Answers.Select((value, index) => new { value, index }))
+                                    {
+                                        <div class="input-group mb-2">
+                                            <input type="text" class="form-control"
+                                                   @bind="testQuestion.Answers[answer.index]"
+                                                   placeholder="Nhập đáp án" />
+                                            @if (testQuestion.QuestionType == 1)
+                                            {
+                                                <div class="input-group-text">
+                                                    <input type="radio" name="singleAnswer"
+                                                           @onchange="() => SetCorrectAnswer(answer.index)" 
+                                                           checked="@testQuestion.CorrectAnswers.Contains(answer.value)" />
+                                                </div>
+                                            }
+                                            else if (testQuestion.QuestionType == 2)
+                                            {
+                                                <div class="input-group-text">
+                                                    <input type="checkbox"
+                                                           @onchange="(e) => ToggleCorrectAnswer(answer.index, (bool)((ChangeEventArgs)e).Value)"
+                                                           checked="@testQuestion.CorrectAnswers.Contains(answer.value)" />
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    <button class="btn btn-outline-primary btn-sm mt-2" @onclick="AddAnswerField">+ Thêm đáp án</button>
+                                </div>
+                            }
+
+                            @if (testQuestion.QuestionType == 3)
+                            {
+                                <div class="mb-3">
+                                    <label class="form-label">Chọn đáp án đúng:</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="trueFalse" @onchange="() => SetCorrectAnswer(0)" 
+                                               checked="@testQuestion.CorrectAnswers.Contains("1")" />
+                                        <label class="form-check-label">Đúng</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="trueFalse" @onchange="() => SetCorrectAnswer(1)" 
+                                               checked="@testQuestion.CorrectAnswers.Contains("0")" />
+                                        <label class="form-check-label">Sai</label>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-5 p-2">
+                            <div class="mb-3">
+                                <label for="questionType" class="form-label">Loại câu hỏi:</label>
+                                <select id="questionType" class="form-select" @bind="testQuestion.QuestionType">
+                                    <option value="1" selected="@(testQuestion.QuestionType == 1)">Trắc nghiệm chọn 1 đáp án</option>
+                                    <option value="2" selected="@(testQuestion.QuestionType == 2)">Trắc nghiệm chọn nhiều đáp án</option>
+                                    <option value="3" selected="@(testQuestion.QuestionType == 3)">Đúng sai</option>
+                                    <option value="4" selected="@(testQuestion.QuestionType == 4)">Điền vào chỗ trống</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="questionLevel" class="form-label">Mức độ tư duy:</label>
+                                <select id="questionLevel" class="form-select" @bind="testQuestion.Level">
+                                    <option value="" selected="@(string.IsNullOrEmpty(testQuestion.Level.ToString()))">--chọn--</option>
+                                    <option value="1" selected="@(testQuestion.Level == 1)">Dễ</option>
+                                    <option value="2" selected="@(testQuestion.Level == 2)">Trung bình</option>
+                                    <option value="3" selected="@(testQuestion.Level == 3)">Khó</option>
+                                    <option value="4" selected="@(testQuestion.Level == 4)">Rất khó</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="testPackage" class="form-label">Gói đề:</label>
+                                <select id="testPackage" @bind="testQuestion.TestId" class="form-select">
+                                    <option value="" selected>--chọn--</option>
+                                    @foreach (var item in testList)
+                                    {
+                                        <option value="@item.Id" selected="@(testQuestion.TestId == item.Id)">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+               @*  <button class="btn btn-success" @onclick="UpdateQuestion">Lưu câu hỏi</button> *@
+                <button class="btn btn-secondary" @onclick="HideQuestionDetailModal">Hủy</button>
+                <span class="text-danger ms-3">@Message</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </div>
 @code {
     private List<listdetailquestion> testQuestionss = new List<listdetailquestion>();
@@ -333,6 +444,7 @@
     {
         try
         {
+            
             await detailtestGrid();
             await SearchTests();
             await detailclass();
@@ -344,6 +456,36 @@
         {
 
         }
+    }
+    private async Task detailquestion(Guid id)
+    {
+        var client= clientFactory.CreateClient("Get");
+        var url = $"https://localhost:7039/api/TestQuestion/GetAll_TestQuestionAnswers/{id}";
+        testQuestion = await client.GetFromJsonAsync<TestQuestion_TestQuestionAnswersDTO>(url);
+         
+    }
+    private async Task updatequestion()
+    {
+        var Httpclient= clientFactory.CreateClient("Put");
+        var url = $"https://localhost:7039/api/TestQuestion/Update_TestQuestion";
+        var respon = await Httpclient.PutAsJsonAsync(url,testQuestio);
+
+    }
+    private async Task deletequestion(Guid id , int level)
+    {
+        var Client= clientFactory.CreateClient("Delete");
+        var url = $"https://localhost:7039/api/TestQuestion/Delete_TestQuestion?Id={id}";
+        var respon = await Client.DeleteAsync(url);
+        if (respon.IsSuccessStatusCode)
+        {
+            await LoadQuestions(id, level); // Reload the questions after deleting
+        }
+        else
+        {
+            // Handle error case, maybe show a notification to the user
+            Console.WriteLine("Failed to delete the question.");
+        }
+        //NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
     }
     private async Task detailtestGrid()
     {
@@ -600,7 +742,8 @@
         private bool isCreateTestModalVisible = false;
         private bool isQuestionDetailModalVisible = false;
         private bool isQuestionDetailModalVisibles = false;
-        
+        private bool isQuestionDetailModalVisibless = false;
+
         private void ShowCreateTestModal()
         {
             isCreateTestModalVisible = true;
@@ -613,6 +756,13 @@
         private void ShowQuestionDetailModals()
         {
             isQuestionDetailModalVisibles = true;
+
+        }
+        private async void ShowQuestionDetailModalss(Guid id)
+        {
+            await detailquestion(id);
+            isQuestionDetailModalVisibless = true;
+
         }
         private void ShowQuestionDetailModal()
         {
@@ -627,7 +777,10 @@
         {
             isQuestionDetailModalVisibles = false;
         }
-        
+        private void HideQuestionDetailModalss()
+        {
+            isQuestionDetailModalVisibless = false;
+        }
     }
         private void UpdateAnswer(ChangeEventArgs e, int index)
         {

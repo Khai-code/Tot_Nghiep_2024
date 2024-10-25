@@ -14,9 +14,10 @@ namespace Data.DTOs
         public DateTime JoinTime { get; set; }
 
         [StringLength(500, ErrorMessage = "Độ dài chuỗi ko quá 500 ký tự")]
-        public IFormFile StudentProfilePhoto { get; set; }
+        public string? StudentProfilePhoto { get; set; }
         public int Status { get; set; }
         public Guid ClassId { get; set; }
         public Guid StudentId { get; set; }
+        public string FaceEncoding { get; set; }
     }
 }
